@@ -42,6 +42,7 @@ namespace HTGSL
             this.label13.Text = Properties.Resources.BedHeight + ":";
             this.label14.Text = Properties.Resources.BedsPerRow + ":";
             this.butSave.Text = Properties.Resources.butSave;
+            this.btnBrowseFile.Text = Properties.Resources.BrowseSoundDirectory;
             InitializeControlValues();
         }
 
@@ -63,6 +64,7 @@ namespace HTGSL
                 Settings.Default.RoomHeight = int.Parse(this.txtRoomHeight.Text);
                 Settings.Default.BedHeight = int.Parse(this.txtBedHeight.Text);
                 Settings.Default.BedsPerRow = int.Parse(this.txtBedsPerRow.Text);
+                Settings.Default.SoundPath =  this.txtSoundPath.Text ;
                 Settings.Default.Save();
                 MessageBox.Show("Đã lưu dữ liệu thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
@@ -156,7 +158,14 @@ namespace HTGSL
             this.txtTimeSendData.Text = Settings.Default.TimeSendData.ToString();
             this.txtTimeSleepAfterSendACK.Text = Settings.Default.TimeSleepAfterSendACK.ToString();
             this.txtTimesRepeatSendACK.Text = Settings.Default.TimeRepeatSendACK.ToString();
+            this.txtSoundPath.Text = Settings.Default.SoundPath.ToString();
         }
-		
+
+        private void btnBrowseFile_Click(object sender, EventArgs e)
+        {
+            var folderDlg = new FolderBrowserDialog(); 
+            if ( folderDlg.ShowDialog() == DialogResult.OK)
+              txtSoundPath.Text = folderDlg.SelectedPath; 
+        }
     }
 }

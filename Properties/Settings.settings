@@ -62,5 +62,8 @@
     <Setting Name="TimeSendData" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">200</Value>
     </Setting>
+    <Setting Name="SoundPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -1910,6 +1910,7 @@ namespace HTGSL
                 isFinishRead = false;
                 while (playList.Count > 0)
                 {
+                    playList[0] = Settings.Default.SoundPath + "\\" + playList[0];
                     if (!string.IsNullOrEmpty(playList[0]) && File.Exists(playList[0]))
                     {
                         player.SoundLocation = (playList[0]);

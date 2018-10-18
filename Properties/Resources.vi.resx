@@ -726,4 +726,7 @@
   <data name="TestForm" xml:space="preserve">
     <value>Kiểm thử</value>
   </data>
+  <data name="BrowseSoundDirectory" xml:space="preserve">
+    <value>Chọn thư mục âm thanh</value>
+  </data>
 </root>

@@ -1015,6 +1015,12 @@ iRegionHeight = 0,
             graphics.DrawString(this.strHospitalName, font, white, new PointF(10f, ((float)panel.Height - sizeF.Height) / 2f));
             graphics.Dispose();
         }
+
+        private void btnSounds_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void FillRectangleV(Graphics g, Rectangle rtg, Color colorLeft, Color colorRight)
         {
             LinearGradientBrush linearGradientBrush = new LinearGradientBrush(rtg, colorLeft, colorRight, 0f, false);

@@ -80,12 +80,14 @@ namespace HTGSL
 			this.txtPath.Name = "txtPath";
 			this.txtPath.Size = new Size(404, 21);
 			this.txtPath.TabIndex = 27;
-			this.label1.AutoSize = true;
+			this.txtPath.Visible = false;
+            this.label1.AutoSize = true;
 			this.label1.Location = new Point(13, 417);
 			this.label1.Name = "label1";
 			this.label1.Size = new Size(63, 13);
 			this.label1.TabIndex = 28;
 			this.label1.Text = "Đường dẫn:";
+            this.label1.Visible = false;
 			this.butUpdatePath.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
 			this.butUpdatePath.Location = new Point(500, 415);
 			this.butUpdatePath.Name = "butUpdatePath";
@@ -93,6 +95,7 @@ namespace HTGSL
 			this.butUpdatePath.TabIndex = 29;
 			this.butUpdatePath.Text = "Cập nhật âm thanh";
 			this.butUpdatePath.UseVisualStyleBackColor = true;
+            this.butUpdatePath.Visible = false;
 			this.butUpdatePath.Click += new EventHandler(this.butUpdatePath_Click);
 			base.AutoScaleDimensions = new SizeF(6f, 13f);
 			base.AutoScaleMode = AutoScaleMode.Font;

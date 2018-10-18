@@ -829,4 +829,7 @@
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
   </data>
+  <data name="BrowseSoundDirectory" xml:space="preserve">
+    <value>Browse Sound Directory</value>
+  </data>
 </root>
