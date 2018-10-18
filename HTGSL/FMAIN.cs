@@ -20,6 +20,8 @@ using System.Windows.Forms;
 using System.Xml;
 //using HTGSL.Properties;
 using Properties;
+using System.Globalization;
+
 namespace HTGSL
 {
     public class FMAIN : Form
@@ -821,8 +823,8 @@ namespace HTGSL
             base.Activate();
         }
         private void LoadCaptionForControls()
-        {
-            this.Text = Properties.Resources.HTGSL;
+        { 
+            this.Text =  Properties.Resources.HTGSL;
             this.fileToolStripMenuItem.Text = Properties.Resources.File;
             this.connectToolStripMenuItem.Text = Properties.Resources.SetConnect;
             this.loginToolStripMenuItem.Text = Properties.Resources.Login;
@@ -1907,6 +1909,7 @@ namespace HTGSL
         {
             try
             {
+              
                 isFinishRead = false;
                 while (playList.Count > 0)
                 {
@@ -1928,7 +1931,7 @@ namespace HTGSL
                 isFinishRead = true;
                 playThread.Abort();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
             }
         }

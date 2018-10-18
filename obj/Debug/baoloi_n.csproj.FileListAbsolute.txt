@@ -39,6 +39,15 @@ E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\obj\Debug\HTGSL.exe
 E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\obj\Debug\HTGSL.pdb
 E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\obj\Debug\Properties.Resources.vi.resources
 E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\obj\Debug\baoloi_n.csprojResolveAssemblyReference.cache
+E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\HTGSL.exe.config
+E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\HTGSL.exe
+E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\HTGSL.pdb
+E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\vi\HTGSL.resources.dll
+E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\C1.C1Report.2.DLL
+E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\C1.Win.C1List.2.DLL
+E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\C1.Win.C1Report.2.DLL
+E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\C1.Win.C1TrueDBGrid.2.DLL
+E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\Microsoft.Office.Interop.Excel.dll
 E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\baoloi_n.csprojAssemblyReference.cache
 E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.FrmDBConnect.resources
 E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.FrmRDateToDate.resources
@@ -58,16 +67,7 @@ E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\Properties.Resources.vi.resources
 E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\baoloi_n.csproj.GenerateResource.cache
 E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.exe.licenses
 E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\baoloi_n.csproj.CoreCompileInputs.cache
-E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.exe
-E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.pdb
-E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\HTGSL.exe.config
-E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\HTGSL.exe
-E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\HTGSL.pdb
-E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\vi\HTGSL.resources.dll
-E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\C1.C1Report.2.DLL
-E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\C1.Win.C1List.2.DLL
-E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\C1.Win.C1Report.2.DLL
-E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\C1.Win.C1TrueDBGrid.2.DLL
-E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\Microsoft.Office.Interop.Excel.dll
 E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\vi\HTGSL.resources.dll
 E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\baoloi_n.csproj.CopyComplete
+E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.exe
+E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.pdb
