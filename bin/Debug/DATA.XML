@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<String_Connect>
+  <SQLServer id="1">
+    <Server_Name>.</Server_Name>
+    <Database>NurseCall</Database>
+    <User>sa</User>
+    <Password>123</Password>
+  </SQLServer>
+</String_Connect>

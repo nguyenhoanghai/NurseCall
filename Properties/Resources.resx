@@ -1,0 +1,832 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="BulletStar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Images\BulletStar.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Triangle4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Images\Triangle4.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeRed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Images\NodeRed.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NodeGreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Images\NodeGreen.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BulletStar1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Images\BulletStar1.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Triangle1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Images\Triangle1.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="play" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\play.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Cross" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Images\Cross.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Nurse" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Images\Nurse.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Triangle2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Images\Triangle2.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Star" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Images\Star.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Node" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Images\Node.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Triangle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Images\Triangle.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Organizer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Images\Organizer.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Square" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Images\Square.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Dot1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Images\Dot1.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Triangle3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Images\Triangle3.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="stop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\stop.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Triangle5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Images\Triangle5.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Home" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Images\Home.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Dot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Images\Dot.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="refresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\refresh.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="help" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\help.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="save" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\save.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="AllowDoubleCall" xml:space="preserve">
+    <value>Allow Double Call</value>
+  </data>
+  <data name="AutoOpenComport" xml:space="preserve">
+    <value>Auto Open Comport</value>
+  </data>
+  <data name="BaudRate" xml:space="preserve">
+    <value>Baud rate</value>
+  </data>
+  <data name="Bed" xml:space="preserve">
+    <value>Bed</value>
+  </data>
+  <data name="BedHeight" xml:space="preserve">
+    <value>Bed Height</value>
+  </data>
+  <data name="BedID" xml:space="preserve">
+    <value>Bed ID/ LocationID</value>
+  </data>
+  <data name="BedInfo" xml:space="preserve">
+    <value>BedInfo/ Location Info</value>
+  </data>
+  <data name="BedName" xml:space="preserve">
+    <value>Bed Name/ Loaction Name</value>
+  </data>
+  <data name="BedProperties" xml:space="preserve">
+    <value>Bed Properties</value>
+  </data>
+  <data name="BedsPerRow" xml:space="preserve">
+    <value>Beds Per Row</value>
+  </data>
+  <data name="Bed_s" xml:space="preserve">
+    <value>bed(s)</value>
+  </data>
+  <data name="BirthDate" xml:space="preserve">
+    <value>Birth date</value>
+  </data>
+  <data name="butSave" xml:space="preserve">
+    <value>     &amp;Save</value>
+  </data>
+  <data name="Call" xml:space="preserve">
+    <value>Call</value>
+  </data>
+  <data name="CallbyRegion" xml:space="preserve">
+    <value>Call by Region</value>
+  </data>
+  <data name="CallbyShift" xml:space="preserve">
+    <value>Call by Shift</value>
+  </data>
+  <data name="CallbyTime" xml:space="preserve">
+    <value>Call by Time</value>
+  </data>
+  <data name="CallTopN" xml:space="preserve">
+    <value>Call Top N</value>
+  </data>
+  <data name="CallWaitOver" xml:space="preserve">
+    <value>Call Wait Over</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="ClearAllCall" xml:space="preserve">
+    <value>Clear All Call</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="ConfigEvent" xml:space="preserve">
+    <value>Config Event</value>
+  </data>
+  <data name="ConfigManager" xml:space="preserve">
+    <value>Config Manager</value>
+  </data>
+  <data name="ConfirmMessage" xml:space="preserve">
+    <value>Restart the application to apply changes</value>
+  </data>
+  <data name="ConfirmTitle" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="Curator" xml:space="preserve">
+    <value>Curator</value>
+  </data>
+  <data name="DataBits" xml:space="preserve">
+    <value>Data bits</value>
+  </data>
+  <data name="DatetimeFrom" xml:space="preserve">
+    <value>Datetime From</value>
+  </data>
+  <data name="DatetimeTo" xml:space="preserve">
+    <value>Datetime To</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>delete</value>
+  </data>
+  <data name="DeleteBed" xml:space="preserve">
+    <value>Delete Bed</value>
+  </data>
+  <data name="DeleteDepartment" xml:space="preserve">
+    <value>Delete Department</value>
+  </data>
+  <data name="DeleteEmployee" xml:space="preserve">
+    <value>Delete Employee</value>
+  </data>
+  <data name="DeleteJob" xml:space="preserve">
+    <value>Delete Job</value>
+  </data>
+  <data name="DeleteLocation" xml:space="preserve">
+    <value>Delete Location</value>
+  </data>
+  <data name="DeleteRegion" xml:space="preserve">
+    <value>Delete Region</value>
+  </data>
+  <data name="DeleteRoom" xml:space="preserve">
+    <value>Delete Room</value>
+  </data>
+  <data name="DeleteU" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>Department</value>
+  </data>
+  <data name="DepartmentID" xml:space="preserve">
+    <value>Department ID</value>
+  </data>
+  <data name="DepartmentInfo" xml:space="preserve">
+    <value>Department Info</value>
+  </data>
+  <data name="DepartmentName" xml:space="preserve">
+    <value>Department name</value>
+  </data>
+  <data name="DepartmentProperties" xml:space="preserve">
+    <value>Department Properties</value>
+  </data>
+  <data name="Departments" xml:space="preserve">
+    <value>Departments</value>
+  </data>
+  <data name="Department_s_" xml:space="preserve">
+    <value>department(s)</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="DoYouWantTo" xml:space="preserve">
+    <value>Do you want to</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="EmpID" xml:space="preserve">
+    <value>Emp. ID</value>
+  </data>
+  <data name="Employee" xml:space="preserve">
+    <value>Employee</value>
+  </data>
+  <data name="EmployeeID" xml:space="preserve">
+    <value>Employee ID</value>
+  </data>
+  <data name="EmployeeInfo" xml:space="preserve">
+    <value>Employee Info</value>
+  </data>
+  <data name="EmployeeName" xml:space="preserve">
+    <value>Employee name</value>
+  </data>
+  <data name="EmployeeProperties" xml:space="preserve">
+    <value>Employee Properties</value>
+  </data>
+  <data name="EmployeesManager" xml:space="preserve">
+    <value>Employees Manager</value>
+  </data>
+  <data name="Employee_s_" xml:space="preserve">
+    <value>employee(s)</value>
+  </data>
+  <data name="EndAllCall" xml:space="preserve">
+    <value>End All Call</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Equipment" xml:space="preserve">
+    <value>Equipment</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="ExportFailed" xml:space="preserve">
+    <value>ExportFailed</value>
+  </data>
+  <data name="ExportSuccess" xml:space="preserve">
+    <value>ExportSuccess</value>
+  </data>
+  <data name="F0001" xml:space="preserve">
+    <value>F0001 - Options</value>
+  </data>
+  <data name="Failure" xml:space="preserve">
+    <value>failure</value>
+  </data>
+  <data name="Fax" xml:space="preserve">
+    <value>Fax</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="FindBed" xml:space="preserve">
+    <value>Find Bed</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>First name</value>
+  </data>
+  <data name="Functions" xml:space="preserve">
+    <value>Functions</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>Gender</value>
+  </data>
+  <data name="grpHeight" xml:space="preserve">
+    <value>Height</value>
+  </data>
+  <data name="Help1" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="Help_" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="HireDate" xml:space="preserve">
+    <value>Hire date</value>
+  </data>
+  <data name="Hospital" xml:space="preserve">
+    <value>Hospital</value>
+  </data>
+  <data name="HospitalID" xml:space="preserve">
+    <value>Hospital ID</value>
+  </data>
+  <data name="HospitalInfo" xml:space="preserve">
+    <value>Hospital Info</value>
+  </data>
+  <data name="HospitalName" xml:space="preserve">
+    <value>Hospital Name</value>
+  </data>
+  <data name="HospitalProperties" xml:space="preserve">
+    <value>Hospital Properties</value>
+  </data>
+  <data name="HTGSL" xml:space="preserve">
+    <value>NurseCall</value>
+  </data>
+  <data name="ID" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="InfoOfBed" xml:space="preserve">
+    <value>Info of Bed</value>
+  </data>
+  <data name="InfoOfDepartment" xml:space="preserve">
+    <value>Info of Department</value>
+  </data>
+  <data name="InfoOfEmployee" xml:space="preserve">
+    <value>Info of Employee</value>
+  </data>
+  <data name="InfoOfJob" xml:space="preserve">
+    <value>Info of Job</value>
+  </data>
+  <data name="InfoOfLocation" xml:space="preserve">
+    <value>Info of Location</value>
+  </data>
+  <data name="InfoOfRegion" xml:space="preserve">
+    <value>Info of Region</value>
+  </data>
+  <data name="InfoOfRoom" xml:space="preserve">
+    <value>Info of Room</value>
+  </data>
+  <data name="Insert" xml:space="preserve">
+    <value>Insert</value>
+  </data>
+  <data name="Install" xml:space="preserve">
+    <value>Install</value>
+  </data>
+  <data name="Invalid" xml:space="preserve">
+    <value>invalid</value>
+  </data>
+  <data name="IsExisted" xml:space="preserve">
+    <value>is existed</value>
+  </data>
+  <data name="IsExistedIn" xml:space="preserve">
+    <value>is existed in</value>
+  </data>
+  <data name="IsNotEmpty" xml:space="preserve">
+    <value>is not empty</value>
+  </data>
+  <data name="IsNotFound" xml:space="preserve">
+    <value>is not found</value>
+  </data>
+  <data name="IsNotSelected" xml:space="preserve">
+    <value>is not selected</value>
+  </data>
+  <data name="IsNumber" xml:space="preserve">
+    <value>is number</value>
+  </data>
+  <data name="Items" xml:space="preserve">
+    <value>item(s)</value>
+  </data>
+  <data name="Job" xml:space="preserve">
+    <value>Job</value>
+  </data>
+  <data name="JobID" xml:space="preserve">
+    <value>Job ID</value>
+  </data>
+  <data name="JobInfo" xml:space="preserve">
+    <value>Job Info</value>
+  </data>
+  <data name="JobName" xml:space="preserve">
+    <value>Job name</value>
+  </data>
+  <data name="JobProperties" xml:space="preserve">
+    <value>Job Properties</value>
+  </data>
+  <data name="Jobs" xml:space="preserve">
+    <value>Jobs</value>
+  </data>
+  <data name="Job_s_" xml:space="preserve">
+    <value>job(s)</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Last name</value>
+  </data>
+  <data name="ListOfDepartments" xml:space="preserve">
+    <value>List of Departments</value>
+  </data>
+  <data name="ListOfEmployees" xml:space="preserve">
+    <value>List of Employees</value>
+  </data>
+  <data name="ListOfJobs" xml:space="preserve">
+    <value>List of Jobs</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="LocationID" xml:space="preserve">
+    <value>Location ID</value>
+  </data>
+  <data name="LocationInfo" xml:space="preserve">
+    <value>Location Info</value>
+  </data>
+  <data name="LocationName" xml:space="preserve">
+    <value>Location Name</value>
+  </data>
+  <data name="LocationProperties" xml:space="preserve">
+    <value>Location Properties</value>
+  </data>
+  <data name="Locations" xml:space="preserve">
+    <value>Locations</value>
+  </data>
+  <data name="LocationType" xml:space="preserve">
+    <value>Location type</value>
+  </data>
+  <data name="Location_s" xml:space="preserve">
+    <value>location(s)</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="MailLists" xml:space="preserve">
+    <value>Mail Lists</value>
+  </data>
+  <data name="MailSchedule" xml:space="preserve">
+    <value>Mail Schedule</value>
+  </data>
+  <data name="MailSetup" xml:space="preserve">
+    <value>Mail Setup</value>
+  </data>
+  <data name="Men" xml:space="preserve">
+    <value>Men</value>
+  </data>
+  <data name="ModifyBed" xml:space="preserve">
+    <value>Modify Bed</value>
+  </data>
+  <data name="ModifyDepartment" xml:space="preserve">
+    <value>Modify Department</value>
+  </data>
+  <data name="ModifyEmployee" xml:space="preserve">
+    <value>Modify Employee</value>
+  </data>
+  <data name="ModifyJob" xml:space="preserve">
+    <value>Modify Job</value>
+  </data>
+  <data name="ModifyLocation" xml:space="preserve">
+    <value>Modify Location</value>
+  </data>
+  <data name="ModifyRegion" xml:space="preserve">
+    <value>Modify Region</value>
+  </data>
+  <data name="ModifyRoom" xml:space="preserve">
+    <value>Modify Room</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="NewBed" xml:space="preserve">
+    <value>New Bed</value>
+  </data>
+  <data name="NewDepartment" xml:space="preserve">
+    <value>New Department</value>
+  </data>
+  <data name="NewEmployee" xml:space="preserve">
+    <value>New Employee</value>
+  </data>
+  <data name="NewJob" xml:space="preserve">
+    <value>New Job</value>
+  </data>
+  <data name="NewLocation" xml:space="preserve">
+    <value>New Location</value>
+  </data>
+  <data name="NewRegion" xml:space="preserve">
+    <value>New Region</value>
+  </data>
+  <data name="NewRoom" xml:space="preserve">
+    <value>New Room</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="NurseCallSystem" xml:space="preserve">
+    <value>Nurse Call System</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="Parameters" xml:space="preserve">
+    <value>Parameters</value>
+  </data>
+  <data name="Parity" xml:space="preserve">
+    <value>Parity</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="PortName" xml:space="preserve">
+    <value>Port name</value>
+  </data>
+  <data name="ProcessTime" xml:space="preserve">
+    <value>Process Time</value>
+  </data>
+  <data name="product" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="RegionHeight" xml:space="preserve">
+    <value>Region Height</value>
+  </data>
+  <data name="RegionID" xml:space="preserve">
+    <value>Region ID</value>
+  </data>
+  <data name="RegionInfo" xml:space="preserve">
+    <value>Region Info</value>
+  </data>
+  <data name="RegionName" xml:space="preserve">
+    <value>Region Name</value>
+  </data>
+  <data name="RegionProperties" xml:space="preserve">
+    <value>Region Properties</value>
+  </data>
+  <data name="Region_s" xml:space="preserve">
+    <value>region(s)</value>
+  </data>
+  <data name="RegisterListenEventFromBed" xml:space="preserve">
+    <value>Register listen event from bed</value>
+  </data>
+  <data name="Rights" xml:space="preserve">
+    <value>Rights</value>
+  </data>
+  <data name="Right_Function" xml:space="preserve">
+    <value>Right Functions</value>
+  </data>
+  <data name="Room" xml:space="preserve">
+    <value>Room</value>
+  </data>
+  <data name="RoomHeight" xml:space="preserve">
+    <value>Room Height</value>
+  </data>
+  <data name="RoomID" xml:space="preserve">
+    <value>Room ID</value>
+  </data>
+  <data name="RoomInfo" xml:space="preserve">
+    <value>Room Info</value>
+  </data>
+  <data name="RoomName" xml:space="preserve">
+    <value>Room Name</value>
+  </data>
+  <data name="RoomProperties" xml:space="preserve">
+    <value>Room Properties</value>
+  </data>
+  <data name="Rooms" xml:space="preserve">
+    <value>Rooms</value>
+  </data>
+  <data name="Room_s" xml:space="preserve">
+    <value>room(s)</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>SelectAll</value>
+  </data>
+  <data name="SerialPort" xml:space="preserve">
+    <value>Serial Port</value>
+  </data>
+  <data name="SerialPortSettings" xml:space="preserve">
+    <value>Serial Port Settings</value>
+  </data>
+  <data name="ServiceID" xml:space="preserve">
+    <value>Service ID</value>
+  </data>
+  <data name="ServiceName" xml:space="preserve">
+    <value>Service Name</value>
+  </data>
+  <data name="Services" xml:space="preserve">
+    <value>Services</value>
+  </data>
+  <data name="Service_s" xml:space="preserve">
+    <value>service(s)</value>
+  </data>
+  <data name="SetConnect" xml:space="preserve">
+    <value>Set Connect</value>
+  </data>
+  <data name="Shifts" xml:space="preserve">
+    <value>Shifts</value>
+  </data>
+  <data name="Sounds" xml:space="preserve">
+    <value>Sounds</value>
+  </data>
+  <data name="SoundTemplates" xml:space="preserve">
+    <value>Sound Templates</value>
+  </data>
+  <data name="Statistic" xml:space="preserve">
+    <value>Reports</value>
+  </data>
+  <data name="Stop1" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="StopBits" xml:space="preserve">
+    <value>Stop bits</value>
+  </data>
+  <data name="Stop_" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="System" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="TestForm" xml:space="preserve">
+    <value>Test Form</value>
+  </data>
+  <data name="TimeReadSound" xml:space="preserve">
+    <value>Time Read Sound</value>
+  </data>
+  <data name="TimeRefreshData" xml:space="preserve">
+    <value>Time Refresh Data (milisecond)</value>
+  </data>
+  <data name="TimeSendData" xml:space="preserve">
+    <value>Time Send Data</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Tools" xml:space="preserve">
+    <value>Tools</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="TotalOfBeds" xml:space="preserve">
+    <value>Total of Beds</value>
+  </data>
+  <data name="TotalOfLocations" xml:space="preserve">
+    <value>Total of Locations</value>
+  </data>
+  <data name="TotalOfRooms" xml:space="preserve">
+    <value>Total of Rooms</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="TypeID" xml:space="preserve">
+    <value>Type ID</value>
+  </data>
+  <data name="TypeName" xml:space="preserve">
+    <value>Type Name</value>
+  </data>
+  <data name="UnSelectAll" xml:space="preserve">
+    <value>UnSelect All</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="Vietnamese" xml:space="preserve">
+    <value>Vietnamese</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="Website" xml:space="preserve">
+    <value>Website</value>
+  </data>
+  <data name="Women" xml:space="preserve">
+    <value>Women</value>
+  </data>
+  <data name="WorkShifts" xml:space="preserve">
+    <value>Work Shifts</value>
+  </data>
+  <data name="Years" xml:space="preserve">
+    <value>Years</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+</root>

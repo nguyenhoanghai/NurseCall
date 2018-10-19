@@ -1,0 +1,325 @@
+<?xml version="1.0"?>
+<Reports>
+  <!--Report *** CallTopN ***-->
+  <Report version="2.6.20093.53207">
+    <Name>CallTopN</Name>
+    <ReportInfo>
+      <Author>PHONGVT</Author>
+    </ReportInfo>
+    <DataSource>
+      <ConnectionString>Provider=SQLOLEDB;Password=123;Persist Security Info=True;User ID=sa;Initial Catalog=NurseCall;Data Source=.</ConnectionString>
+      <RecordSource>v_call_top_n</RecordSource>
+    </DataSource>
+    <Layout>
+      <Width>13935</Width>
+      <Orientation>2</Orientation>
+      <PaperSize>9</PaperSize>
+    </Layout>
+    <Font>
+      <Name>Microsoft Sans Serif</Name>
+      <Size>9</Size>
+    </Font>
+    <OnOpen>' -- style script start
+_styleCtr = 0
+' -- style script end
+</OnOpen>
+    <Groups />
+    <Sections>
+      <Section>
+        <Name>Detail</Name>
+        <Type>0</Type>
+        <Height>300</Height>
+        <OnPrint>' -- style script start
+detail.BackColor = iif(_styleCtr mod 2 = 0, rgb(255,255,255),rgb(255,243,235))
+_styleCtr = _styleCtr + 1
+' -- style script end
+</OnPrint>
+      </Section>
+      <Section>
+        <Name>Header</Name>
+        <Type>1</Type>
+        <Height>960</Height>
+      </Section>
+      <Section>
+        <Name>Footer</Name>
+        <Type>2</Type>
+        <Visible>0</Visible>
+      </Section>
+      <Section>
+        <Name>PageHeader</Name>
+        <Type>3</Type>
+        <Height>615</Height>
+      </Section>
+      <Section>
+        <Name>PageFooter</Name>
+        <Type>4</Type>
+        <Height>330</Height>
+      </Section>
+    </Sections>
+    <Fields>
+      <Field>
+        <Name>ftrLeft</Name>
+        <Section>4</Section>
+        <Text>Now()</Text>
+        <Calculated>-1</Calculated>
+        <Left>45</Left>
+        <Top>30</Top>
+        <Width>2475</Width>
+        <Height>300</Height>
+        <Align>0</Align>
+        <ForeColor>2522623</ForeColor>
+        <Font>
+          <Name>Microsoft Sans Serif</Name>
+          <Size>8</Size>
+        </Font>
+      </Field>
+      <Field>
+        <Name>ftrRight</Name>
+        <Section>4</Section>
+        <Text>"Trang " &amp; [Page] &amp; " / " &amp; [Pages]</Text>
+        <Calculated>-1</Calculated>
+        <Left>6480</Left>
+        <Top>30</Top>
+        <Width>7410</Width>
+        <Height>300</Height>
+        <Align>2</Align>
+        <ForeColor>2522623</ForeColor>
+        <Font>
+          <Name>Microsoft Sans Serif</Name>
+          <Size>8</Size>
+        </Font>
+      </Field>
+      <Field>
+        <Name>shift_nameLbl</Name>
+        <Section>3</Section>
+        <Text>Ca làm việc</Text>
+        <Left>30</Left>
+        <Width>1215</Width>
+        <Height>405</Height>
+        <Align>3</Align>
+        <WordWrap>0</WordWrap>
+      </Field>
+      <Field>
+        <Name>region_noteLbl</Name>
+        <Section>3</Section>
+        <Text>Khu vực</Text>
+        <Left>1215</Left>
+        <Width>1485</Width>
+        <Height>405</Height>
+        <Align>3</Align>
+        <WordWrap>0</WordWrap>
+      </Field>
+      <Field>
+        <Name>room_noteLbl</Name>
+        <Section>3</Section>
+        <Text>Vị trí</Text>
+        <Left>2715</Left>
+        <Width>1440</Width>
+        <Height>405</Height>
+        <Align>3</Align>
+        <WordWrap>0</WordWrap>
+      </Field>
+      <Field>
+        <Name>bed_noteLbl</Name>
+        <Section>3</Section>
+        <Text>Sự cố</Text>
+        <Left>4170</Left>
+        <Width>1410</Width>
+        <Height>405</Height>
+        <Align>3</Align>
+        <WordWrap>0</WordWrap>
+      </Field>
+      <Field>
+        <Name>start_callLbl</Name>
+        <Section>3</Section>
+        <Text>Bắt đầu</Text>
+        <Left>5595</Left>
+        <Top>15</Top>
+        <Width>1755</Width>
+        <Height>405</Height>
+        <Align>3</Align>
+        <WordWrap>0</WordWrap>
+      </Field>
+      <Field>
+        <Name>end_callLbl</Name>
+        <Section>3</Section>
+        <Text>Kết thúc</Text>
+        <Left>9195</Left>
+        <Top>15</Top>
+        <Width>1755</Width>
+        <Height>405</Height>
+        <Align>3</Align>
+        <WordWrap>0</WordWrap>
+      </Field>
+      <Field>
+        <Name>time_intervalLbl</Name>
+        <Section>3</Section>
+        <Text>Thời gian chờ</Text>
+        <Left>10995</Left>
+        <Top>15</Top>
+        <Width>1500</Width>
+        <Height>405</Height>
+        <Align>3</Align>
+        <WordWrap>0</WordWrap>
+      </Field>
+      <Field>
+        <Name>shift_nameCtl</Name>
+        <Section>0</Section>
+        <Text>shift_name</Text>
+        <Calculated>-1</Calculated>
+        <Left>30</Left>
+        <Width>1245</Width>
+        <Height>285</Height>
+        <Align>0</Align>
+        <CanGrow>-1</CanGrow>
+      </Field>
+      <Field>
+        <Name>region_noteCtl</Name>
+        <Section>0</Section>
+        <Text>region_name</Text>
+        <Calculated>-1</Calculated>
+        <Left>1215</Left>
+        <Width>1500</Width>
+        <Height>285</Height>
+        <Align>0</Align>
+        <CanGrow>-1</CanGrow>
+      </Field>
+      <Field>
+        <Name>room_noteCtl</Name>
+        <Section>0</Section>
+        <Text>room_note</Text>
+        <Calculated>-1</Calculated>
+        <Left>2715</Left>
+        <Width>1440</Width>
+        <Height>285</Height>
+        <Align>0</Align>
+        <CanGrow>-1</CanGrow>
+      </Field>
+      <Field>
+        <Name>bed_noteCtl</Name>
+        <Section>0</Section>
+        <Text>bed_note</Text>
+        <Calculated>-1</Calculated>
+        <Left>4170</Left>
+        <Width>1410</Width>
+        <Height>285</Height>
+        <Align>0</Align>
+        <CanGrow>-1</CanGrow>
+      </Field>
+      <Field>
+        <Name>start_callCtl</Name>
+        <Section>0</Section>
+        <Text>start_call</Text>
+        <Calculated>-1</Calculated>
+        <Left>5580</Left>
+        <Width>1740</Width>
+        <Height>285</Height>
+        <Align>0</Align>
+      </Field>
+      <Field>
+        <Name>end_callCtl</Name>
+        <Section>0</Section>
+        <Text>end_call</Text>
+        <Calculated>-1</Calculated>
+        <Left>9195</Left>
+        <Width>1800</Width>
+        <Height>285</Height>
+        <Align>0</Align>
+      </Field>
+      <Field>
+        <Name>_styleLine1</Name>
+        <Section>3</Section>
+        <Left>30</Left>
+        <Width>13905</Width>
+        <Height>30</Height>
+        <BorderStyle>1</BorderStyle>
+        <BorderColor>16711935</BorderColor>
+        <LineSlant>1</LineSlant>
+      </Field>
+      <Field>
+        <Name>titleLbl</Name>
+        <Section>1</Section>
+        <Text>Danh sách Top các sự kiện</Text>
+        <Left>45</Left>
+        <Width>13860</Width>
+        <Height>600</Height>
+        <Align>7</Align>
+        <ForeColor>7167831</ForeColor>
+        <Font>
+          <Name>Microsoft Sans Serif</Name>
+          <Size>20</Size>
+        </Font>
+      </Field>
+      <Field>
+        <Name>DateFromTo</Name>
+        <Section>1</Section>
+        <Text>Từ ngày: ... đến ngày: ...</Text>
+        <Left>45</Left>
+        <Top>630</Top>
+        <Width>13860</Width>
+        <Height>240</Height>
+        <Align>7</Align>
+      </Field>
+      <Field>
+        <Name>start_callLbl1</Name>
+        <Section>3</Section>
+        <Text>Xử lý</Text>
+        <Left>7395</Left>
+        <Top>15</Top>
+        <Width>1755</Width>
+        <Height>405</Height>
+        <Align>3</Align>
+        <WordWrap>0</WordWrap>
+      </Field>
+      <Field>
+        <Name>time_intervalLbl1</Name>
+        <Section>3</Section>
+        <Text>Thời gian xử lý</Text>
+        <Left>12510</Left>
+        <Top>15</Top>
+        <Width>1410</Width>
+        <Height>405</Height>
+        <Align>3</Align>
+        <WordWrap>0</WordWrap>
+      </Field>
+      <Field>
+        <Name>Field1</Name>
+        <Section>0</Section>
+        <Text>process_time</Text>
+        <Calculated>-1</Calculated>
+        <Left>7410</Left>
+        <Width>1755</Width>
+        <Height>285</Height>
+      </Field>
+      <Field>
+        <Name>Field2</Name>
+        <Section>0</Section>
+        <Text>wait_interval</Text>
+        <Calculated>-1</Calculated>
+        <Left>10995</Left>
+        <Width>1500</Width>
+        <Height>285</Height>
+      </Field>
+      <Field>
+        <Name>Field3</Name>
+        <Section>0</Section>
+        <Text>process_interval</Text>
+        <Calculated>-1</Calculated>
+        <Left>12510</Left>
+        <Width>1410</Width>
+        <Height>300</Height>
+      </Field>
+      <Field>
+        <Name>_styleLine2</Name>
+        <Section>3</Section>
+        <Left>30</Left>
+        <Top>540</Top>
+        <Width>13905</Width>
+        <Height>30</Height>
+        <BorderStyle>1</BorderStyle>
+        <BorderColor>16711935</BorderColor>
+        <LineSlant>1</LineSlant>
+      </Field>
+    </Fields>
+  </Report>
+</Reports>

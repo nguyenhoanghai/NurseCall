@@ -1,0 +1,504 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{5759E345-5199-46D3-8782-35C96107E00E}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>HTGSL</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <WarningLevel>4</WarningLevel>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>HDLogo.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="C1.C1Report.2">
+      <HintPath>libs\C1.C1Report.2.DLL</HintPath>
+    </Reference>
+    <Reference Include="C1.Win.C1List.2">
+      <HintPath>libs\C1.Win.C1List.2.DLL</HintPath>
+    </Reference>
+    <Reference Include="C1.Win.C1Report.2">
+      <HintPath>libs\C1.Win.C1Report.2.DLL</HintPath>
+    </Reference>
+    <Reference Include="C1.Win.C1TrueDBGrid.2">
+      <HintPath>libs\C1.Win.C1TrueDBGrid.2.DLL</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>libs\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Management" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="HTGSL\FrmDBConnect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\FrmDBConnect.Designer.cs">
+      <DependentUpon>FrmDBConnect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTGSL\FrmRDateToDate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\FrmRDateToDate.Designer.cs">
+      <DependentUpon>FrmRDateToDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTGSL\FrmRGetByRegion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\FrmRGetByRegion.Designer.cs">
+      <DependentUpon>FrmRGetByRegion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTGSL\FrmRShift.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\FrmRShift.Designer.cs">
+      <DependentUpon>FrmRShift.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTGSL\FrmRTopN.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\FrmRTopN.Designer.cs">
+      <DependentUpon>FrmRTopN.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTGSL\FrmTestform.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\FrmTestform.Designer.cs">
+      <DependentUpon>FrmTestform.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTGSL\Models\BedArray.cs" />
+    <Compile Include="HTGSL\Models\BedExArray.cs" />
+    <Compile Include="HTGSL\Models\BedExInfo.cs" />
+    <Compile Include="HTGSL\Models\BedInfo.cs" />
+    <Compile Include="HTGSL\Models\BedInfor.cs" />
+    <Compile Include="HTGSL\Models\BedsArray.cs" />
+    <Compile Include="HTGSL\Helper\clsDatabase.cs" />
+    <Compile Include="HTGSL\Helper\clsMail.cs" />
+    <Compile Include="HTGSL\Helper\clsSound.cs" />
+    <Compile Include="HTGSL\Helper\clsString.cs" />
+    <Compile Include="HTGSL\Helper\clsUtl.cs" />
+    <Compile Include="HTGSL\ColHeader.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="HTGSL\Helper\DataProvider.cs" />
+    <Compile Include="HTGSL\Helper\DataService.cs" />
+    <Compile Include="HTGSL\Models\DepartmentArray.cs" />
+    <Compile Include="HTGSL\Models\DepartmentInfo.cs" />
+    <Compile Include="HTGSL\Models\EmployeeArray.cs" />
+    <Compile Include="HTGSL\Models\EmployeeInfo.cs" />
+    <Compile Include="HTGSL\F0001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\F0004.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\F0015.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\F0016.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\F0017.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\F0018.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\F0019.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\F0020.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\F0044.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\FrmCreateBed.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\FrmCreateBed.Designer.cs">
+      <DependentUpon>FrmCreateBed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTGSL\F9001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\F9002.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\F9003.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\F9004.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\F9993.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\F9994.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\F9995.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\F9996.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\F9997.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\F9998.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\FrmConfigManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\FrmConfigManager.Designer.cs">
+      <DependentUpon>FrmConfigManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTGSL\FConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\FConfig.Designer.cs">
+      <DependentUpon>FConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTGSL\FMAIN.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\Form10.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\Form11.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\Form12.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\Form13.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\Form14.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\Form15.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\Form2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\Form4.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\Form5.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\Form7.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\Form8.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\Form9.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\FRCTR.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\FrmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\FrmLogin.Designer.cs">
+      <DependentUpon>FrmLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTGSL\FrmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\FrmMain.Designer.cs">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTGSL\FrmUserBedCall.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\FrmUserBedCall.Designer.cs">
+      <DependentUpon>FrmUserBedCall.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTGSL\FrmROver.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\FrmROver.Designer.cs">
+      <DependentUpon>FrmROver.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTGSL\Models\HospitalExInfo.cs" />
+    <Compile Include="HTGSL\Models\HospitalInfo.cs" />
+    <Compile Include="HTGSL\Models\HospitalNodeInfo.cs" />
+    <Compile Include="HTGSL\Models\JobArray.cs" />
+    <Compile Include="HTGSL\Models\JobInfo.cs" />
+    <Compile Include="HTGSL\Models\LocationArray.cs" />
+    <Compile Include="HTGSL\Models\LocationExArray.cs" />
+    <Compile Include="HTGSL\Models\LocationExInfo.cs" />
+    <Compile Include="HTGSL\Models\LocationInfo.cs" />
+    <Compile Include="HTGSL\Models\LocationsNodeInfo.cs" />
+    <Compile Include="HTGSL\Models\LocationTypeArray.cs" />
+    <Compile Include="HTGSL\Models\LocationTypeInfo.cs" />
+    <Compile Include="HTGSL\Models\ReportModel.cs" />
+    <Compile Include="HTGSL\Helper\MyMsgBox.cs" />
+    <Compile Include="HTGSL\Helper\MySqlDataClass.cs" />
+    <Compile Include="HTGSL\Helper\NewInstanceMessageEventHandler.cs" />
+    <Compile Include="HTGSL\Program.cs" />
+    <Compile Include="HTGSL\Models\PropertyArray.cs" />
+    <Compile Include="HTGSL\Models\PropertyInfo.cs" />
+    <Compile Include="HTGSL\Models\RegionArray.cs" />
+    <Compile Include="HTGSL\Models\RegionExArray.cs" />
+    <Compile Include="HTGSL\Models\RegionExInfo.cs" />
+    <Compile Include="HTGSL\Models\RegionInfo.cs" />
+    <Compile Include="HTGSL\Models\RegionNodeArray.cs" />
+    <Compile Include="HTGSL\Models\RegionNodeInfo.cs" />
+    <Compile Include="HTGSL\Models\RoomArray.cs" />
+    <Compile Include="HTGSL\Models\RoomExArray.cs" />
+    <Compile Include="HTGSL\Models\RoomExInfo.cs" />
+    <Compile Include="HTGSL\Models\RoomInfo.cs" />
+    <Compile Include="HTGSL\Models\RoomNodeArray.cs" />
+    <Compile Include="HTGSL\Models\RoomNodeInfo.cs" />
+    <Compile Include="HTGSL\Models\RoomsNodeInfo.cs" />
+    <Compile Include="HTGSL\Models\ServiceArray.cs" />
+    <Compile Include="HTGSL\Models\ServiceInfo.cs" />
+    <Compile Include="HTGSL\Helper\SingleInstanceApplication.cs" />
+    <Compile Include="HTGSL\Models\SoundExArray.cs" />
+    <Compile Include="HTGSL\Models\SoundExInfo.cs" />
+    <Compile Include="HTGSL\Models\SoundInfo.cs" />
+    <Compile Include="HTGSL\Models\SoundTempArray.cs" />
+    <Compile Include="HTGSL\Models\SoundTempInfo.cs" />
+    <Compile Include="HTGSL\Helper\StringEx.cs" />
+    <Compile Include="HTGSL\Helper\StringUtil.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="HTGSL\FrmDBConnect.resx">
+      <DependentUpon>FrmDBConnect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTGSL\FrmRDateToDate.resx">
+      <DependentUpon>FrmRDateToDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTGSL\FrmRGetByRegion.resx">
+      <DependentUpon>FrmRGetByRegion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTGSL\FrmRShift.resx">
+      <DependentUpon>FrmRShift.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTGSL\FrmRTopN.resx">
+      <DependentUpon>FrmRTopN.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTGSL\FrmTestform.resx">
+      <DependentUpon>FrmTestform.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.vi.resx" />
+    <EmbeddedResource Include="HTGSL\F0001.resources" />
+    <EmbeddedResource Include="HTGSL\F0004.resources" />
+    <EmbeddedResource Include="HTGSL\F0015.resources" />
+    <EmbeddedResource Include="HTGSL\F0016.resources" />
+    <EmbeddedResource Include="HTGSL\F0017.resources" />
+    <EmbeddedResource Include="HTGSL\F0018.resources" />
+    <EmbeddedResource Include="HTGSL\F0019.resources" />
+    <EmbeddedResource Include="HTGSL\F0020.resources" />
+    <EmbeddedResource Include="HTGSL\F0044.resources" />
+    <EmbeddedResource Include="HTGSL\FrmCreateBed.resx">
+      <DependentUpon>FrmCreateBed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTGSL\F9001.resources" />
+    <EmbeddedResource Include="HTGSL\F9002.resources" />
+    <EmbeddedResource Include="HTGSL\F9003.resources" />
+    <EmbeddedResource Include="HTGSL\F9004.resources" />
+    <EmbeddedResource Include="HTGSL\F9993.resources" />
+    <EmbeddedResource Include="HTGSL\F9994.resources" />
+    <EmbeddedResource Include="HTGSL\F9995.resources" />
+    <EmbeddedResource Include="HTGSL\F9996.resources" />
+    <EmbeddedResource Include="HTGSL\F9997.resources" />
+    <EmbeddedResource Include="HTGSL\F9998.resources" />
+    <EmbeddedResource Include="HTGSL\FrmConfigManager.resx">
+      <DependentUpon>FrmConfigManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTGSL\FConfig.resx">
+      <DependentUpon>FConfig.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTGSL\FMAIN.resources" />
+    <EmbeddedResource Include="HTGSL\Form10.resources" />
+    <EmbeddedResource Include="HTGSL\Form11.resources" />
+    <EmbeddedResource Include="HTGSL\Form12.resources" />
+    <EmbeddedResource Include="HTGSL\Form13.resources" />
+    <EmbeddedResource Include="HTGSL\Form14.resources" />
+    <EmbeddedResource Include="HTGSL\Form15.resources" />
+    <EmbeddedResource Include="HTGSL\Form2.resources" />
+    <EmbeddedResource Include="HTGSL\Form4.resources" />
+    <EmbeddedResource Include="HTGSL\Form5.resources" />
+    <EmbeddedResource Include="HTGSL\Form7.resources" />
+    <EmbeddedResource Include="HTGSL\Form8.resources" />
+    <EmbeddedResource Include="HTGSL\Form9.resources" />
+    <EmbeddedResource Include="HTGSL\FRCTR.resources" />
+    <EmbeddedResource Include="HTGSL\FrmLogin.resx">
+      <DependentUpon>FrmLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTGSL\FrmMain.resx">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTGSL\FrmROver.resx">
+      <DependentUpon>FrmROver.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTGSL\FrmUserBedCall.resx">
+      <DependentUpon>FrmUserBedCall.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Images\BulletStar.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Images\BulletStar1.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Images\Cross.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Images\Dot.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Images\Dot1.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Images\Home.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Images\Node.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Images\NodeGreen.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Images\NodeRed.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Images\Nurse.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Images\Organizer.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Images\Square.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Images\Star.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Images\Triangle.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Images\Triangle1.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Images\Triangle2.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Images\Triangle3.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Images\Triangle4.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Images\Triangle5.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Resources\play.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="HDLogo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

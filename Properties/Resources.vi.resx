@@ -1,0 +1,729 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>Giới thiệu về</value>
+  </data>
+  <data name="Account" xml:space="preserve">
+    <value>Tài khoản</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Địa chỉ</value>
+  </data>
+  <data name="AllowDoubleCall" xml:space="preserve">
+    <value>Gọi nhiều lần</value>
+  </data>
+  <data name="AutoOpenComport" xml:space="preserve">
+    <value>Tự động mở Comport</value>
+  </data>
+  <data name="BaudRate" xml:space="preserve">
+    <value>Tốc độ truyền</value>
+  </data>
+  <data name="Bed" xml:space="preserve">
+    <value>Giường</value>
+  </data>
+  <data name="BedHeight" xml:space="preserve">
+    <value>Chiều cao giường</value>
+  </data>
+  <data name="BedID" xml:space="preserve">
+    <value>Mã giường/ Mã vị trí</value>
+  </data>
+  <data name="BedInfo" xml:space="preserve">
+    <value>Thông tin giường/ Vị trí</value>
+  </data>
+  <data name="BedName" xml:space="preserve">
+    <value>Tên giường/ Tên vị trí</value>
+  </data>
+  <data name="BedProperties" xml:space="preserve">
+    <value>Thuộc tính giường</value>
+  </data>
+  <data name="BedsPerRow" xml:space="preserve">
+    <value>Số giường cho dãy</value>
+  </data>
+  <data name="Bed_s" xml:space="preserve">
+    <value>giường</value>
+  </data>
+  <data name="BirthDate" xml:space="preserve">
+    <value>Ngày sinh</value>
+  </data>
+  <data name="butSave" xml:space="preserve">
+    <value>      &amp;Lưu dữ liệu</value>
+  </data>
+  <data name="Call" xml:space="preserve">
+    <value>Gọi</value>
+  </data>
+  <data name="CallbyShift" xml:space="preserve">
+    <value>Báo cáo cuộc gọi theo ca trực</value>
+  </data>
+  <data name="CallbyTime" xml:space="preserve">
+    <value>Báo cáo về cuộc gọi theo thời gian</value>
+  </data>
+  <data name="CallTopN" xml:space="preserve">
+    <value>Báo cáo cuộc gọi đợi phục vụ lâu nhất</value>
+  </data>
+  <data name="CallWaitOver" xml:space="preserve">
+    <value>Báo cáo cuộc gọi có thời gian đợi lớn</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Hủy bỏ</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>Thành phố</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Đóng</value>
+  </data>
+  <data name="ConfigManager" xml:space="preserve">
+    <value>Cấu hình Quản lý</value>
+  </data>
+  <data name="ConfirmMessage" xml:space="preserve">
+    <value>Khởi động lại chương trình để áp dụng những thay đổi</value>
+  </data>
+  <data name="ConfirmTitle" xml:space="preserve">
+    <value>Xác nhận</value>
+  </data>
+  <data name="Curator" xml:space="preserve">
+    <value>Người phụ trách</value>
+  </data>
+  <data name="DataBits" xml:space="preserve">
+    <value>Bit dữ liệu</value>
+  </data>
+  <data name="DatetimeFrom" xml:space="preserve">
+    <value>Từ ngày</value>
+  </data>
+  <data name="DatetimeTo" xml:space="preserve">
+    <value>Đến ngày</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>hủy bỏ</value>
+  </data>
+  <data name="DeleteBed" xml:space="preserve">
+    <value>Hủy bỏ giường</value>
+  </data>
+  <data name="DeleteDepartment" xml:space="preserve">
+    <value>Hủy bỏ phòng ban</value>
+  </data>
+  <data name="DeleteEmployee" xml:space="preserve">
+    <value>Hủy bỏ nhân viên</value>
+  </data>
+  <data name="DeleteJob" xml:space="preserve">
+    <value>Hủy bỏ công việc</value>
+  </data>
+  <data name="DeleteLocation" xml:space="preserve">
+    <value>Hủy bỏ vị trí</value>
+  </data>
+  <data name="DeleteRegion" xml:space="preserve">
+    <value>Hủy bỏ khu</value>
+  </data>
+  <data name="DeleteRoom" xml:space="preserve">
+    <value>Hủy bỏ phòng</value>
+  </data>
+  <data name="DeleteU" xml:space="preserve">
+    <value>Hủy bỏ</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>Phòng ban</value>
+  </data>
+  <data name="DepartmentID" xml:space="preserve">
+    <value>Mã phòng ban</value>
+  </data>
+  <data name="DepartmentInfo" xml:space="preserve">
+    <value>Thông tin phòng ban</value>
+  </data>
+  <data name="DepartmentName" xml:space="preserve">
+    <value>Tên phòng ban</value>
+  </data>
+  <data name="DepartmentProperties" xml:space="preserve">
+    <value>Thuộc tính phòng ban</value>
+  </data>
+  <data name="Departments" xml:space="preserve">
+    <value>Phòng ban</value>
+  </data>
+  <data name="Department_s_" xml:space="preserve">
+    <value>phòng ban</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Chi tiết</value>
+  </data>
+  <data name="DoYouWantTo" xml:space="preserve">
+    <value>Bạn có muốn</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Thư điện tử</value>
+  </data>
+  <data name="EmloyeeID" xml:space="preserve">
+    <value>Mã nhân viên</value>
+  </data>
+  <data name="EmpID" xml:space="preserve">
+    <value>Mã NV</value>
+  </data>
+  <data name="Employee" xml:space="preserve">
+    <value>Nhân viên</value>
+  </data>
+  <data name="EmployeeInfo" xml:space="preserve">
+    <value>Thông tin nhân viên</value>
+  </data>
+  <data name="EmployeeName" xml:space="preserve">
+    <value>Tên nhân viên</value>
+  </data>
+  <data name="EmployeeProperties" xml:space="preserve">
+    <value>Thuộc tính nhân viên</value>
+  </data>
+  <data name="EmployeesManager" xml:space="preserve">
+    <value>Quản lý Nhân viên</value>
+  </data>
+  <data name="Employee_s_" xml:space="preserve">
+    <value>nhân viên</value>
+  </data>
+  <data name="EndAllCall" xml:space="preserve">
+    <value>Xóa tất cả sự kiện</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>Anh ngữ</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Thoát</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Xuất báo cáo</value>
+  </data>
+  <data name="ExportFailed" xml:space="preserve">
+    <value>Tạo Tệp Excel thất bại.</value>
+  </data>
+  <data name="ExportSuccess" xml:space="preserve">
+    <value>Tạo Tệp Excel thành công.!</value>
+  </data>
+  <data name="F0001" xml:space="preserve">
+    <value>F0001 - Tùy chọn</value>
+  </data>
+  <data name="Failure" xml:space="preserve">
+    <value>không thành công</value>
+  </data>
+  <data name="Fax" xml:space="preserve">
+    <value>Fax</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>Hồ sơ</value>
+  </data>
+  <data name="FindBed" xml:space="preserve">
+    <value>Tìm giường</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>Tên đầu</value>
+  </data>
+  <data name="Functions" xml:space="preserve">
+    <value>Chức năng</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>Giới tính</value>
+  </data>
+  <data name="grpHeight" xml:space="preserve">
+    <value>Kích thước</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>Trợ giúp</value>
+  </data>
+  <data name="HireDate" xml:space="preserve">
+    <value>Ngày làm</value>
+  </data>
+  <data name="Hospital" xml:space="preserve">
+    <value>Bệnh viện</value>
+  </data>
+  <data name="HospitalID" xml:space="preserve">
+    <value>Mã số bệnh viện</value>
+  </data>
+  <data name="HospitalInfo" xml:space="preserve">
+    <value>Thông tin Bệnh viện</value>
+  </data>
+  <data name="HospitalName" xml:space="preserve">
+    <value>Tên bệnh viện</value>
+  </data>
+  <data name="HospitalProperties" xml:space="preserve">
+    <value>Thuộc tính Bệnh viện</value>
+  </data>
+  <data name="ID" xml:space="preserve">
+    <value>Mã số</value>
+  </data>
+  <data name="InfoOfBed" xml:space="preserve">
+    <value>Thông tin của giường</value>
+  </data>
+  <data name="InfoOfDepartment" xml:space="preserve">
+    <value>Thông tin của phòng ban</value>
+  </data>
+  <data name="InfoOfEmployee" xml:space="preserve">
+    <value>Thông tin của nhân viên</value>
+  </data>
+  <data name="InfoOfJob" xml:space="preserve">
+    <value>Thông tin của công việc</value>
+  </data>
+  <data name="InfoOfLocation" xml:space="preserve">
+    <value>Thông tin của vị trí</value>
+  </data>
+  <data name="InfoOfRegion" xml:space="preserve">
+    <value>Thông tin của khu</value>
+  </data>
+  <data name="InfoOfRoom" xml:space="preserve">
+    <value>Thông tin của phòng</value>
+  </data>
+  <data name="Insert" xml:space="preserve">
+    <value>Thêm mới</value>
+  </data>
+  <data name="Install" xml:space="preserve">
+    <value>Lắp đặt</value>
+  </data>
+  <data name="Invalid" xml:space="preserve">
+    <value>không hợp lệ</value>
+  </data>
+  <data name="IsExisted" xml:space="preserve">
+    <value>đã tồn tại</value>
+  </data>
+  <data name="IsExistedIn" xml:space="preserve">
+    <value>đã tồn tại trong</value>
+  </data>
+  <data name="IsNotEmpty" xml:space="preserve">
+    <value>là không rỗng</value>
+  </data>
+  <data name="IsNotFound" xml:space="preserve">
+    <value>không tìm thấy</value>
+  </data>
+  <data name="IsNotSelected" xml:space="preserve">
+    <value>không được chọn</value>
+  </data>
+  <data name="IsNumber" xml:space="preserve">
+    <value>phải là số</value>
+  </data>
+  <data name="Items" xml:space="preserve">
+    <value>mẫu tin</value>
+  </data>
+  <data name="Job" xml:space="preserve">
+    <value>Công việc</value>
+  </data>
+  <data name="JobID" xml:space="preserve">
+    <value>Mã công việc</value>
+  </data>
+  <data name="JobInfo" xml:space="preserve">
+    <value>Thông tin công việc </value>
+  </data>
+  <data name="JobName" xml:space="preserve">
+    <value>Tên công việc</value>
+  </data>
+  <data name="JobProperties" xml:space="preserve">
+    <value>Thuộc tính công việc</value>
+  </data>
+  <data name="Jobs" xml:space="preserve">
+    <value>Công việc</value>
+  </data>
+  <data name="Job_s_" xml:space="preserve">
+    <value>công việc</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Ngôn ngữ</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Tên sau</value>
+  </data>
+  <data name="ListOfDepartments" xml:space="preserve">
+    <value>Danh sách Phòng ban</value>
+  </data>
+  <data name="ListOfEmployees" xml:space="preserve">
+    <value>Danh sách Nhân viên</value>
+  </data>
+  <data name="ListOfJobs" xml:space="preserve">
+    <value>Danh mục Công việc</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Vị trí</value>
+  </data>
+  <data name="LocationID" xml:space="preserve">
+    <value>Mã vị trí</value>
+  </data>
+  <data name="LocationInfo" xml:space="preserve">
+    <value>Thông tin vị trí</value>
+  </data>
+  <data name="LocationName" xml:space="preserve">
+    <value>Tên vị trí</value>
+  </data>
+  <data name="LocationProperties" xml:space="preserve">
+    <value>Thuộc tính vị trí</value>
+  </data>
+  <data name="Locations" xml:space="preserve">
+    <value>Vị trí</value>
+  </data>
+  <data name="LocationType" xml:space="preserve">
+    <value>Loại vị trí</value>
+  </data>
+  <data name="Location_s" xml:space="preserve">
+    <value>vị trí</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Đăng nhập</value>
+  </data>
+  <data name="Men" xml:space="preserve">
+    <value>Nam</value>
+  </data>
+  <data name="ModifyBed" xml:space="preserve">
+    <value>Điều chỉnh giường</value>
+  </data>
+  <data name="ModifyDepartment" xml:space="preserve">
+    <value>Điều chỉnh phòng ban</value>
+  </data>
+  <data name="ModifyEmployee" xml:space="preserve">
+    <value>Điều chỉnh nhân viên</value>
+  </data>
+  <data name="ModifyJob" xml:space="preserve">
+    <value>Điều chỉnh công việc</value>
+  </data>
+  <data name="ModifyLocation" xml:space="preserve">
+    <value>Điều chỉnh vị trí</value>
+  </data>
+  <data name="ModifyRegion" xml:space="preserve">
+    <value>Điều chỉnh khu</value>
+  </data>
+  <data name="ModifyRoom" xml:space="preserve">
+    <value>Điều chỉnh phòng</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Tên</value>
+  </data>
+  <data name="NewBed" xml:space="preserve">
+    <value>Giường mới</value>
+  </data>
+  <data name="NewDepartment" xml:space="preserve">
+    <value>Phòng ban mới</value>
+  </data>
+  <data name="NewEmployee" xml:space="preserve">
+    <value>Nhân viên mới</value>
+  </data>
+  <data name="NewJob" xml:space="preserve">
+    <value>Công việc mới</value>
+  </data>
+  <data name="NewLocation" xml:space="preserve">
+    <value>Vị trí mới</value>
+  </data>
+  <data name="NewRegion" xml:space="preserve">
+    <value>Khu mới</value>
+  </data>
+  <data name="NewRoom" xml:space="preserve">
+    <value>Phòng mới</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Không</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>Ghi chú</value>
+  </data>
+  <data name="NurseCallSystem" xml:space="preserve">
+    <value>Hệ thống gọi Y tá</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>Đồng ý</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>Mở</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>Tùy chọn</value>
+  </data>
+  <data name="Parameters" xml:space="preserve">
+    <value>Thông số</value>
+  </data>
+  <data name="Parity" xml:space="preserve">
+    <value>Chẵn lẻ</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Điện thoại</value>
+  </data>
+  <data name="PortName" xml:space="preserve">
+    <value>Tên cổng</value>
+  </data>
+  <data name="ProcessTime" xml:space="preserve">
+    <value>Thời gian xử lý</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>Khu</value>
+  </data>
+  <data name="RegionHeight" xml:space="preserve">
+    <value>Chiều cao khoa</value>
+  </data>
+  <data name="RegionID" xml:space="preserve">
+    <value>Mã khu</value>
+  </data>
+  <data name="RegionInfo" xml:space="preserve">
+    <value>Thông tin khu</value>
+  </data>
+  <data name="RegionName" xml:space="preserve">
+    <value>Tên Khu</value>
+  </data>
+  <data name="RegionProperties" xml:space="preserve">
+    <value>Thuộc tính khu</value>
+  </data>
+  <data name="Region_s" xml:space="preserve">
+    <value>khu</value>
+  </data>
+  <data name="RegisterListenEventFromBed" xml:space="preserve">
+    <value>Đăng ký nghe cuộc gọi theo sự kiện</value>
+  </data>
+  <data name="Rights" xml:space="preserve">
+    <value>Quyền hạn</value>
+  </data>
+  <data name="Right_Function" xml:space="preserve">
+    <value>Phân quyền theo chức năng</value>
+  </data>
+  <data name="Room" xml:space="preserve">
+    <value>Phòng</value>
+  </data>
+  <data name="RoomHeight" xml:space="preserve">
+    <value>Chiều cao phòng</value>
+  </data>
+  <data name="RoomID" xml:space="preserve">
+    <value>Mã phòng</value>
+  </data>
+  <data name="RoomInfo" xml:space="preserve">
+    <value>Thông tin phòng</value>
+  </data>
+  <data name="RoomName" xml:space="preserve">
+    <value>Tên phòng</value>
+  </data>
+  <data name="RoomProperties" xml:space="preserve">
+    <value>Thuộc tính phòng</value>
+  </data>
+  <data name="Rooms" xml:space="preserve">
+    <value>Phòng</value>
+  </data>
+  <data name="Room_s" xml:space="preserve">
+    <value>phòng</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Chọn tất cả</value>
+  </data>
+  <data name="SerialPort" xml:space="preserve">
+    <value>Cổng nối tiếp</value>
+  </data>
+  <data name="SerialPortSettings" xml:space="preserve">
+    <value>Thiết lập cổng nối tiếp</value>
+  </data>
+  <data name="ServiceID" xml:space="preserve">
+    <value>Mã phục vụ</value>
+  </data>
+  <data name="ServiceName" xml:space="preserve">
+    <value>Tên phục vụ</value>
+  </data>
+  <data name="Service_s" xml:space="preserve">
+    <value>Phục vụ</value>
+  </data>
+  <data name="SetConnect" xml:space="preserve">
+    <value>Thiết lập kết nối</value>
+  </data>
+  <data name="Shifts" xml:space="preserve">
+    <value>Ca làm việc</value>
+  </data>
+  <data name="Sounds" xml:space="preserve">
+    <value>Âm thanh</value>
+  </data>
+  <data name="SoundTemplates" xml:space="preserve">
+    <value>Mẫu âm thanh</value>
+  </data>
+  <data name="Statistic" xml:space="preserve">
+    <value>Báo cáo</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Dừng</value>
+  </data>
+  <data name="StopBits" xml:space="preserve">
+    <value>Bit dừng</value>
+  </data>
+  <data name="System" xml:space="preserve">
+    <value>Hệ thống</value>
+  </data>
+  <data name="TimeReadSound" xml:space="preserve">
+    <value>Thời gian đọc âm thanh</value>
+  </data>
+  <data name="TimeRefreshData" xml:space="preserve">
+    <value>Thời gian đọc dữ liệu (mili giây)</value>
+  </data>
+  <data name="TimeSendData" xml:space="preserve">
+    <value>Thời gian gửi dữ liệu</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Chức danh</value>
+  </data>
+  <data name="Tools" xml:space="preserve">
+    <value>Công cụ</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Tổng số</value>
+  </data>
+  <data name="TotalOfBeds" xml:space="preserve">
+    <value>Tổng số giường</value>
+  </data>
+  <data name="TotalOfLocations" xml:space="preserve">
+    <value>Tổng số vị trí</value>
+  </data>
+  <data name="TotalOfRooms" xml:space="preserve">
+    <value>Tổng số phòng</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Loại</value>
+  </data>
+  <data name="TypeID" xml:space="preserve">
+    <value>Mã loại</value>
+  </data>
+  <data name="TypeName" xml:space="preserve">
+    <value>Tên loại</value>
+  </data>
+  <data name="UnSelectAll" xml:space="preserve">
+    <value>Bỏ chọn tất cả</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Người dùng</value>
+  </data>
+  <data name="Vietnamese" xml:space="preserve">
+    <value>Việt ngữ</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>Hiển thị</value>
+  </data>
+  <data name="Website" xml:space="preserve">
+    <value>Địa chỉ Web</value>
+  </data>
+  <data name="Women" xml:space="preserve">
+    <value>Nữ</value>
+  </data>
+  <data name="WorkShifts" xml:space="preserve">
+    <value>Lịch làm việc</value>
+  </data>
+  <data name="Years" xml:space="preserve">
+    <value>Tuổi</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Có</value>
+  </data>
+  <data name="CallbyRegion" xml:space="preserve">
+    <value>Báo cáo theo khu vực</value>
+  </data>
+  <data name="ClearAllCall" xml:space="preserve">
+    <value>Xóa tất cả cuộc gọi</value>
+  </data>
+  <data name="HTGSL" xml:space="preserve">
+    <value>Hệ thống báo lỗi</value>
+  </data>
+  <data name="TestForm" xml:space="preserve">
+    <value>Kiểm thử</value>
+  </data>
+</root>

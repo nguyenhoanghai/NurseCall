@@ -1,0 +1,73 @@
+E:\GPRO_2018\App\BaoLoi.20.7.18\mmmm\obj\Debug\baoloi_n.csprojResolveAssemblyReference.cache
+E:\GPRO_2018\App\BaoLoi.20.7.18\mmmm\bin\Debug\HTGSL.exe.config
+E:\GPRO_2018\App\BaoLoi.20.7.18\mmmm\bin\Debug\HTGSL.exe
+E:\GPRO_2018\App\BaoLoi.20.7.18\mmmm\bin\Debug\HTGSL.pdb
+E:\GPRO_2018\App\BaoLoi.20.7.18\mmmm\bin\Debug\C1.C1Report.2.DLL
+E:\GPRO_2018\App\BaoLoi.20.7.18\mmmm\bin\Debug\C1.Win.C1List.2.DLL
+E:\GPRO_2018\App\BaoLoi.20.7.18\mmmm\bin\Debug\C1.Win.C1Report.2.DLL
+E:\GPRO_2018\App\BaoLoi.20.7.18\mmmm\bin\Debug\C1.Win.C1TrueDBGrid.2.DLL
+E:\GPRO_2018\App\BaoLoi.20.7.18\mmmm\obj\Debug\HTGSL.exe
+E:\GPRO_2018\App\BaoLoi.20.7.18\mmmm\obj\Debug\HTGSL.pdb
+E:\GPRO_2018\App\BaoLoi.20.7.18\mmmm\obj\Debug\HTGSL.FConfig.resources
+E:\GPRO_2018\App\BaoLoi.20.7.18\mmmm\obj\Debug\baoloi_n.csproj.GenerateResource.Cache
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\bin\Debug\HTGSL.exe.config
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\bin\Debug\HTGSL.exe
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\bin\Debug\HTGSL.pdb
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\bin\Debug\vi\HTGSL.resources.dll
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\bin\Debug\C1.C1Report.2.DLL
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\bin\Debug\C1.Win.C1List.2.DLL
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\bin\Debug\C1.Win.C1Report.2.DLL
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\bin\Debug\C1.Win.C1TrueDBGrid.2.DLL
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\obj\Debug\HTGSL.FrmDBConnect.resources
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\obj\Debug\HTGSL.FrmRDateToDate.resources
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\obj\Debug\HTGSL.FrmRGetByRegion.resources
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\obj\Debug\HTGSL.FrmRShift.resources
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\obj\Debug\HTGSL.FrmRTopN.resources
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\obj\Debug\HTGSL.FrmTestform.resources
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\obj\Debug\HTGSL.FrmCreateBed.resources
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\obj\Debug\HTGSL.FrmConfigManager.resources
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\obj\Debug\HTGSL.FConfig.resources
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\obj\Debug\HTGSL.FrmLogin.resources
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\obj\Debug\HTGSL.FrmMain.resources
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\obj\Debug\HTGSL.FrmROver.resources
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\obj\Debug\HTGSL.FrmUserBedCall.resources
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\obj\Debug\Properties.Resources.resources
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\obj\Debug\baoloi_n.csproj.GenerateResource.Cache
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\obj\Debug\HTGSL.exe.licenses
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\obj\Debug\vi\HTGSL.resources.dll
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\obj\Debug\HTGSL.exe
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\obj\Debug\HTGSL.pdb
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\obj\Debug\Properties.Resources.vi.resources
+E:\GPRO_2018\App\BaoLoi.20.7.18\BAOLOI_OK_22.7.2018\obj\Debug\baoloi_n.csprojResolveAssemblyReference.cache
+E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\baoloi_n.csprojAssemblyReference.cache
+E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.FrmDBConnect.resources
+E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.FrmRDateToDate.resources
+E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.FrmRGetByRegion.resources
+E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.FrmRShift.resources
+E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.FrmRTopN.resources
+E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.FrmTestform.resources
+E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.FrmCreateBed.resources
+E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.FrmConfigManager.resources
+E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.FConfig.resources
+E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.FrmLogin.resources
+E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.FrmMain.resources
+E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.FrmROver.resources
+E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.FrmUserBedCall.resources
+E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\Properties.Resources.resources
+E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\Properties.Resources.vi.resources
+E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\baoloi_n.csproj.GenerateResource.cache
+E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.exe.licenses
+E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\baoloi_n.csproj.CoreCompileInputs.cache
+E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.exe
+E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.pdb
+E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\HTGSL.exe.config
+E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\HTGSL.exe
+E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\HTGSL.pdb
+E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\vi\HTGSL.resources.dll
+E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\C1.C1Report.2.DLL
+E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\C1.Win.C1List.2.DLL
+E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\C1.Win.C1Report.2.DLL
+E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\C1.Win.C1TrueDBGrid.2.DLL
+E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\Microsoft.Office.Interop.Excel.dll
+E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\vi\HTGSL.resources.dll
+E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\baoloi_n.csproj.CopyComplete
