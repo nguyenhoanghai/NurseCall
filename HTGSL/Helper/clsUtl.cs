@@ -19,7 +19,7 @@ namespace HTGSL
 		private static int iRight = 0;
 		private static string sConnectString = "";
 		private static bool bConnect_Status = false;
-        static List<string> iUserBedIds = new List<string>();
+        private static List<string> iUserBedIds = new List<string>();
 
         public static List<string> UserBedIds
         {

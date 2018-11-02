@@ -1,5 +1,7 @@
 using C1.C1Report;
 using C1.Win.C1TrueDBGrid;
+//using HTGSL.Properties;
+using Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,9 +20,6 @@ using System.Threading;
 using System.Timers;
 using System.Windows.Forms;
 using System.Xml;
-//using HTGSL.Properties;
-using Properties;
-using System.Globalization;
 
 namespace HTGSL
 {
@@ -196,6 +195,7 @@ namespace HTGSL
             this.InitializeSerialPortSettingsForControlValues();
             this.comport.DataReceived += new SerialDataReceivedEventHandler(this.Port_DataReceived);
         }
+
         private void FMAIN_Load(object sender, EventArgs e)
         {
             //if (SingleInstanceApplication.AlreadyExists)
@@ -287,7 +287,6 @@ namespace HTGSL
             }
         }
 
-
         private void InitializeSerialPortSettingsForControlValues()
         {
             this.strPortName = Settings.Default.PortName;
@@ -315,6 +314,7 @@ namespace HTGSL
                 this.statusToolStripStatusLabel.Text = "Error - InitializeSerialPortSettingsForControlValues: There are no COM Ports detected on this computer. Please install a COM Port and restart this app.";
             }
         }
+
         private void SaveSerialPortSettings()
         {
             Settings.Default.PortName = this.strPortName;
@@ -324,12 +324,14 @@ namespace HTGSL
             Settings.Default.StopBits = (StopBits)Enum.Parse(typeof(StopBits), this.strStopBits);
             Settings.Default.Save();
         }
+
         private void SetStateSerialPortControl(bool b_open)
         {
             this.openToolStripMenuItem.Enabled = !b_open;
             this.closeToolStripMenuItem.Enabled = b_open;
             this.serialPortToolStripSplitButton.Image = (b_open ? this.openToolStripMenuItem.Image : this.closeToolStripMenuItem.Image);
         }
+
         private void OpenOrCloseSerialPort()
         {
             this.Cursor = Cursors.WaitCursor;
@@ -359,6 +361,7 @@ namespace HTGSL
             this.SetStateSerialPortControl(this.comport.IsOpen);
             this.Cursor = Cursors.Default;
         }
+
         private void port_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             while (this.comport.BytesToRead > 0)
@@ -387,6 +390,7 @@ namespace HTGSL
                 this.blnSendData = true;
             }
         }
+
         private void ParseToCommand(string sCommand)
         {
             // MessageBox.Show(sCommand);
@@ -574,13 +578,18 @@ namespace HTGSL
                         }
                         else
                         {
+                            //tat quet lap lai
+                            tmerQuetRepeatSound.Enabled = false;
                             this.WriteData2Comport(this.gsEquipment, "07");
                             string a2 = this.SaveData(int.Parse(this.sRegion), this.sRoom, this.sEquipment, this.sBed, this.iShift, this.iUser, 1);
                             if (a2 == "Y" | a2 == "E")
-                            {
                                 this.statusToolStripStatusLabel.Text = string.Concat(new string[] { "(", this.sRegion, ", ", this.sRoom, ", ", this.sBed, "): vừa gọi." });
+                            
+                            if (a2 == "Y")
                                 InsertCallRequire(sRegion, sRoom, sBed);
-                            }
+
+                            //bat quet lap lai
+                            tmerQuetRepeatSound.Enabled = true;
                         }
                     }
                 }
@@ -589,6 +598,7 @@ namespace HTGSL
             {
             }
         }
+
         /// <summary>
         /// HoangHai
         /// luu suong database de goi doc am thanh
@@ -624,13 +634,12 @@ namespace HTGSL
                             if (int.Parse(table.Rows[i][0].ToString()) == clsUtl.USER_ID)
                                 hasMe = true;
 
-                            if (iAllowDouble == 1)
-                                sql += "INSERT INTO [dbo].[N_CallRequires]([UserId],[bed_id],[room_id],[region_id],[Content],[CreatedDate],[IsNewCall])" +
-                                      "VALUES(" + table.Rows[i][0].ToString() + ",'" + sBed + "','" + sRoom + "'," + int.Parse(sRegion) + ",N'" + soundStr + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "',1) ";
+                            sql += "INSERT INTO [dbo].[N_CallRequires]([UserId],[bed_id],[room_id],[region_id],[Content],[CreatedDate],[IsNewCall])" +
+                                  "VALUES(" + table.Rows[i][0].ToString() + ",'" + sBed + "','" + sRoom + "'," + int.Parse(sRegion) + ",N'" + soundStr + "','" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "',1) ";
 
                         }
-                        if (hasMe)
-                            playList.AddRange(soundStr.Split('|'));
+                        //if (hasMe)
+                        //    playList.AddRange(soundStr.Split('|'));
 
                         if (!string.IsNullOrEmpty(sql))
                         {
@@ -823,8 +832,8 @@ namespace HTGSL
             base.Activate();
         }
         private void LoadCaptionForControls()
-        { 
-            this.Text =  Properties.Resources.HTGSL;
+        {
+            this.Text = Properties.Resources.HTGSL;
             this.fileToolStripMenuItem.Text = Properties.Resources.File;
             this.connectToolStripMenuItem.Text = Properties.Resources.SetConnect;
             this.loginToolStripMenuItem.Text = Properties.Resources.Login;
@@ -978,6 +987,7 @@ namespace HTGSL
                 }
             }
         }
+
         private void LoadDefaultValue()
         {
             SqlDataReader sqlDataReader = this.provider.excuteQuery("SELECT [time] FROM [dbo].[MAIL_SCHEDULE] WHERE [active] = 1");
@@ -1006,10 +1016,23 @@ namespace HTGSL
                         if (this.conn.State == ConnectionState.Closed)
                             this.conn.Open();
 
-                        SqlCommand sqlCommand = new SqlCommand("sp_end_all_call", this.MySqlConnect);
-                        sqlCommand.CommandType = CommandType.StoredProcedure;
-                        sqlCommand.Parameters.Add("@dTimeTo", SqlDbType.DateTime).Value = DateTime.Now;
-                        sqlCommand.ExecuteNonQuery();
+                        var sqlQuery = string.Empty;
+                        if (clsUtl.UserBedIds != null && clsUtl.UserBedIds.Count > 0)
+                        {
+                            SqlDataReader ad = null;
+                            for (int i = 0; i < clsUtl.UserBedIds.Count; i++)
+                            {
+                                var obj = clsUtl.UserBedIds[i].Split('|');
+                                sqlQuery += " UPDATE dbo.CALL_DETAILS    SET[process_time] = GETDATE() ";
+                                sqlQuery += ",[end_call] = GETDATE(),[wait_interval] =  DATEDIFF(ss, [start_call], GETDATE()) ";
+                                sqlQuery += ",[time_interval] =  DATEDIFF(ss, [start_call], GETDATE()) ";
+                                sqlQuery += "WHERE CONVERT(varchar(10),[start_call], 111) <= convert(varchar(10), GETDATE(), 111) ";
+                                sqlQuery += "AND end_call is null and [bed_id] = " + Convert.ToInt32(obj[2]) + " and [region_id] = " + Convert.ToInt32(obj[0]);
+                                sqlQuery += "    delete from [N_CallRequires] where [region_id] = " + Convert.ToInt32(obj[0]) + " and [bed_id] = " + Convert.ToInt32(obj[2]) + "   ";
+                            }
+                            ad = provider.excuteQuery(sqlQuery);
+                            ad.Dispose();
+                        }
                     }
                 }
                 if (this.MySqlConnect != null)
@@ -1021,7 +1044,9 @@ namespace HTGSL
                         this.comport.Close();
                 }
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+            }
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -1461,19 +1486,19 @@ namespace HTGSL
             {
                 BedExInfo bedExInfo = beds[num5];
                 string caption = string.Concat(new string[]
-				{
-					regionExInfo.iRegionID.ToString(),
-					". ",
-					regionExInfo.strRegionName,
-					"\n",
-					roomExInfo.iRoomID.ToString(),
-					". ",
-					roomExInfo.strRoomName,
-					"\n",
-					bedExInfo.iBedID.ToString(),
-					". ",
-					bedExInfo.strBedName
-				});
+                {
+                    regionExInfo.iRegionID.ToString(),
+                    ". ",
+                    regionExInfo.strRegionName,
+                    "\n",
+                    roomExInfo.iRoomID.ToString(),
+                    ". ",
+                    roomExInfo.strRoomName,
+                    "\n",
+                    bedExInfo.iBedID.ToString(),
+                    ". ",
+                    bedExInfo.strBedName
+                });
                 this.myToolTip.SetToolTip(panel, caption);
             }
             else
@@ -1523,6 +1548,7 @@ namespace HTGSL
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
         }
+
         private void Room_Paint(int iRegionID, int iRoomID, int iBedID, string ColorName)
         {
             int index = this.MyRs.GetIndex(iRegionID);
@@ -1597,6 +1623,7 @@ namespace HTGSL
         private void FMAIN_Activated(object sender, EventArgs e)
         {
         }
+
         private void usersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form form = new F9998();
@@ -1669,16 +1696,16 @@ namespace HTGSL
                 string innerText3 = elementsByTagName.Item(0).ChildNodes[2].InnerText;
                 string innerText4 = elementsByTagName.Item(0).ChildNodes[3].InnerText;
                 result = string.Concat(new string[]
-				{
-					"Server=",
-					innerText,
-					";Database=",
-					innerText2,
-					";uid=",
-					innerText3,
-					";pwd=",
-					innerText4
-				});
+                {
+                    "Server=",
+                    innerText,
+                    ";Database=",
+                    innerText2,
+                    ";uid=",
+                    innerText3,
+                    ";pwd=",
+                    innerText4
+                });
             }
             catch (Exception)
             {
@@ -1689,6 +1716,7 @@ namespace HTGSL
         private void timer2_Tick(object sender, EventArgs e)
         {
         }
+
         private void stopBedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -1709,15 +1737,15 @@ namespace HTGSL
                     if (a == "Y")
                     {
                         this.statusToolStripStatusLabel.Text = string.Concat(new string[]
-						{
-							"(",
-							this.sRegion,
-							", ",
-							this.sRoom,
-							", ",
-							this.sBed,
-							"): vừa kết thúc"
-						});
+                        {
+                            "(",
+                            this.sRegion,
+                            ", ",
+                            this.sRoom,
+                            ", ",
+                            this.sBed,
+                            "): vừa kết thúc"
+                        });
                         SqlCommand sqlCommand = new SqlCommand("sp_delete_call_require", this.MySqlConnect);
                         sqlCommand.CommandType = CommandType.StoredProcedure;
                         sqlCommand.Parameters.Add("@iRegion", SqlDbType.Int).Value = int.Parse(this.sRegion);
@@ -1748,18 +1776,18 @@ namespace HTGSL
                     s_Region = "0" + s_Region;
                 }
                 string text = string.Concat(new string[]
-				{
-					s_Region,
-					",",
-					s_Room,
-					",",
-					s_Equipment,
-					",",
-					s_Type_Request,
-					",",
-					s_Bed,
-					","
-				});
+                {
+                    s_Region,
+                    ",",
+                    s_Room,
+                    ",",
+                    s_Equipment,
+                    ",",
+                    s_Type_Request,
+                    ",",
+                    s_Bed,
+                    ","
+                });
                 string str = clsString.XOR(text);
                 text += str;
                 text = "02" + clsString.Ascii2HexStringNull(text) + "03";
@@ -1879,9 +1907,7 @@ namespace HTGSL
                         SqlCommand sqlCommand = new SqlCommand("sp_process_read_sound", this.MySqlConnect);
                         sqlCommand.CommandType = CommandType.StoredProcedure;
                         sqlCommand.Parameters.Add("@iUserId", SqlDbType.Int).Value = clsUtl.USER_ID;
-                        if (iAllowDouble == 0)
-                            sqlCommand.Parameters.Add("@iAction", SqlDbType.Int).Value = 0; //xoa
-                        else
+                         
                             sqlCommand.Parameters.Add("@iAction", SqlDbType.Int).Value = 1; //change to waiting
 
                         sqlCommand.Parameters.Add("@vResult", SqlDbType.VarChar, 10).Direction = ParameterDirection.Output;
@@ -1909,7 +1935,6 @@ namespace HTGSL
         {
             try
             {
-              
                 isFinishRead = false;
                 while (playList.Count > 0)
                 {
@@ -1935,7 +1960,6 @@ namespace HTGSL
             {
             }
         }
-
 
         private void PlaySound()
         {
@@ -2109,26 +2133,38 @@ namespace HTGSL
                 {
                     this.conn = new SqlConnection((this.strConnString == "") ? this.strConnStringDefault : this.strConnString);
                     if (this.conn.State == ConnectionState.Closed)
-                    {
                         this.conn.Open();
-                    }
 
-                    SqlCommand sqlCommand = new SqlCommand("sp_end_all_call", this.MySqlConnect);
-                    sqlCommand.CommandType = CommandType.StoredProcedure;
-                    sqlCommand.Parameters.Add("@dTimeTo", SqlDbType.DateTime).Value = DateTime.Now;
-                    sqlCommand.ExecuteNonQuery();
+                    var sqlQuery = string.Empty;
+                    if (clsUtl.UserBedIds != null && clsUtl.UserBedIds.Count > 0)
+                    {
+                        SqlDataReader ad = null;
+                        for (int i = 0; i < clsUtl.UserBedIds.Count; i++)
+                        {
+                            var obj = clsUtl.UserBedIds[i].Split('|');
+                            sqlQuery += " UPDATE dbo.CALL_DETAILS    SET[process_time] = GETDATE() ";
+                            sqlQuery += ",[end_call] = GETDATE(),[wait_interval] =  DATEDIFF(ss, [start_call], GETDATE()) ";
+                            sqlQuery += ",[time_interval] =  DATEDIFF(ss, [start_call], GETDATE()) ";
+                            sqlQuery += "WHERE CONVERT(varchar(10),[start_call], 111) <= convert(varchar(10), GETDATE(), 111) ";
+                            sqlQuery += "AND end_call is null and [bed_id] = " + Convert.ToInt32(obj[2]) + " and [region_id] = " + Convert.ToInt32(obj[0]);
+                            sqlQuery += "    delete from [N_CallRequires] where [region_id] = " + Convert.ToInt32(obj[0]) + " and [bed_id] = " + Convert.ToInt32(obj[2]) + "   ";
+                        }
+                        ad = provider.excuteQuery(sqlQuery);
+                        ad.Dispose();
+                    }
                 }
             }
+           
         }
 
         private void tmerQuetRepeatSound_Tick(object sender, EventArgs e)
         {
             try
             {
-                //if (!this.bIsSounding)
+             // if (!this.bIsSounding)
                 //{
                 //    this.bIsSounding = true;
-                //    this.tmerQuetRepeatSound.Stop();
+                //    
                 //    //new Thread(delegate
                 //    //{
                 //    //    this.PlaySound();
@@ -2139,8 +2175,10 @@ namespace HTGSL
                 //    //}.Start();
                 //}
                 //this.bIsSounding = false;
-                //this.tmerQuetRepeatSound.Start();
-                FindSoundToRead(0);
+                //
+this.tmerQuetRepeatSound.Stop(); 
+               FindSoundToRead(0);
+                this.tmerQuetRepeatSound.Start();
             }
             catch (Exception ex)
             {
@@ -2257,16 +2295,16 @@ namespace HTGSL
                 string innerText3 = elementsByTagName.Item(0).ChildNodes[2].InnerText;
                 string innerText4 = elementsByTagName.Item(0).ChildNodes[3].InnerText;
                 result = string.Concat(new string[]
-				{
-					"Provider=SQLOLEDB;Password=",
-					innerText4,
-					";Persist Security Info=True;User ID=",
-					innerText3,
-					";Initial Catalog=",
-					innerText2,
-					";Data Source=",
-					innerText
-				});
+                {
+                    "Provider=SQLOLEDB;Password=",
+                    innerText4,
+                    ";Persist Security Info=True;User ID=",
+                    innerText3,
+                    ";Initial Catalog=",
+                    innerText2,
+                    ";Data Source=",
+                    innerText
+                });
             }
             catch (Exception)
             {
@@ -2442,26 +2480,25 @@ namespace HTGSL
             }
         }
 
-
         private void SaveTransactions()
         {
             try
             {
                 string sqlString = string.Empty;
                 sqlString = string.Concat(new string[]
-				{
-					"INSERT INTO [dbo].[TRANSACTIONS] ([region],[room],[equipment],[command],[bed]) VALUES (",
-					this.sRegion,
-					", ",
-					this.sRoom,
-					", ",
-					this.sEquipment,
-					", ",
-					this.sType_Request,
-					", ",
-					this.sBed,
-					")"
-				});
+                {
+                    "INSERT INTO [dbo].[TRANSACTIONS] ([region],[room],[equipment],[command],[bed]) VALUES (",
+                    this.sRegion,
+                    ", ",
+                    this.sRoom,
+                    ", ",
+                    this.sEquipment,
+                    ", ",
+                    this.sType_Request,
+                    ", ",
+                    this.sBed,
+                    ")"
+                });
                 this.provider.excuteNonTran(sqlString);
             }
             catch (Exception ex)
@@ -2469,7 +2506,6 @@ namespace HTGSL
                 MessageBox.Show(ex.Message, "SaveTransactions", MessageBoxButtons.OK, MessageBoxIcon.Hand);
             }
         }
-
 
         private void equipmentToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -2660,26 +2696,26 @@ namespace HTGSL
             this.regionContextMenuStrip.SuspendLayout();
             base.SuspendLayout();
             this.menuStrip1.Items.AddRange(new ToolStripItem[]
-			{
-				this.fileToolStripMenuItem,
-				this.viewToolStripMenuItem,
-				this.statisticsToolStripMenuItem,
-				this.toolsToolStripMenuItem,
-				this.systemToolStripMenuItem,
-				this.helpToolStripMenuItem
-			});
+            {
+                this.fileToolStripMenuItem,
+                this.viewToolStripMenuItem,
+                this.statisticsToolStripMenuItem,
+                this.toolsToolStripMenuItem,
+                this.systemToolStripMenuItem,
+                this.helpToolStripMenuItem
+            });
             this.menuStrip1.Location = new Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new Size(677, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             this.fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[]
-			{
-				this.loginToolStripMenuItem,
-				this.connectToolStripMenuItem,
-				this.toolStripSeparator11,
-				this.exitToolStripMenuItem
-			});
+            {
+                this.loginToolStripMenuItem,
+                this.connectToolStripMenuItem,
+                this.toolStripSeparator11,
+                this.exitToolStripMenuItem
+            });
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -2698,17 +2734,17 @@ namespace HTGSL
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new EventHandler(this.exitToolStripMenuItem_Click);
             this.viewToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[]
-			{
-				this.languageToolStripMenuItem
-			});
+            {
+                this.languageToolStripMenuItem
+            });
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new Size(44, 20);
             this.viewToolStripMenuItem.Text = "View";
             this.languageToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[]
-			{
-				this.englishToolStripMenuItem,
-				this.vietnameseToolStripMenuItem
-			});
+            {
+                this.englishToolStripMenuItem,
+                this.vietnameseToolStripMenuItem
+            });
             this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
             this.languageToolStripMenuItem.Size = new Size(126, 22);
             this.languageToolStripMenuItem.Text = "Language";
@@ -2721,13 +2757,13 @@ namespace HTGSL
             this.vietnameseToolStripMenuItem.Text = "Vietnamese";
             this.vietnameseToolStripMenuItem.Click += new EventHandler(this.vietnameseToolStripMenuItem_Click);
             this.statisticsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[]
-			{
-				this.CallByDateTimeToolStripMenuItem,
-				this.CallTopNToolStripMenuItem,
-				this.CallTimeGreaterToolStripMenuItem,
-				this.CallByShiftToolStripMenuItem,
-				this.callByRegionToolStripMenuItem
-			});
+            {
+                this.CallByDateTimeToolStripMenuItem,
+                this.CallTopNToolStripMenuItem,
+                this.CallTimeGreaterToolStripMenuItem,
+                this.CallByShiftToolStripMenuItem,
+                this.callByRegionToolStripMenuItem
+            });
             this.statisticsToolStripMenuItem.Name = "statisticsToolStripMenuItem";
             this.statisticsToolStripMenuItem.Size = new Size(65, 20);
             this.statisticsToolStripMenuItem.Text = "Statistics";
@@ -2752,19 +2788,19 @@ namespace HTGSL
             this.callByRegionToolStripMenuItem.Text = "Call by Region";
             this.callByRegionToolStripMenuItem.Click += new EventHandler(this.callByRegionToolStripMenuItem_Click);
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[]
-			{
-				this.serialPortSettingsToolStripMenuItem,
-				this.equipmentToolStripMenuItem,
-				this.toolStripSeparator10,
-				this.soundsToolStripMenuItem,
-				this.soundTemplatesToolStripMenuItem,
-				this.toolStripSeparator3,
-				this.mailSetupToolStripMenuItem,
-				this.mailScheduleToolStripMenuItem,
-				this.mailListsToolStripMenuItem,
-				this.toolStripSeparator13,
-				this.optionsToolStripMenuItem
-			});
+            {
+                this.serialPortSettingsToolStripMenuItem,
+                this.equipmentToolStripMenuItem,
+                this.toolStripSeparator10,
+                this.soundsToolStripMenuItem,
+                this.soundTemplatesToolStripMenuItem,
+                this.toolStripSeparator3,
+                this.mailSetupToolStripMenuItem,
+                this.mailScheduleToolStripMenuItem,
+                this.mailListsToolStripMenuItem,
+                this.toolStripSeparator13,
+                this.optionsToolStripMenuItem
+            });
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new Size(48, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
@@ -2807,28 +2843,28 @@ namespace HTGSL
             this.optionsToolStripMenuItem.Text = "Options...";
             this.optionsToolStripMenuItem.Click += new EventHandler(this.optionsToolStripMenuItem_Click);
             this.systemToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[]
-			{
-				this.configManagerToolStripMenuItem,
-				this.toolStripMenuItemConfigEvent,
-				this.servicesToolStripMenuItem,
-				this.productsToolStripMenuItem,
-				this.toolStripSeparator5,
-				this.departmentsToolStripMenuItem,
-				this.jobsToolStripMenuItem,
-				this.toolStripSeparator4,
-				this.employeesManagerToolStripMenuItem,
-				this.hospitalPropertiesToolStripMenuItem,
-				this.toolStripSeparator8,
-				this.shiftToolStripMenuItem,
-				this.workShiftToolStripMenuItem,
-				this.toolStripSeparator9,
-				this.usersToolStripMenuItem,
-				this.userBedCallToolStripMenuItem,
-				this.toolStripSeparator12,
-				this.rightsToolStripMenuItem,
-				this.functionsToolStripMenuItem,
-				this.rightFunctionToolStripMenuItem
-			});
+            {
+                this.configManagerToolStripMenuItem,
+                this.toolStripMenuItemConfigEvent,
+                this.servicesToolStripMenuItem,
+                this.productsToolStripMenuItem,
+                this.toolStripSeparator5,
+                this.departmentsToolStripMenuItem,
+                this.jobsToolStripMenuItem,
+                this.toolStripSeparator4,
+                this.employeesManagerToolStripMenuItem,
+                this.hospitalPropertiesToolStripMenuItem,
+                this.toolStripSeparator8,
+                this.shiftToolStripMenuItem,
+                this.workShiftToolStripMenuItem,
+                this.toolStripSeparator9,
+                this.usersToolStripMenuItem,
+                this.userBedCallToolStripMenuItem,
+                this.toolStripSeparator12,
+                this.rightsToolStripMenuItem,
+                this.functionsToolStripMenuItem,
+                this.rightFunctionToolStripMenuItem
+            });
             this.systemToolStripMenuItem.Name = "systemToolStripMenuItem";
             this.systemToolStripMenuItem.Size = new Size(57, 20);
             this.systemToolStripMenuItem.Text = "System";
@@ -2905,11 +2941,11 @@ namespace HTGSL
             this.rightFunctionToolStripMenuItem.Text = "Right Function";
             this.rightFunctionToolStripMenuItem.Click += new EventHandler(this.rightFunctionToolStripMenuItem_Click);
             this.helpToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[]
-			{
-				this.aboutToolStripMenuItem,
+            {
+                this.aboutToolStripMenuItem,
                 this.testToolStripMenuItem,
                 this.clearAllCallToolStripMenuItem
-			});
+            });
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
@@ -2926,12 +2962,12 @@ namespace HTGSL
             this.clearAllCallToolStripMenuItem.Text = "Test Form";
             this.clearAllCallToolStripMenuItem.Click += new EventHandler(this.clearAllCallToolStripMenuItem_Click);
             this.statusStrip1.Items.AddRange(new ToolStripItem[]
-			{
-				this.serialPortStatusToolStripStatusLabel,
-				this.tssDataSend,
-				this.statusToolStripStatusLabel,
-				this.clockToolStripStatusLabel
-			});
+            {
+                this.serialPortStatusToolStripStatusLabel,
+                this.tssDataSend,
+                this.statusToolStripStatusLabel,
+                this.clockToolStripStatusLabel
+            });
             this.statusStrip1.Location = new Point(0, 414);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new Size(677, 24);
@@ -2953,15 +2989,15 @@ namespace HTGSL
             this.clockToolStripStatusLabel.Size = new Size(127, 19);
             this.clockToolStripStatusLabel.Text = "00/00/0000 00:00:00 TT";
             this.toolStrip1.Items.AddRange(new ToolStripItem[]
-			{
-				this.toolStripButton1,
-				this.toolStripButton2,
-				this.toolStripSeparator1,
-				this.serialPortToolStripLabel,
-				this.serialPortToolStripSplitButton,
-				this.toolStripSeparator2,
-				this.helpToolStripButton
-			});
+            {
+                this.toolStripButton1,
+                this.toolStripButton2,
+                this.toolStripSeparator1,
+                this.serialPortToolStripLabel,
+                this.serialPortToolStripSplitButton,
+                this.toolStripSeparator2,
+                this.helpToolStripButton
+            });
             this.toolStrip1.Location = new Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new Size(677, 25);
@@ -2990,10 +3026,10 @@ namespace HTGSL
             this.serialPortToolStripLabel.Text = "COM?";
             this.serialPortToolStripSplitButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
             this.serialPortToolStripSplitButton.DropDownItems.AddRange(new ToolStripItem[]
-			{
-				this.openToolStripMenuItem,
-				this.closeToolStripMenuItem
-			});
+            {
+                this.openToolStripMenuItem,
+                this.closeToolStripMenuItem
+            });
             this.serialPortToolStripSplitButton.Image = (Image)componentResourceManager.GetObject("serialPortToolStripSplitButton.Image");
             this.serialPortToolStripSplitButton.ImageTransparentColor = Color.Magenta;
             this.serialPortToolStripSplitButton.Name = "serialPortToolStripSplitButton";
@@ -3068,12 +3104,12 @@ namespace HTGSL
             this.timer1.Interval = 1000;
             this.timer1.Tick += new EventHandler(this.timer1_Tick);
             this.bedContextMenuStrip.Items.AddRange(new ToolStripItem[]
-			{
-				this.callBedToolStripMenuItem,
-				this.stopBedToolStripMenuItem,
-				this.toolStripSeparator6,
-				this.bedDetailsToolStripMenuItem
-			});
+            {
+                this.callBedToolStripMenuItem,
+                this.stopBedToolStripMenuItem,
+                this.toolStripSeparator6,
+                this.bedDetailsToolStripMenuItem
+            });
             this.bedContextMenuStrip.Name = "bedContextMenuStrip";
             this.bedContextMenuStrip.Size = new Size(153, 98);
             this.bedContextMenuStrip.MouseClick += new MouseEventHandler(this.bedContextMenuStrip_MouseClick);
@@ -3093,11 +3129,11 @@ namespace HTGSL
             this.bedDetailsToolStripMenuItem.Size = new Size(152, 22);
             this.bedDetailsToolStripMenuItem.Text = "Details...";
             this.roomContextMenuStrip.Items.AddRange(new ToolStripItem[]
-			{
-				this.callRoomToolStripMenuItem,
-				this.roomPropertiesToolStripSeparator,
-				this.roomDetailsToolStripMenuItem
-			});
+            {
+                this.callRoomToolStripMenuItem,
+                this.roomPropertiesToolStripSeparator,
+                this.roomDetailsToolStripMenuItem
+            });
             this.roomContextMenuStrip.Name = "bedContextMenuStrip";
             this.roomContextMenuStrip.Size = new Size(119, 54);
             this.callRoomToolStripMenuItem.Name = "callRoomToolStripMenuItem";
@@ -3109,11 +3145,11 @@ namespace HTGSL
             this.roomDetailsToolStripMenuItem.Size = new Size(118, 22);
             this.roomDetailsToolStripMenuItem.Text = "Details...";
             this.regionContextMenuStrip.Items.AddRange(new ToolStripItem[]
-			{
-				this.callRegionToolStripMenuItem,
-				this.toolStripSeparator7,
-				this.regionDetailsToolStripMenuItem
-			});
+            {
+                this.callRegionToolStripMenuItem,
+                this.toolStripSeparator7,
+                this.regionDetailsToolStripMenuItem
+            });
             this.regionContextMenuStrip.Name = "bedContextMenuStrip";
             this.regionContextMenuStrip.Size = new Size(119, 54);
             this.callRegionToolStripMenuItem.Name = "callRegionToolStripMenuItem";
@@ -3171,9 +3207,6 @@ namespace HTGSL
             base.PerformLayout();
 
         }
-
-
-
 
         private void Port_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {

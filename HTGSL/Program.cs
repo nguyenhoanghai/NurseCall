@@ -29,7 +29,7 @@ namespace HTGSL
                 SingleInstanceApplication.Initialize();
                 Application.Run(new FMAIN());
                 //  Application.Run(new FrmMain());
-                SingleInstanceApplication.Close();
+                SingleInstanceApplication.Close(); 
             }
             catch (Exception)
             {
