@@ -41,6 +41,16 @@ namespace HTGSL
             this.label12.Text = Properties.Resources.RoomHeight + ":";
             this.label13.Text = Properties.Resources.BedHeight + ":";
             this.label14.Text = Properties.Resources.BedsPerRow + ":";
+
+            this.groupBox2.Text = Properties.Resources.MailGroupbox;
+            this.label15.Text = Properties.Resources.MailSend + ":";
+            this.label16.Text = Properties.Resources.MailSendPassword + ":";
+            this.label17.Text = Properties.Resources.MailRecieve + ":";
+            this.label18.Text = Properties.Resources.SendTime + ":";
+            this.label19.Text = Properties.Resources.StartDate + ":";
+            this.label20.Text = Properties.Resources.EndDate + ":";
+            this.label21.Text = Properties.Resources.SendMail + ":";
+
             this.butSave.Text = Properties.Resources.butSave;
             this.btnBrowseFile.Text = Properties.Resources.BrowseSoundDirectory;
             InitializeControlValues();
@@ -65,8 +75,17 @@ namespace HTGSL
                 Settings.Default.BedHeight = int.Parse(this.txtBedHeight.Text);
                 Settings.Default.BedsPerRow = int.Parse(this.txtBedsPerRow.Text);
                 Settings.Default.SoundPath =  this.txtSoundPath.Text ;
+
+                Settings.Default.MailSend = this.txtMailSend.Text;
+                Settings.Default.Password = this.txtPass.Text;
+                Settings.Default.MailRecieve = this.txtMailRecieve.Text;
+                Settings.Default.TimeSend = this.txtTimeSend.Text;
+                Settings.Default.StartDate = (int)this.txtStartDate.Value;
+                Settings.Default.EndDate = (int)this.txtEndDate.Value; 
+                Settings.Default.SendMail =  this.chbkSendMail.Checked;
+
                 Settings.Default.Save();
-                MessageBox.Show("Đã lưu dữ liệu thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                MessageBox.Show(Properties.Resources.SaveSuccess  , "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
             catch (Exception ex)
             {
@@ -159,6 +178,14 @@ namespace HTGSL
             this.txtTimeSleepAfterSendACK.Text = Settings.Default.TimeSleepAfterSendACK.ToString();
             this.txtTimesRepeatSendACK.Text = Settings.Default.TimeRepeatSendACK.ToString();
             this.txtSoundPath.Text = Settings.Default.SoundPath.ToString();
+
+            this.txtMailSend.Text = Settings.Default.MailSend.ToString();
+            this.txtPass.Text = Settings.Default.Password.ToString();
+            this.txtMailRecieve.Text = Settings.Default.MailRecieve.ToString();
+            this.txtTimeSend.Text = Settings.Default.TimeSend.ToString();
+            this.txtStartDate.Value = Settings.Default.StartDate ;
+            this.txtEndDate.Value = Settings.Default.EndDate ;  
+            this.chbkSendMail.Checked = Settings.Default.SendMail;
         }
 
         private void btnBrowseFile_Click(object sender, EventArgs e)
@@ -166,6 +193,11 @@ namespace HTGSL
             var folderDlg = new FolderBrowserDialog(); 
             if ( folderDlg.ShowDialog() == DialogResult.OK)
               txtSoundPath.Text = folderDlg.SelectedPath; 
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

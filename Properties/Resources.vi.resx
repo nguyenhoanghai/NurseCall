@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
     <value>Giới thiệu về</value>
@@ -728,5 +728,35 @@
   </data>
   <data name="BrowseSoundDirectory" xml:space="preserve">
     <value>Chọn thư mục âm thanh</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>Ngày KT lấy báo cáo</value>
+  </data>
+  <data name="MailGroupbox" xml:space="preserve">
+    <value>Cấu hình gửi thư điện tử</value>
+  </data>
+  <data name="MailRecieve" xml:space="preserve">
+    <value>Danh sách địa chỉ thư nhận</value>
+  </data>
+  <data name="MailSend" xml:space="preserve">
+    <value>Địa chỉ thư gửi</value>
+  </data>
+  <data name="MailSendPassword" xml:space="preserve">
+    <value>Mật khẩu</value>
+  </data>
+  <data name="SendTime" xml:space="preserve">
+    <value>Thời gian gửi thư</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Ngày BĐ lấy báo cáo</value>
+  </data>
+  <data name="Savefailed" xml:space="preserve">
+    <value>Lưu thất bại.</value>
+  </data>
+  <data name="SaveSuccess" xml:space="preserve">
+    <value>Lưu thành công.</value>
+  </data>
+  <data name="SendMail" xml:space="preserve">
+    <value>Gửi thư điện tử</value>
   </data>
 </root>

@@ -1,5 +1,6 @@
 using C1.C1Report;
 using C1.Win.C1TrueDBGrid;
+using HTGSL.Models;
 //using HTGSL.Properties;
 using Properties;
 using System;
@@ -13,6 +14,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Printing;
 using System.IO;
 using System.IO.Ports;
+using System.Linq;
 using System.Media;
 using System.Reflection;
 using System.Text;
@@ -20,6 +22,7 @@ using System.Threading;
 using System.Timers;
 using System.Windows.Forms;
 using System.Xml;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace HTGSL
 {
@@ -115,7 +118,7 @@ namespace HTGSL
         private SplitContainer splitContainer1;
         private ToolStripButton toolStripButton1;
         private ToolStripButton helpToolStripButton;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer tmerResetDateTime;
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripSplitButton serialPortToolStripSplitButton;
         private ToolStripMenuItem openToolStripMenuItem;
@@ -177,7 +180,7 @@ namespace HTGSL
         private ToolStripMenuItem mailScheduleToolStripMenuItem;
         private ToolStripMenuItem mailListsToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator13;
-        private System.Windows.Forms.Timer timer4;
+        private System.Windows.Forms.Timer tmerCheckSendMail;
         private ToolStripStatusLabel tssDataSend;
         private ToolStripMenuItem equipmentToolStripMenuItem;
         private ToolStripMenuItem toolStripMenuItemConfigEvent;
@@ -189,6 +192,8 @@ namespace HTGSL
         bool isFinishRead = true, isFinishDrawData = true;
         Thread playThread;
         System.Windows.Forms.Timer tmerFindSound;
+
+        private TimeSpan? TimeSendMail;
         public FMAIN()
         {
             this.InitializeComponent();
@@ -226,6 +231,16 @@ namespace HTGSL
             this.iAllowDouble = (Settings.Default.AllowDoubleCall ? 1 : 0);
             try
             {
+                TimeSendMail = TimeSpan.Parse(Settings.Default.TimeSend);
+            }
+            catch (Exception ex)
+            {
+                TimeSendMail = null;
+                MessageBox.Show("Không thể cài đặt được thời gian gửi thư điện tử. Vui lòng kiểm tra lại cấu hình.");
+            }
+
+            try
+            {
                 this.MySqlConnect = new SqlConnection((this.strConnString == "") ? this.strConnStringDefault : this.strConnString);
                 this.MySqlConnect.Open();
                 this.SqlData = new MySqlDataClass(this.MySqlConnect);
@@ -250,7 +265,7 @@ namespace HTGSL
                     this.OpenOrCloseSerialPort();
 
                 Control.CheckForIllegalCrossThreadCalls = false;
-                this.timer1.Enabled = true;
+                this.tmerResetDateTime.Enabled = true;
                 FMAIN.timer5 = new System.Timers.Timer();
                 FMAIN.timer5.Elapsed += new ElapsedEventHandler(this.OnTimedEvent);
                 FMAIN.timer5.Interval = (double)this.iTimeRefreshData;
@@ -259,7 +274,7 @@ namespace HTGSL
                 this.tmerQuetRepeatSound.Enabled = true;
                 string folderName = Application.StartupPath + "\\Outputs";
                 this.ClearFolder(folderName);
-                this.timer4.Enabled = true;
+                this.tmerCheckSendMail.Enabled = true;
                 FMAIN.tiSendData = new System.Timers.Timer();
                 FMAIN.tiSendData.Elapsed += new ElapsedEventHandler(this.OnTimedSendDataEvent);
                 FMAIN.tiSendData.Interval = (double)Settings.Default.TimeSendData;
@@ -276,6 +291,10 @@ namespace HTGSL
                 //HoangHai
                 player = new SoundPlayer();
                 tmerFindSound.Enabled = true;
+
+                tmerCheckSendMail.Enabled = false ;
+                if (Settings.Default.SendMail)
+                    tmerCheckSendMail.Enabled = true;
 
                 // InsertCallRequire("03", "009", "02");
                 //   ParseToCommand("02 30 31 2C 30 30 31 2C 38 2C 30 31 2C 30 39 03");
@@ -584,7 +603,7 @@ namespace HTGSL
                             string a2 = this.SaveData(int.Parse(this.sRegion), this.sRoom, this.sEquipment, this.sBed, this.iShift, this.iUser, 1);
                             if (a2 == "Y" | a2 == "E")
                                 this.statusToolStripStatusLabel.Text = string.Concat(new string[] { "(", this.sRegion, ", ", this.sRoom, ", ", this.sBed, "): vừa gọi." });
-                            
+
                             if (a2 == "Y")
                                 InsertCallRequire(sRegion, sRoom, sBed);
 
@@ -1038,7 +1057,7 @@ namespace HTGSL
                 if (this.MySqlConnect != null)
                 {
                     this.MySqlConnect.Close();
-                    this.timer1.Enabled = false;
+                    this.tmerResetDateTime.Enabled = false;
                     this.timer2.Enabled = false;
                     if (this.comport.IsOpen)
                         this.comport.Close();
@@ -1048,10 +1067,12 @@ namespace HTGSL
             {
             }
         }
-        private void timer1_Tick(object sender, EventArgs e)
+
+        private void tmerResetDateTime_Tick(object sender, EventArgs e)
         {
             this.clockToolStripStatusLabel.Text = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss tt");
         }
+
         private void serialPortSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form2 form = new Form2();
@@ -1907,8 +1928,8 @@ namespace HTGSL
                         SqlCommand sqlCommand = new SqlCommand("sp_process_read_sound", this.MySqlConnect);
                         sqlCommand.CommandType = CommandType.StoredProcedure;
                         sqlCommand.Parameters.Add("@iUserId", SqlDbType.Int).Value = clsUtl.USER_ID;
-                         
-                            sqlCommand.Parameters.Add("@iAction", SqlDbType.Int).Value = 1; //change to waiting
+
+                        sqlCommand.Parameters.Add("@iAction", SqlDbType.Int).Value = 1; //change to waiting
 
                         sqlCommand.Parameters.Add("@vResult", SqlDbType.VarChar, 10).Direction = ParameterDirection.Output;
                         sqlCommand.ExecuteNonQuery();
@@ -2154,14 +2175,14 @@ namespace HTGSL
                     }
                 }
             }
-           
+
         }
 
         private void tmerQuetRepeatSound_Tick(object sender, EventArgs e)
         {
             try
             {
-             // if (!this.bIsSounding)
+                // if (!this.bIsSounding)
                 //{
                 //    this.bIsSounding = true;
                 //    
@@ -2176,8 +2197,8 @@ namespace HTGSL
                 //}
                 //this.bIsSounding = false;
                 //
-this.tmerQuetRepeatSound.Stop(); 
-               FindSoundToRead(0);
+                this.tmerQuetRepeatSound.Stop();
+                FindSoundToRead(0);
                 this.tmerQuetRepeatSound.Start();
             }
             catch (Exception ex)
@@ -2348,103 +2369,586 @@ this.tmerQuetRepeatSound.Stop();
                 this.statusToolStripStatusLabel.Text = "mailListsToolStripMenuItem_Click Error: " + ex.Message;
             }
         }
-        private void timer4_Tick(object sender, EventArgs e)
+
+        //Hai update 12/11/2018 
+        private void tmerCheckSendMail_Tick(object sender, EventArgs e)
         {
-            string value = DateTime.Now.ToString("HH:mm:ss");
-            if (this.strMailShedule.IndexOf(value) >= 0)
+            //string value = DateTime.Now.ToString("HH:mm:ss");
+            //if (this.strMailShedule.IndexOf(value) >= 0)
+            //{
+            //    this.tmerCheckSendMail.Stop();
+            //    //new Thread(delegate
+            //    //{
+            //    //    this.SendMails();
+            //    //}
+            //    //)
+            //    //{
+            //    //    IsBackground = true
+            //    //}.Start();
+            //    this.tmerCheckSendMail.Start();
+            //}
+
+            if (TimeSendMail.HasValue)
             {
-                this.timer4.Stop();
-                //new Thread(delegate
-                //{
-                //    this.SendMails();
-                //}
-                //)
-                //{
-                //    IsBackground = true
-                //}.Start();
-                this.timer4.Start();
+                TimeSpan dateTimeNow = DateTime.Now.TimeOfDay;
+                TimeSpan timeNow = TimeSpan.Parse(dateTimeNow.Hours.ToString() + ":" + dateTimeNow.Minutes.ToString() + ":00");
+                if (timeNow == TimeSendMail.Value)
+                {
+                    new Thread(this.SendMails) { IsBackground = true }.Start();
+                    //MessageBox.Show("gui mail");
+                }
             }
         }
+
+        //Hai update 12/11/2018
         private void SendMails()
         {
+
+            //try
+            //{
+            //    string type = "";
+            //    string host = "";
+            //    int port = 25;
+            //    string from = "vthphong@gmail.com";
+            //    string displayName = "vthphong";
+            //    string password = "123456";
+            //    string text = "";
+            //    string subject = "Test mail";
+            //    string body = "Hi All";
+            //    this.CallbyDatetimeExport();
+            //    this.ErrorsbyRegionExport();
+            //    string text2 = "SELECT dbo.MAIL_TYPE.mail_type, dbo.MAIL_SETUP.host, dbo.MAIL_SETUP.port, dbo.MAIL_SETUP.fromaddress, dbo.MAIL_SETUP.frompassword, ";
+            //    text2 += "dbo.MAIL_SETUP.displayname, dbo.MAIL_SETUP.subject, dbo.MAIL_SETUP.body, dbo.MAIL_SETUP.note ";
+            //    text2 += "FROM dbo.MAIL_SETUP INNER JOIN dbo.MAIL_TYPE ON dbo.MAIL_SETUP.mail_type = dbo.MAIL_TYPE.id WHERE dbo.MAIL_SETUP.active = 1";
+            //    SqlConnection sqlConnection = new SqlConnection((this.strConnString == "") ? this.strConnStringDefault : this.strConnString);
+            //    if (sqlConnection.State == ConnectionState.Closed)
+            //    {
+            //        sqlConnection.Open();
+            //    }
+            //    SqlCommand sqlCommand = new SqlCommand(text2, sqlConnection);
+            //    SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+            //    while (sqlDataReader.Read())
+            //    {
+            //        type = sqlDataReader["mail_type"].ToString();
+            //        host = sqlDataReader["host"].ToString();
+            //        port = int.Parse(sqlDataReader["port"].ToString());
+            //        from = sqlDataReader["fromaddress"].ToString();
+            //        displayName = sqlDataReader["displayname"].ToString();
+            //        password = sqlDataReader["frompassword"].ToString();
+            //        subject = sqlDataReader["subject"].ToString();
+            //        body = sqlDataReader["body"].ToString();
+            //    }
+            //    sqlCommand.Dispose();
+            //    sqlDataReader.Close();
+            //    text2 = "SELECT [email] FROM  [dbo].[MAIL_LISTS] WHERE [active] = 1";
+            //    SqlCommand sqlCommand2 = new SqlCommand(text2, sqlConnection);
+            //    SqlDataReader sqlDataReader2 = sqlCommand2.ExecuteReader();
+            //    while (sqlDataReader2.Read())
+            //    {
+            //        if (text.Length == 0)
+            //        {
+            //            text += sqlDataReader2["email"].ToString();
+            //        }
+            //        else
+            //        {
+            //            text = text + ", " + sqlDataReader2["email"].ToString();
+            //        }
+            //    }
+            //    sqlCommand2.Dispose();
+            //    sqlDataReader2.Close();
+            //    clsMail clsMail = new clsMail();
+            //    clsMail.Type = type;
+            //    clsMail.Host = host;
+            //    clsMail.Port = port;
+            //    clsMail.From = from;
+            //    clsMail.DisplayName = displayName;
+            //    clsMail.Password = password;
+            //    clsMail.To = text;
+            //    clsMail.Subject = subject;
+            //    clsMail.Body = body;
+            //    clsMail.AddAttachment(this.strFileAttactment1);
+            //    clsMail.AddAttachment(this.strFileAttactment2);
+            //    clsMail.SendMail();
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message, "SendMails");
+            //}
+            //finally
+            //{
+            //    if (this.conn.State == ConnectionState.Open)
+            //    {
+            //        this.conn.Close();
+            //    }
+            //}
+            tmerCheckSendMail.Enabled = false;
             try
             {
-                string type = "";
-                string host = "";
-                int port = 25;
-                string from = "vthphong@gmail.com";
-                string displayName = "vthphong";
-                string password = "123456";
-                string text = "";
-                string subject = "Test mail";
-                string body = "Hi All";
-                this.CallbyDatetimeExport();
-                this.ErrorsbyRegionExport();
-                string text2 = "SELECT dbo.MAIL_TYPE.mail_type, dbo.MAIL_SETUP.host, dbo.MAIL_SETUP.port, dbo.MAIL_SETUP.fromaddress, dbo.MAIL_SETUP.frompassword, ";
-                text2 += "dbo.MAIL_SETUP.displayname, dbo.MAIL_SETUP.subject, dbo.MAIL_SETUP.body, dbo.MAIL_SETUP.note ";
-                text2 += "FROM dbo.MAIL_SETUP INNER JOIN dbo.MAIL_TYPE ON dbo.MAIL_SETUP.mail_type = dbo.MAIL_TYPE.id WHERE dbo.MAIL_SETUP.active = 1";
-                SqlConnection sqlConnection = new SqlConnection((this.strConnString == "") ? this.strConnStringDefault : this.strConnString);
-                if (sqlConnection.State == ConnectionState.Closed)
-                {
-                    sqlConnection.Open();
-                }
-                SqlCommand sqlCommand = new SqlCommand(text2, sqlConnection);
-                SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
-                while (sqlDataReader.Read())
-                {
-                    type = sqlDataReader["mail_type"].ToString();
-                    host = sqlDataReader["host"].ToString();
-                    port = int.Parse(sqlDataReader["port"].ToString());
-                    from = sqlDataReader["fromaddress"].ToString();
-                    displayName = sqlDataReader["displayname"].ToString();
-                    password = sqlDataReader["frompassword"].ToString();
-                    subject = sqlDataReader["subject"].ToString();
-                    body = sqlDataReader["body"].ToString();
-                }
-                sqlCommand.Dispose();
-                sqlDataReader.Close();
-                text2 = "SELECT [email] FROM  [dbo].[MAIL_LISTS] WHERE [active] = 1";
-                SqlCommand sqlCommand2 = new SqlCommand(text2, sqlConnection);
-                SqlDataReader sqlDataReader2 = sqlCommand2.ExecuteReader();
-                while (sqlDataReader2.Read())
-                {
-                    if (text.Length == 0)
-                    {
-                        text += sqlDataReader2["email"].ToString();
-                    }
-                    else
-                    {
-                        text = text + ", " + sqlDataReader2["email"].ToString();
-                    }
-                }
-                sqlCommand2.Dispose();
-                sqlDataReader2.Close();
-                clsMail clsMail = new clsMail();
-                clsMail.Type = type;
-                clsMail.Host = host;
-                clsMail.Port = port;
-                clsMail.From = from;
-                clsMail.DisplayName = displayName;
-                clsMail.Password = password;
-                clsMail.To = text;
-                clsMail.Subject = subject;
-                clsMail.Body = body;
-                clsMail.AddAttachment(this.strFileAttactment1);
-                clsMail.AddAttachment(this.strFileAttactment2);
-                clsMail.SendMail();
+                clsMail mail = new clsMail();
+                mail.Type = "Google";
+                mail.Host = "smtp.gmail.com";
+                mail.Port = 587;
+                mail.From = Settings.Default.MailSend;
+                mail.DisplayName = "";
+                mail.Password = Settings.Default.Password;
+                mail.To = Settings.Default.MailRecieve;
+                mail.Subject = "Sơn Hà báo cáo thông tin sự cố hàng ngày";
+                mail.Body = "Hệ thống tự động gửi mail báo cáo sự cố hàng ngày. Vui lòng không reply!";
+                mail.AddAttachment(GetReportFiles());
+                mail.SendMail();
+                DeleteAllFileInPath(Application.StartupPath + @"\SaveReports");
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "SendMails");
+                // threadSendMail.Abort();
+                MessageBox.Show("Lỗi gửi mail: " + ex.Message);
+            }
+            Thread.Sleep(10000);
+            tmerCheckSendMail.Enabled = true;
+        }
+
+        //Hai
+        private string GetReportFiles()
+        {
+            string templatePath = Application.StartupPath + @"\Templates_Report\SonHa_Template.xlsx";
+            if (!File.Exists(templatePath))
+                MessageBox.Show("Không tìm thấy file mail template.");
+            else
+            {
+                try
+                {
+                    #region khoi tao cac doi tuong Com Excel de lam viec
+                    Excel.Application xlApp;
+                    Excel.Worksheet xlSheet;
+                    Excel.Workbook xlBook;
+                    Excel.Range oRng;
+                    //doi tuong Trống để thêm  vào xlApp sau đó lưu lại sau
+                    object missValue = System.Reflection.Missing.Value;
+                    //khoi tao doi tuong Com Excel moi
+                    xlApp = new Excel.Application();
+                    xlBook = xlApp.Workbooks.Open(templatePath, 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+                    xlBook.CheckCompatibility = false;
+                    xlBook.DoNotPromptForConvert = true;
+
+                    //su dung Sheet dau tien de thao tac
+                    xlSheet = (Excel.Worksheet)xlBook.Worksheets.get_Item(1);
+                    //không cho hiện ứng dụng Excel lên để tránh gây đơ máy
+                    xlApp.Visible = false;
+
+                    #endregion
+                    int endOfThisMonth = DateTime.Parse(DateTime.Now.ToString("1/M/yyyy")).AddMonths(1).AddDays(-1).Day;
+                    string startDate = DateTime.Now.Month + "/" + Settings.Default.StartDate + "/" + DateTime.Now.Year,
+                      endDate = DateTime.Now.Month + "/" + (Settings.Default.EndDate < endOfThisMonth ? Settings.Default.EndDate : endOfThisMonth) + "/" + DateTime.Now.Year;
+                    string query = "SELECT " +
+                                    "  dbo.CALL_DETAILS.transaction_date as Ngay, " +
+                                    " CONVERT(varchar(10), dbo.CALL_DETAILS.transaction_date, 103) strNgay, " +
+                                    " isnull(dbo.REGIONS.product_name,'') as SanPham," +
+                                    " dbo.REGIONS.region_name as Chuyen," +
+
+                                    " dbo.SHIFTS.shift_name as Ca, " +
+                                    " dbo.SHIFTS.start_time as BDCaLV, " +
+                                    " dbo.SHIFTS.end_time as KTCaLV, " +
+
+                                    " dbo.CALL_DETAILS.start_call as BatDau,			" +
+                                    " dbo.CALL_DETAILS.end_call as KetThuc,				" +
+                                    " dbo.CALL_DETAILS.process_time as TGXuLy, " +
+                                    " dbo.fn_second2time(dbo.CALL_DETAILS.wait_interval) wait_interval, " +
+                                    " dbo.fn_second2time(dbo.CALL_DETAILS.time_interval) time_interval, " +
+                                    " dbo.fn_second2time(dbo.CALL_DETAILS.time_interval - dbo.CALL_DETAILS.wait_interval) process_interval,	" +
+
+                                    " dbo.CALL_DETAILS.region_id," +
+
+                                    " dbo.REGIONS.note AS region_note,  " +
+
+                                    " dbo.CALL_DETAILS.room_id, " +
+                                    " dbo.ROOMS.room_name as room_code ," +
+                                    " dbo.ROOMS.note AS room_note,	" +
+
+                                    " dbo.CALL_DETAILS.bed_id as bedId, 	" +
+                                    " dbo.BEDS.bed_name as bed_code,  " +
+                                    " dbo.BEDS.note AS bed_note,   	" +
+                                    "dbo.CALL_DETAILS.id," +
+                                    //" dbo.CALL_DETAILS.equipment, " +
+                                    " isnull(dbo.REGIONS.make_time, 0) as make_time, isnull(dbo.REGIONS.price, 0) as price  " +
+                                    // " dbo.fn_shift_employee(dbo.CALL_DETAILS.shift_id, dbo.CALL_DETAILS.start_call) AS shift_employee " +
+
+                                    " FROM dbo.CALL_DETAILS INNER JOIN " +
+                                    " dbo.REGIONS ON dbo.CALL_DETAILS.region_id = dbo.REGIONS.region_id INNER JOIN " +
+                                    " dbo.SHIFTS ON dbo.CALL_DETAILS.shift_id = dbo.SHIFTS.shift_id INNER JOIN " +
+                                    " dbo.ROOMS ON dbo.CALL_DETAILS.room_id = dbo.ROOMS.room_id AND dbo.CALL_DETAILS.region_id = dbo.ROOMS.region_id INNER JOIN " +
+                                    " dbo.BEDS ON dbo.CALL_DETAILS.bed_id = dbo.BEDS.bed_id AND dbo.CALL_DETAILS.room_id = dbo.BEDS.room_id AND " +
+                                    " dbo.CALL_DETAILS.region_id = dbo.BEDS.region_id " +
+
+                                    " WHERE [start_call] > convert(varchar(10), N'" + startDate + "', 111)  and [start_call] <= convert(varchar(10), N'" + endDate + "', 111) ";
+
+                    var objs = new List<NewReportModel>();
+
+                    SqlConnection sqlConnection = new SqlConnection((this.strConnString == "") ? this.strConnStringDefault : this.strConnString);
+                    if (sqlConnection.State == ConnectionState.Closed)
+                   sqlConnection.Open();
+                  
+                    SqlCommand sqlCommand = new SqlCommand(query, sqlConnection);
+                    SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+                    while (sqlDataReader.Read())
+                    {
+                        var obj = new NewReportModel();
+                        obj.Date = DateTime.Parse(sqlDataReader["Ngay"].ToString());
+                        obj.strDate = sqlDataReader["strNgay"].ToString();
+                        obj.Start = DateTime.Parse(sqlDataReader["BatDau"].ToString());
+                        obj.End = DateTime.Parse((!string.IsNullOrEmpty(sqlDataReader["KetThuc"].ToString()) ? sqlDataReader["KetThuc"].ToString() : sqlDataReader["BatDau"].ToString()));
+                        obj.ShiftStart = DateTime.Parse(sqlDataReader["BDCaLV"].ToString());
+                        obj.ShiftEnd = DateTime.Parse(sqlDataReader["KTCaLV"].ToString());
+                        obj.Product = (!string.IsNullOrEmpty(sqlDataReader["SanPham"].ToString()) ? sqlDataReader["SanPham"].ToString() : "");
+                        obj.Area = sqlDataReader["region_note"].ToString();
+                        obj.Room = sqlDataReader["room_note"].ToString();
+                        obj.Bed = sqlDataReader["bed_note"].ToString();
+                        obj.BedId = int.Parse(sqlDataReader["bedId"].ToString());
+                        obj.ProcessTime = obj.End.Subtract(obj.Start).TotalMinutes;
+                        obj.WaitingTime = DateTime.Parse(sqlDataReader["TGXuLy"].ToString()).Subtract(obj.Start).TotalMinutes;
+                        objs.Add(obj);
+                    }
+
+
+
+                    //if (provider.connection.State == ConnectionState.Closed)
+                    //    provider.connection.Open();
+
+                    //var exeResult = provider.execute(query).Tables;
+
+                    //var table = exeResult[0];
+                    //if (table.Rows.Count > 0)
+                    //    for (int i = 0; i < table.Rows.Count; i++)
+                    //    {
+                    //        var obj = new NewReportModel();
+                    //        obj.Date = DateTime.Parse(table.Rows[i]["Ngay"].ToString());
+                    //        obj.strDate = table.Rows[i]["strNgay"].ToString();
+                    //        obj.Start = DateTime.Parse(table.Rows[i]["BatDau"].ToString());
+                    //        obj.End = DateTime.Parse((!string.IsNullOrEmpty(table.Rows[i]["KetThuc"].ToString()) ? table.Rows[i]["KetThuc"].ToString() : table.Rows[i]["BatDau"].ToString()));
+                    //        obj.ShiftStart = DateTime.Parse(table.Rows[i]["BDCaLV"].ToString());
+                    //        obj.ShiftEnd = DateTime.Parse(table.Rows[i]["KTCaLV"].ToString());
+                    //        obj.Product = (!string.IsNullOrEmpty(table.Rows[i]["SanPham"].ToString()) ? table.Rows[i]["SanPham"].ToString() : "");
+                    //        obj.Area = table.Rows[i]["region_note"].ToString();
+                    //        obj.Room = table.Rows[i]["room_note"].ToString();
+                    //        obj.Bed = table.Rows[i]["bed_note"].ToString();
+                    //        obj.BedId = int.Parse(table.Rows[i]["bedId"].ToString());
+                    //        obj.ProcessTime = obj.End.Subtract(obj.Start).TotalMinutes;
+                    //        obj.WaitingTime = DateTime.Parse(table.Rows[i]["TGXuLy"].ToString()).Subtract(obj.Start).TotalMinutes;
+                    //        objs.Add(obj);
+                    //    }
+
+                    #region sheet 1
+                    var groupDate = objs.GroupBy(x => x.strDate).Select(x => new NewReportModel()
+                    {
+                        Date = x.First().Date,
+                        strDate = x.First().strDate,
+                        Area = x.First().Area,
+                        Room = x.First().Room,
+                        Bed = x.First().Bed,
+                        Product = x.First().Product,
+                        ShiftStart = x.First().ShiftStart,
+                        ShiftEnd = x.First().ShiftEnd,
+                        Details = x.ToList()
+                    }).OrderBy(x => x.Date).ThenBy(x => x.Area).ToList();
+                    int doc = 8;
+                    double tongTG = 0, tgXuLy = 0, tongTGLV = 0;
+                    Excel.Range range;
+                    foreach (var item in groupDate)
+                    {
+                        var groupChuyen = item.Details.GroupBy(x => x.Area).Select(x => new NewReportModel()
+                        {
+                            Date = x.First().Date,
+                            strDate = x.First().strDate,
+                            Area = x.First().Area,
+                            Room = x.First().Room,
+                            Bed = x.First().Bed,
+                            Product = x.First().Product,
+                            ShiftStart = x.First().ShiftStart,
+                            ShiftEnd = x.First().ShiftEnd,
+                            Details = x.ToList()
+                        }).OrderBy(x => x.Date).ThenBy(x => x.Area).ToList();
+
+                        range = xlSheet.get_Range("B" + doc + ":B" + doc, "B" + (doc + groupChuyen.Count - 1));
+                        range.Merge(Type.Missing);
+                        range.Value = item.strDate.ToString();
+                        range.HorizontalAlignment = Excel.Constants.xlCenter;
+                        range.VerticalAlignment = Excel.Constants.xlCenter;
+                        range.WrapText = true;
+                        range.Borders.ColorIndex = 56;
+
+                        foreach (var chuyen in groupChuyen)
+                        {
+                            for (int ngang = 0; ngang < 23; ngang++)
+                            {
+                                switch (ngang)
+                                {
+                                    // case 2: xlSheet.Cells[doc, ngang] = ; break;
+                                    case 3: xlSheet.Cells[doc, ngang] = chuyen.Product; break;
+                                    case 4: xlSheet.Cells[doc, ngang] = chuyen.Area; break;
+
+                                    case 6:
+                                        tongTG = chuyen.ShiftEnd.Subtract(chuyen.ShiftStart).TotalMinutes;
+                                        tongTGLV += tongTG;
+                                        xlSheet.Cells[doc, ngang] = tongTG; break;
+                                    //tg chet
+                                    case 7: xlSheet.Cells[doc, ngang] = chuyen.Details.Sum(x => x.ProcessTime); break;
+                                    //tong su co
+                                    case 8: xlSheet.Cells[doc, ngang] = chuyen.Details.Count; break;
+
+                                    //to truong
+                                    case 11: xlSheet.Cells[doc, ngang] = chuyen.Details.Where(x => x.BedId == 1).Count(); break;
+                                    case 12:
+                                        tgXuLy = chuyen.Details.Where(x => x.BedId == 1).ToList().Sum(x => x.ProcessTime);
+                                        xlSheet.Cells[doc, ngang] = tgXuLy; break;
+                                    case 13: xlSheet.Cells[doc, ngang] = Math.Round((tgXuLy / tongTG) * 100, 2); break;
+
+                                    // bao tri
+                                    case 14: xlSheet.Cells[doc, ngang] = chuyen.Details.Where(x => x.BedId == 2).Count(); break;
+                                    case 15:
+                                        tgXuLy = chuyen.Details.Where(x => x.BedId == 2).ToList().Sum(x => x.ProcessTime);
+                                        xlSheet.Cells[doc, ngang] = tgXuLy; break;
+                                    case 16: xlSheet.Cells[doc, ngang] = Math.Round((tgXuLy / tongTG) * 100, 2); break;
+
+                                    // ky thuat
+                                    case 17: xlSheet.Cells[doc, ngang] = chuyen.Details.Where(x => x.BedId == 3).Count(); break;
+                                    case 18:
+                                        tgXuLy = chuyen.Details.Where(x => x.BedId == 3).ToList().Sum(x => x.ProcessTime);
+                                        xlSheet.Cells[doc, ngang] = tgXuLy; break;
+                                    case 19: xlSheet.Cells[doc, ngang] = Math.Round((tgXuLy / tongTG) * 100, 2); break;
+
+                                    // to cat
+                                    case 20: xlSheet.Cells[doc, ngang] = chuyen.Details.Where(x => x.BedId == 4).Count(); break;
+                                    case 21:
+                                        tgXuLy = chuyen.Details.Where(x => x.BedId == 4).ToList().Sum(x => x.ProcessTime);
+                                        xlSheet.Cells[doc, ngang] = tgXuLy; break;
+                                    case 22: xlSheet.Cells[doc, ngang] = Math.Round((tgXuLy / tongTG) * 100, 2); break;
+                                }
+                            }
+                            doc++;
+                        }
+                    }
+
+                    xlSheet.Cells[3, 6] = "Từ " + Settings.Default.StartDate + " - " + (Settings.Default.EndDate < endOfThisMonth ? Settings.Default.EndDate : endOfThisMonth) + " tháng " + DateTime.Now.ToString("M - yyyy");
+                    doc++;
+                    range = xlSheet.get_Range("A" + doc + ":E" + doc);
+                    range.Merge(Type.Missing);
+                    range.Value = "TỔNG CỘNG";
+                    range.HorizontalAlignment = Excel.Constants.xlCenter;
+                    range.VerticalAlignment = Excel.Constants.xlCenter;
+                    range.WrapText = true;
+                    range.Borders.ColorIndex = 56;
+
+                    xlSheet.Cells[doc, 6] = tongTGLV;
+                    xlSheet.Cells[doc, 7] = objs.Sum(x => x.ProcessTime);
+                    xlSheet.Cells[doc, 8] = objs.Count;
+
+                    var slSuCo = objs.Where(x => x.BedId == 1).ToList();
+                    xlSheet.Cells[doc, 11] = slSuCo.Count;
+                    xlSheet.Cells[doc, 12] = slSuCo.Sum(x => x.ProcessTime);
+                    xlSheet.Cells[doc, 13] = Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
+
+                    slSuCo = objs.Where(x => x.BedId == 2).ToList();
+                    xlSheet.Cells[doc, 14] = slSuCo.Count;
+                    xlSheet.Cells[doc, 15] = slSuCo.Sum(x => x.ProcessTime);
+                    xlSheet.Cells[doc, 16] = Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
+
+                    slSuCo = objs.Where(x => x.BedId == 3).ToList();
+                    xlSheet.Cells[doc, 17] = slSuCo.Count;
+                    xlSheet.Cells[doc, 18] = slSuCo.Sum(x => x.ProcessTime);
+                    xlSheet.Cells[doc, 19] = Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
+
+                    slSuCo = objs.Where(x => x.BedId == 4).ToList();
+                    xlSheet.Cells[doc, 20] = slSuCo.Count;
+                    xlSheet.Cells[doc, 21] = slSuCo.Sum(x => x.ProcessTime);
+                    xlSheet.Cells[doc, 22] = Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
+
+                    #endregion
+
+                    #region sheet 2
+                    xlSheet = (Excel.Worksheet)xlBook.Worksheets.get_Item(2);
+                    var groupByChuyen = objs.GroupBy(x => x.Area).Select(x => new NewReportModel()
+                    {
+                        Date = x.First().Date,
+                        strDate = x.First().strDate,
+                        Area = x.First().Area,
+                        Room = x.First().Room,
+                        Bed = x.First().Bed,
+                        Product = x.First().Product,
+                        ShiftStart = x.First().ShiftStart,
+                        ShiftEnd = x.First().ShiftEnd,
+                        Details = x.ToList()
+                    }).OrderBy(x => x.Area).ThenBy(x => x.Date).ToList();
+                    doc = 8;
+                    tongTG = 0;
+                    tgXuLy = 0;
+                    tongTGLV = 0;
+
+                    foreach (var item in groupByChuyen)
+                    {
+                        var groupByDate = item.Details.GroupBy(x => x.strDate).Select(x => new NewReportModel()
+                        {
+                            Date = x.First().Date,
+                            strDate = x.First().strDate,
+                            Area = x.First().Area,
+                            Room = x.First().Room,
+                            Bed = x.First().Bed,
+                            Product = x.First().Product,
+                            ShiftStart = x.First().ShiftStart,
+                            ShiftEnd = x.First().ShiftEnd,
+                            Details = x.ToList()
+                        }).OrderBy(x => x.Date).ToList();
+
+                        range = xlSheet.get_Range("D" + doc + ":D" + (doc + groupByDate.Count - 1));
+                        range.Merge(Type.Missing);
+                        range.Value = item.Area;
+                        range.HorizontalAlignment = Excel.Constants.xlCenter;
+                        range.VerticalAlignment = Excel.Constants.xlCenter;
+                        range.WrapText = true;
+                        range.Borders.ColorIndex = 56;
+
+                        foreach (var date in groupByDate)
+                        {
+                            for (int ngang = 0; ngang <= 15; ngang++)
+                            {
+                                switch (ngang)
+                                {
+                                    case 2: xlSheet.Cells[doc, ngang] = date.strDate; break;
+                                    case 3: xlSheet.Cells[doc, ngang] = date.Product; break;
+                                    case 4: xlSheet.Cells[doc, ngang] = date.Area; break;
+
+                                    case 6:
+                                        tongTG = date.ShiftEnd.Subtract(date.ShiftStart).TotalMinutes;
+                                        tongTGLV += tongTG;
+                                        xlSheet.Cells[doc, ngang] = tongTG; break;
+                                    //tg chet
+                                    case 7: xlSheet.Cells[doc, ngang] = date.Details.Sum(x => x.ProcessTime); break;
+
+                                    case 8: //to truong
+                                        tgXuLy = date.Details.Where(x => x.BedId == 1).ToList().Sum(x => x.ProcessTime);
+                                        xlSheet.Cells[doc, ngang] = tgXuLy; break;
+                                    case 9:  // bao tri
+                                        tgXuLy = date.Details.Where(x => x.BedId == 2).ToList().Sum(x => x.ProcessTime);
+                                        xlSheet.Cells[doc, ngang] = tgXuLy; break;
+                                    case 10:  // ky thuat
+                                        tgXuLy = date.Details.Where(x => x.BedId == 3).ToList().Sum(x => x.ProcessTime);
+                                        xlSheet.Cells[doc, ngang] = tgXuLy; break;
+                                    case 11:   // to cat
+                                        tgXuLy = date.Details.Where(x => x.BedId == 4).ToList().Sum(x => x.ProcessTime);
+                                        xlSheet.Cells[doc, ngang] = tgXuLy; break;
+
+                                    case 12: //to truong
+                                        tgXuLy = date.Details.Where(x => x.BedId == 1).ToList().Sum(x => x.ProcessTime);
+                                        xlSheet.Cells[doc, ngang] = Math.Round((tgXuLy / tongTG) * 100, 2); break;
+                                    case 13:  // bao tri
+                                        tgXuLy = date.Details.Where(x => x.BedId == 2).ToList().Sum(x => x.ProcessTime);
+                                        xlSheet.Cells[doc, ngang] = Math.Round((tgXuLy / tongTG) * 100, 2); break;
+                                    case 14:  // ky thuat
+                                        tgXuLy = date.Details.Where(x => x.BedId == 3).ToList().Sum(x => x.ProcessTime);
+                                        xlSheet.Cells[doc, ngang] = Math.Round((tgXuLy / tongTG) * 100, 2); break;
+                                    case 15:   // to cat
+                                        tgXuLy = date.Details.Where(x => x.BedId == 4).ToList().Sum(x => x.ProcessTime);
+                                        xlSheet.Cells[doc, ngang] = Math.Round((tgXuLy / tongTG) * 100, 2); break;
+                                }
+                            }
+                            doc++;
+                        }
+                    }
+
+                    xlSheet.Cells[3, 6] = "Từ " + Settings.Default.StartDate + " - " + (Settings.Default.EndDate < endOfThisMonth ? Settings.Default.EndDate : endOfThisMonth) + " tháng " + DateTime.Now.ToString("M - yyyy");
+                    doc++;
+                    range = xlSheet.get_Range("A" + doc + ":E" + doc);
+                    range.Merge(Type.Missing);
+                    range.Value = "TỔNG CỘNG";
+                    range.HorizontalAlignment = Excel.Constants.xlCenter;
+                    range.VerticalAlignment = Excel.Constants.xlCenter;
+                    range.WrapText = true;
+                    range.Borders.ColorIndex = 56;
+
+                    xlSheet.Cells[doc, 6] = tongTGLV;
+                    xlSheet.Cells[doc, 7] = objs.Sum(x => x.ProcessTime);
+
+                    slSuCo = objs.Where(x => x.BedId == 1).ToList();
+                    xlSheet.Cells[doc, 8] = slSuCo.Sum(x => x.ProcessTime);
+                    xlSheet.Cells[doc, 12] = Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
+
+                    slSuCo = objs.Where(x => x.BedId == 2).ToList();
+                    xlSheet.Cells[doc, 9] = slSuCo.Sum(x => x.ProcessTime);
+                    xlSheet.Cells[doc, 13] = Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
+
+                    slSuCo = objs.Where(x => x.BedId == 3).ToList();
+                    xlSheet.Cells[doc, 10] = slSuCo.Sum(x => x.ProcessTime);
+                    xlSheet.Cells[doc, 14] = Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
+
+                    slSuCo = objs.Where(x => x.BedId == 4).ToList();
+                    xlSheet.Cells[doc, 11] = slSuCo.Sum(x => x.ProcessTime);
+                    xlSheet.Cells[doc, 15] = Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
+                    #endregion
+
+                    xlSheet = (Excel.Worksheet)xlBook.Worksheets.get_Item(1);
+
+                    //save file
+                    xlBook.SaveAs(Application.StartupPath + @"\SaveReports\BaocaoSH_" + DateTime.Now.ToString("dd_MM_yyyy_HH_mm") + ".xlsx", Excel.XlFileFormat.xlWorkbookDefault, missValue, missValue, missValue, missValue, Excel.XlSaveAsAccessMode.xlNoChange, missValue, missValue, missValue, missValue, missValue);
+                    xlBook.Close(true, missValue, missValue);
+                    xlApp.Quit();
+
+                    // release cac doi tuong COM
+                    releaseObject(xlSheet);
+                    releaseObject(xlBook);
+                    releaseObject(xlApp);
+                    return Application.StartupPath + @"\SaveReports\BaocaoSH_" + DateTime.Now.ToString("dd_MM_yyyy_HH_mm") + ".xlsx";
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Tạo file mail bị lỗi.\n" + ex.Message);
+                }
+            }
+            return "";
+        }
+        //Hai
+        public void releaseObject(object obj)
+        {
+            try
+            {
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
+                obj = null;
+            }
+            catch (Exception ex)
+            {
+                obj = null;
+                throw new Exception("Exception Occured while releasing object " + ex.ToString());
             }
             finally
             {
-                if (this.conn.State == ConnectionState.Open)
-                {
-                    this.conn.Close();
-                }
+                GC.Collect();
             }
         }
+        //Hai
+        private static void DeleteAllFileInPath(string path)
+        {
+            try
+            {
+                if (Directory.Exists(path))
+                {
+                    var dr = new DirectoryInfo(path);
+                    foreach (var f in dr.GetFiles())
+                        try
+                        {
+                            // xoa het file trong folder truoc khi tao file moi   
+                            f.Delete();
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+                }
+                else
+                    Directory.CreateDirectory(path);
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+
         private void ClearFolder(string FolderName)
         {
             DirectoryInfo directoryInfo = new DirectoryInfo(FolderName);
@@ -2463,6 +2967,7 @@ this.tmerQuetRepeatSound.Stop();
                 directoryInfo2.Delete();
             }
         }
+
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
             try
@@ -2666,7 +3171,7 @@ this.tmerQuetRepeatSound.Stop();
             this.mainPanel = new Panel();
             this.mainVScrollBar = new VScrollBar();
             this.headerPanel = new Panel();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.tmerResetDateTime = new System.Windows.Forms.Timer(this.components);
             this.myToolTip = new ToolTip(this.components);
             this.bedContextMenuStrip = new ContextMenuStrip(this.components);
             this.callBedToolStripMenuItem = new ToolStripMenuItem();
@@ -2683,7 +3188,7 @@ this.tmerQuetRepeatSound.Stop();
             this.regionDetailsToolStripMenuItem = new ToolStripMenuItem();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.tmerQuetRepeatSound = new System.Windows.Forms.Timer(this.components);
-            this.timer4 = new System.Windows.Forms.Timer(this.components);
+            this.tmerCheckSendMail = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -3101,8 +3606,8 @@ this.tmerQuetRepeatSound.Stop();
             this.headerPanel.Size = new Size(496, 28);
             this.headerPanel.TabIndex = 0;
             this.headerPanel.Paint += new PaintEventHandler(this.headerPanel_Paint);
-            this.timer1.Interval = 1000;
-            this.timer1.Tick += new EventHandler(this.timer1_Tick);
+            this.tmerResetDateTime.Interval = 1000;
+            this.tmerResetDateTime.Tick += new EventHandler(this.tmerResetDateTime_Tick);
             this.bedContextMenuStrip.Items.AddRange(new ToolStripItem[]
             {
                 this.callBedToolStripMenuItem,
@@ -3164,8 +3669,8 @@ this.tmerQuetRepeatSound.Stop();
             this.timer2.Tick += new EventHandler(this.timer2_Tick);
             this.tmerQuetRepeatSound.Interval = 1000;
             this.tmerQuetRepeatSound.Tick += new EventHandler(this.tmerQuetRepeatSound_Tick);
-            this.timer4.Interval = 1000;
-            this.timer4.Tick += new EventHandler(this.timer4_Tick);
+            this.tmerCheckSendMail.Interval = 1000;
+            this.tmerCheckSendMail.Tick += new EventHandler(this.tmerCheckSendMail_Tick);
             base.AutoScaleDimensions = new SizeF(6f, 13f);
             base.AutoScaleMode = AutoScaleMode.Font;
             base.ClientSize = new Size(677, 438);

@@ -1,14 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{5759E345-5199-46D3-8782-35C96107E00E}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>WinExe</OutputType>
     <AssemblyName>HTGSL</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <WarningLevel>4</WarningLevel>
-    <TargetFrameworkProfile />
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -62,11 +63,20 @@
     <Reference Include="C1.Win.C1TrueDBGrid.2">
       <HintPath>libs\C1.Win.C1TrueDBGrid.2.DLL</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>libs\Microsoft.Office.Interop.Excel.dll</HintPath>
     </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -104,6 +114,12 @@
     </Compile>
     <Compile Include="HTGSL\FrmRTopN.Designer.cs">
       <DependentUpon>FrmRTopN.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HTGSL\FrmSendShedule.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\FrmSendShedule.Designer.cs">
+      <DependentUpon>FrmSendShedule.cs</DependentUpon>
     </Compile>
     <Compile Include="HTGSL\FrmTestform.cs">
       <SubType>Form</SubType>
@@ -284,6 +300,7 @@
     <Compile Include="HTGSL\Models\LocationsNodeInfo.cs" />
     <Compile Include="HTGSL\Models\LocationTypeArray.cs" />
     <Compile Include="HTGSL\Models\LocationTypeInfo.cs" />
+    <Compile Include="HTGSL\Models\NewReportModel.cs" />
     <Compile Include="HTGSL\Models\ReportModel.cs" />
     <Compile Include="HTGSL\Helper\MyMsgBox.cs" />
     <Compile Include="HTGSL\Helper\MySqlDataClass.cs" />
@@ -340,6 +357,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="HTGSL\FrmRTopN.resx">
       <DependentUpon>FrmRTopN.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTGSL\FrmSendShedule.resx">
+      <DependentUpon>FrmSendShedule.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HTGSL\FrmTestform.resx">
       <DependentUpon>FrmTestform.cs</DependentUpon>
@@ -407,7 +427,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\Debug\Images\BulletStar.bmp" />
@@ -467,6 +489,7 @@
     <None Include="bin\Debug\Images\Triangle5.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

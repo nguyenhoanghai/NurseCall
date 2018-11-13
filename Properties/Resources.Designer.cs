@@ -678,6 +678,15 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to End Date range.
+        /// </summary>
+        internal static string EndDate {
+            get {
+                return ResourceManager.GetString("EndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to English.
         /// </summary>
         internal static string English {
@@ -1265,6 +1274,15 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Send Mail Config.
+        /// </summary>
+        internal static string MailGroupbox {
+            get {
+                return ResourceManager.GetString("MailGroupbox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mail Lists.
         /// </summary>
         internal static string MailLists {
@@ -1274,11 +1292,38 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mails Recieve.
+        /// </summary>
+        internal static string MailRecieve {
+            get {
+                return ResourceManager.GetString("MailRecieve", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mail Schedule.
         /// </summary>
         internal static string MailSchedule {
             get {
                 return ResourceManager.GetString("MailSchedule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mail Send.
+        /// </summary>
+        internal static string MailSend {
+            get {
+                return ResourceManager.GetString("MailSend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mail Send Password.
+        /// </summary>
+        internal static string MailSendPassword {
+            get {
+                return ResourceManager.GetString("MailSendPassword", resourceCulture);
             }
         }
         
@@ -1786,11 +1831,47 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save failed..
+        /// </summary>
+        internal static string Savefailed {
+            get {
+                return ResourceManager.GetString("Savefailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save successful..
+        /// </summary>
+        internal static string SaveSuccess {
+            get {
+                return ResourceManager.GetString("SaveSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SelectAll.
         /// </summary>
         internal static string SelectAll {
             get {
                 return ResourceManager.GetString("SelectAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send Mail.
+        /// </summary>
+        internal static string SendMail {
+            get {
+                return ResourceManager.GetString("SendMail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time send in day.
+        /// </summary>
+        internal static string SendTime {
+            get {
+                return ResourceManager.GetString("SendTime", resourceCulture);
             }
         }
         
@@ -1901,6 +1982,15 @@ namespace Properties {
             get {
                 object obj = ResourceManager.GetObject("Star", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Date range.
+        /// </summary>
+        internal static string StartDate {
+            get {
+                return ResourceManager.GetString("StartDate", resourceCulture);
             }
         }
         

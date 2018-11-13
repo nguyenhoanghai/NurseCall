@@ -274,5 +274,89 @@ namespace Properties {
                 this["SoundPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("trivodai@gmail.com")]
+        public string MailSend {
+            get {
+                return ((string)(this["MailSend"]));
+            }
+            set {
+                this["MailSend"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("123456")]
+        public string Password {
+            get {
+                return ((string)(this["Password"]));
+            }
+            set {
+                this["Password"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("trivodai@gmail.com,nguyenhoanghaitn@gmail.com")]
+        public string MailRecieve {
+            get {
+                return ((string)(this["MailRecieve"]));
+            }
+            set {
+                this["MailRecieve"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("17:00:00")]
+        public string TimeSend {
+            get {
+                return ((string)(this["TimeSend"]));
+            }
+            set {
+                this["TimeSend"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int StartDate {
+            get {
+                return ((int)(this["StartDate"]));
+            }
+            set {
+                this["StartDate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("31")]
+        public int EndDate {
+            get {
+                return ((int)(this["EndDate"]));
+            }
+            set {
+                this["EndDate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SendMail {
+            get {
+                return ((bool)(this["SendMail"]));
+            }
+            set {
+                this["SendMail"] = value;
+            }
+        }
     }
 }

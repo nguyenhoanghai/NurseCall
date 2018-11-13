@@ -47,7 +47,6 @@ E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\C1.C1Report.2.DLL
 E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\C1.Win.C1List.2.DLL
 E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\C1.Win.C1Report.2.DLL
 E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\C1.Win.C1TrueDBGrid.2.DLL
-E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\Microsoft.Office.Interop.Excel.dll
 E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\baoloi_n.csprojAssemblyReference.cache
 E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.FrmDBConnect.resources
 E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.FrmRDateToDate.resources
@@ -71,3 +70,8 @@ E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\vi\HTGSL.resources.dll
 E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\baoloi_n.csproj.CopyComplete
 E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.exe
 E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.pdb
+E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.FrmSendShedule.resources
+E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\EntityFramework.dll
+E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\EntityFramework.SqlServer.dll
+E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\EntityFramework.xml
+E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\EntityFramework.SqlServer.xml

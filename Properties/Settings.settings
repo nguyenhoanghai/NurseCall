@@ -65,5 +65,26 @@
     <Setting Name="SoundPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">D:</Value>
     </Setting>
+    <Setting Name="MailSend" Type="System.String" Scope="User">
+      <Value Profile="(Default)">trivodai@gmail.com</Value>
+    </Setting>
+    <Setting Name="Password" Type="System.String" Scope="User">
+      <Value Profile="(Default)">123456</Value>
+    </Setting>
+    <Setting Name="MailRecieve" Type="System.String" Scope="User">
+      <Value Profile="(Default)">trivodai@gmail.com,nguyenhoanghaitn@gmail.com</Value>
+    </Setting>
+    <Setting Name="TimeSend" Type="System.String" Scope="User">
+      <Value Profile="(Default)">17:00:00</Value>
+    </Setting>
+    <Setting Name="StartDate" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="EndDate" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">31</Value>
+    </Setting>
+    <Setting Name="SendMail" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

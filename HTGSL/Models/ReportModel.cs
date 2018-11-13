@@ -14,6 +14,7 @@ namespace HTGSL.Models
         public string User { get; set; }
         public string Start { get; set; }
         public string End { get; set; }
-        public string ProcessTime { get; set; }
-    }
+        public string ProcessTime { get; set; } 
+    } 
+
 }
