@@ -292,7 +292,7 @@ namespace HTGSL
                 player = new SoundPlayer();
                 tmerFindSound.Enabled = true;
 
-                tmerCheckSendMail.Enabled = false ;
+                tmerCheckSendMail.Enabled = false;
                 if (Settings.Default.SendMail)
                     tmerCheckSendMail.Enabled = true;
 
@@ -2369,7 +2369,7 @@ namespace HTGSL
                 this.statusToolStripStatusLabel.Text = "mailListsToolStripMenuItem_Click Error: " + ex.Message;
             }
         }
-
+        Thread sendMailThread; 
         //Hai update 12/11/2018 
         private void tmerCheckSendMail_Tick(object sender, EventArgs e)
         {
@@ -2387,15 +2387,26 @@ namespace HTGSL
             //    //}.Start();
             //    this.tmerCheckSendMail.Start();
             //}
-
+            try
+            {
+                TimeSendMail = TimeSpan.Parse(Settings.Default.TimeSend);
+            }
+            catch (Exception ex)
+            {
+                TimeSendMail = null;
+                MessageBox.Show("Không thể cài đặt được thời gian gửi thư điện tử. Vui lòng kiểm tra lại cấu hình.");
+            }
             if (TimeSendMail.HasValue)
             {
                 TimeSpan dateTimeNow = DateTime.Now.TimeOfDay;
                 TimeSpan timeNow = TimeSpan.Parse(dateTimeNow.Hours.ToString() + ":" + dateTimeNow.Minutes.ToString() + ":00");
                 if (timeNow == TimeSendMail.Value)
                 {
-                    new Thread(this.SendMails) { IsBackground = true }.Start();
-                    //MessageBox.Show("gui mail");
+                    this.statusToolStripStatusLabel.Text = "bắt đầu gửi mail.";
+                    
+                    sendMailThread = new Thread(this.SendMails);
+                    sendMailThread.IsBackground = true;
+                    sendMailThread.Start();  
                 }
             }
         }
@@ -2481,7 +2492,10 @@ namespace HTGSL
             //        this.conn.Close();
             //    }
             //}
-            tmerCheckSendMail.Enabled = false;
+            this.Invoke((MethodInvoker)delegate
+            {
+                this.tmerCheckSendMail.Enabled = false;
+            });
             try
             {
                 clsMail mail = new clsMail();
@@ -2495,6 +2509,7 @@ namespace HTGSL
                 mail.Subject = "Sơn Hà báo cáo thông tin sự cố hàng ngày";
                 mail.Body = "Hệ thống tự động gửi mail báo cáo sự cố hàng ngày. Vui lòng không reply!";
                 mail.AddAttachment(GetReportFiles());
+                mail.AddAttachment(BaoCaoChiTietNgay());
                 mail.SendMail();
                 DeleteAllFileInPath(Application.StartupPath + @"\SaveReports");
             }
@@ -2503,10 +2518,15 @@ namespace HTGSL
                 // threadSendMail.Abort();
                 MessageBox.Show("Lỗi gửi mail: " + ex.Message);
             }
-            Thread.Sleep(10000);
-            tmerCheckSendMail.Enabled = true;
+            Thread.Sleep(60000);
+            this.Invoke((MethodInvoker)delegate
+            {
+                this.tmerCheckSendMail.Enabled = true;
+            });
+            this.statusToolStripStatusLabel.Text = "kết thúc gửi mail.";
+            sendMailThread.Abort();
         }
-
+        #region Hai 12/11/2018
         //Hai
         private string GetReportFiles()
         {
@@ -2536,7 +2556,7 @@ namespace HTGSL
                     xlApp.Visible = false;
 
                     #endregion
-                    int endOfThisMonth = DateTime.Parse(DateTime.Now.ToString("1/M/yyyy")).AddMonths(1).AddDays(-1).Day;
+                    int endOfThisMonth = new DateTime(DateTime.Now.Year, (DateTime.Now.Month + 1), 1).AddDays(-1).Day;
                     string startDate = DateTime.Now.Month + "/" + Settings.Default.StartDate + "/" + DateTime.Now.Year,
                       endDate = DateTime.Now.Month + "/" + (Settings.Default.EndDate < endOfThisMonth ? Settings.Default.EndDate : endOfThisMonth) + "/" + DateTime.Now.Year;
                     string query = "SELECT " +
@@ -2585,8 +2605,8 @@ namespace HTGSL
 
                     SqlConnection sqlConnection = new SqlConnection((this.strConnString == "") ? this.strConnStringDefault : this.strConnString);
                     if (sqlConnection.State == ConnectionState.Closed)
-                   sqlConnection.Open();
-                  
+                        sqlConnection.Open();
+
                     SqlCommand sqlCommand = new SqlCommand(query, sqlConnection);
                     SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
                     while (sqlDataReader.Read())
@@ -2607,34 +2627,6 @@ namespace HTGSL
                         obj.WaitingTime = DateTime.Parse(sqlDataReader["TGXuLy"].ToString()).Subtract(obj.Start).TotalMinutes;
                         objs.Add(obj);
                     }
-
-
-
-                    //if (provider.connection.State == ConnectionState.Closed)
-                    //    provider.connection.Open();
-
-                    //var exeResult = provider.execute(query).Tables;
-
-                    //var table = exeResult[0];
-                    //if (table.Rows.Count > 0)
-                    //    for (int i = 0; i < table.Rows.Count; i++)
-                    //    {
-                    //        var obj = new NewReportModel();
-                    //        obj.Date = DateTime.Parse(table.Rows[i]["Ngay"].ToString());
-                    //        obj.strDate = table.Rows[i]["strNgay"].ToString();
-                    //        obj.Start = DateTime.Parse(table.Rows[i]["BatDau"].ToString());
-                    //        obj.End = DateTime.Parse((!string.IsNullOrEmpty(table.Rows[i]["KetThuc"].ToString()) ? table.Rows[i]["KetThuc"].ToString() : table.Rows[i]["BatDau"].ToString()));
-                    //        obj.ShiftStart = DateTime.Parse(table.Rows[i]["BDCaLV"].ToString());
-                    //        obj.ShiftEnd = DateTime.Parse(table.Rows[i]["KTCaLV"].ToString());
-                    //        obj.Product = (!string.IsNullOrEmpty(table.Rows[i]["SanPham"].ToString()) ? table.Rows[i]["SanPham"].ToString() : "");
-                    //        obj.Area = table.Rows[i]["region_note"].ToString();
-                    //        obj.Room = table.Rows[i]["room_note"].ToString();
-                    //        obj.Bed = table.Rows[i]["bed_note"].ToString();
-                    //        obj.BedId = int.Parse(table.Rows[i]["bedId"].ToString());
-                    //        obj.ProcessTime = obj.End.Subtract(obj.Start).TotalMinutes;
-                    //        obj.WaitingTime = DateTime.Parse(table.Rows[i]["TGXuLy"].ToString()).Subtract(obj.Start).TotalMinutes;
-                    //        objs.Add(obj);
-                    //    }
 
                     #region sheet 1
                     var groupDate = objs.GroupBy(x => x.strDate).Select(x => new NewReportModel()
@@ -2894,6 +2886,8 @@ namespace HTGSL
                     releaseObject(xlSheet);
                     releaseObject(xlBook);
                     releaseObject(xlApp);
+                    sqlConnection.Close();
+                    sqlConnection.Dispose();
                     return Application.StartupPath + @"\SaveReports\BaocaoSH_" + DateTime.Now.ToString("dd_MM_yyyy_HH_mm") + ".xlsx";
                 }
                 catch (Exception ex)
@@ -2947,6 +2941,118 @@ namespace HTGSL
             {
             }
         }
+
+        private string BaoCaoChiTietNgay()
+        {
+            try
+            {
+                string templatePath = System.Windows.Forms.Application.StartupPath + @"\Reports\DtoD.xlsx";
+                Excel.Application xlApp;
+                Excel.Worksheet xlSheet;
+                Excel.Workbook xlBook;
+                Excel.Range oRng;
+                //doi tuong Trống để thêm  vào xlApp sau đó lưu lại sau
+                object missValue = System.Reflection.Missing.Value;
+                //khoi tao doi tuong Com Excel moi
+                xlApp = new Excel.Application();
+                xlBook = xlApp.Workbooks.Open(templatePath, 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+                xlBook.CheckCompatibility = false;
+                xlBook.DoNotPromptForConvert = true;
+                //su dung Sheet dau tien de thao tac
+                xlSheet = (Excel.Worksheet)xlBook.Worksheets.get_Item(1);
+                //không cho hiện ứng dụng Excel lên để tránh gây đơ máy
+                xlApp.Visible = false;
+
+                int endOfThisMonth = new DateTime(DateTime.Now.Year, (DateTime.Now.Month + 1), 1).AddDays(-1).Day;
+                string startDate = DateTime.Now.Month + "/" + Settings.Default.StartDate + "/" + DateTime.Now.Year,
+                  endDate = DateTime.Now.Month + "/" + (Settings.Default.EndDate < endOfThisMonth ? Settings.Default.EndDate : endOfThisMonth) + "/" + DateTime.Now.Year;
+
+                xlSheet.Cells[2, 1] = "Từ " + Settings.Default.StartDate + " - " + (Settings.Default.EndDate < endOfThisMonth ? Settings.Default.EndDate : endOfThisMonth) + " tháng " + DateTime.Now.ToString("M - yyyy");
+
+                #region get data
+                var myconn = new SqlConnection(strConnString == "" ? strConnStringDefault : strConnString);//DataProvider.ConnectionString);
+                if (myconn.State == ConnectionState.Closed)
+                {
+                    myconn.Open();
+                }
+
+                SqlCommand cmd = new SqlCommand("hai_test", myconn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                // Set Parameters            
+                cmd.Parameters.Add("@dTimeFrom", SqlDbType.DateTime).Value = startDate;
+                cmd.Parameters.Add("@dTimeTo", SqlDbType.DateTime).Value = endDate;
+                List<ReportModel> models = new List<ReportModel>();
+                SqlDataReader rdr = cmd.ExecuteReader();
+                if (rdr.HasRows)
+                {
+                    System.Data.DataTable dt = new System.Data.DataTable();
+                    dt.Load(rdr);
+                    if (dt.Rows.Count > 0)
+                    {
+                        ReportModel obj;
+                        for (int i = 0; i < dt.Rows.Count; i++)
+                        {
+                            obj = new ReportModel();
+                            obj.Date = dt.Rows[i]["transaction_date"].ToString();
+                            obj.Shift = dt.Rows[i]["shift_name"].ToString();
+                            obj.Area = dt.Rows[i]["region_note"].ToString();
+                            obj.Room = dt.Rows[i]["room_note"].ToString();
+                            obj.Bed = dt.Rows[i]["bed_note"].ToString();
+                            obj.User = dt.Rows[i]["user"].ToString();
+                            obj.Start = dt.Rows[i]["start_call"].ToString();
+                            obj.End = dt.Rows[i]["end_call"].ToString();
+                            obj.ProcessTime = dt.Rows[i]["time_interval"].ToString();
+                            models.Add(obj);
+                        }
+                    }
+                }
+                #endregion 
+
+                int row = 5;
+                int cell = 1;
+                for (int i = 0; i < models.Count; i++)
+                {
+                    for (int j = 0; j < 9; j++)
+                    {
+                        switch (j)
+                        {
+                            case 0: xlSheet.Cells[row, cell] = models[i].Date; break;
+                            case 1: xlSheet.Cells[row, cell] = models[i].Shift; break;
+                            case 2: xlSheet.Cells[row, cell] = models[i].Area; break;
+                            case 3: xlSheet.Cells[row, cell] = models[i].Room; break;
+                            case 4: xlSheet.Cells[row, cell] = models[i].Bed; break;
+                            case 5: xlSheet.Cells[row, cell] = models[i].User; break;
+                            case 6: xlSheet.Cells[row, cell] = models[i].Start; break;
+                            case 7: xlSheet.Cells[row, cell] = models[i].End; break;
+                            case 8: xlSheet.Cells[row, cell] = models[i].ProcessTime; break;
+                        }
+                        cell++;
+                    }
+                    cell = 1;
+                    row++;
+                }
+
+                //save file
+                xlBook.SaveAs(Application.StartupPath + @"\SaveReports\BaocaoCT_" + DateTime.Now.ToString("dd_MM_yyyy_HH_mm") + ".xlsx", Excel.XlFileFormat.xlWorkbookDefault, missValue, missValue, missValue, missValue, Excel.XlSaveAsAccessMode.xlNoChange, missValue, missValue, missValue, missValue, missValue);
+                xlBook.Close(true, missValue, missValue);
+                xlApp.Quit();
+
+                // release cac doi tuong COM
+                releaseObject(xlSheet);
+                releaseObject(xlBook);
+                releaseObject(xlApp);
+                myconn.Close();
+                myconn.Dispose();
+                return Application.StartupPath + @"\SaveReports\BaocaoCT_" + DateTime.Now.ToString("dd_MM_yyyy_HH_mm") + ".xlsx";
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return "";
+        }
+         
+        #endregion
 
 
         private void ClearFolder(string FolderName)
