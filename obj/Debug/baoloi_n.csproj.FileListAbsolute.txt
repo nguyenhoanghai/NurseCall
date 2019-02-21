@@ -75,3 +75,4 @@ E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\EntityFramework.dll
 E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\EntityFramework.SqlServer.dll
 E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\EntityFramework.xml
 E:\Hai_GPRO\Git Sources\NurseCall\bin\Debug\EntityFramework.SqlServer.xml
+E:\Hai_GPRO\Git Sources\NurseCall\obj\Debug\HTGSL.FrmRoom.resources

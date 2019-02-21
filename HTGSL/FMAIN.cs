@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Printing;
+using System.Globalization;
 using System.IO;
 using System.IO.Ports;
 using System.Linq;
@@ -231,7 +232,7 @@ namespace HTGSL
             this.iAllowDouble = (Settings.Default.AllowDoubleCall ? 1 : 0);
             try
             {
-                TimeSendMail = TimeSpan.Parse(Settings.Default.TimeSend);
+                TimeSendMail = Settings.Default.TimeSend.TimeOfDay;
             }
             catch (Exception ex)
             {
@@ -2369,7 +2370,7 @@ namespace HTGSL
                 this.statusToolStripStatusLabel.Text = "mailListsToolStripMenuItem_Click Error: " + ex.Message;
             }
         }
-        Thread sendMailThread; 
+        Thread sendMailThread;
         //Hai update 12/11/2018 
         private void tmerCheckSendMail_Tick(object sender, EventArgs e)
         {
@@ -2389,7 +2390,7 @@ namespace HTGSL
             //}
             try
             {
-                TimeSendMail = TimeSpan.Parse(Settings.Default.TimeSend);
+                TimeSendMail = Settings.Default.TimeSend.TimeOfDay;
             }
             catch (Exception ex)
             {
@@ -2403,10 +2404,10 @@ namespace HTGSL
                 if (timeNow == TimeSendMail.Value)
                 {
                     this.statusToolStripStatusLabel.Text = "bắt đầu gửi mail.";
-                    
+
                     sendMailThread = new Thread(this.SendMails);
                     sendMailThread.IsBackground = true;
-                    sendMailThread.Start();  
+                    sendMailThread.Start();
                 }
             }
         }
@@ -2508,7 +2509,23 @@ namespace HTGSL
                 mail.To = Settings.Default.MailRecieve;
                 mail.Subject = "Sơn Hà báo cáo thông tin sự cố hàng ngày";
                 mail.Body = "Hệ thống tự động gửi mail báo cáo sự cố hàng ngày. Vui lòng không reply!";
-                mail.AddAttachment(GetReportFiles());
+
+                int month = DateTime.Now.Month, year = DateTime.Now.Year;
+                if (month == 12)
+                {
+                    month = 1;
+                    year++;
+                }
+
+                //bao cao thang
+                int endOfThisMonth = new DateTime(year, month, 1).AddDays(-1).Day;
+                string startDate = DateTime.Now.Month + "/" + Settings.Default.StartDate + "/" + DateTime.Now.Year,
+                  endDate = DateTime.Now.Month + "/" + (Settings.Default.EndDate < endOfThisMonth ? Settings.Default.EndDate : endOfThisMonth) + "/" + DateTime.Now.Year;
+                mail.AddAttachment(GetReportFiles(startDate, endDate,endOfThisMonth));
+
+                // bao cao ngay
+                mail.AddAttachment(GetReportFiles(DateTime.Now.ToString("MM/dd/yyyy"), DateTime.Now.AddDays(1).ToString("MM/dd/yyyy"), null));
+
                 mail.AddAttachment(BaoCaoChiTietNgay());
                 mail.SendMail();
                 DeleteAllFileInPath(Application.StartupPath + @"\SaveReports");
@@ -2528,7 +2545,7 @@ namespace HTGSL
         }
         #region Hai 12/11/2018
         //Hai
-        private string GetReportFiles()
+        private string GetReportFiles(string startDate, string endDate, int? toD)
         {
             string templatePath = Application.StartupPath + @"\Templates_Report\SonHa_Template.xlsx";
             if (!File.Exists(templatePath))
@@ -2556,50 +2573,50 @@ namespace HTGSL
                     xlApp.Visible = false;
 
                     #endregion
-                    int endOfThisMonth = new DateTime(DateTime.Now.Year, (DateTime.Now.Month + 1), 1).AddDays(-1).Day;
-                    string startDate = DateTime.Now.Month + "/" + Settings.Default.StartDate + "/" + DateTime.Now.Year,
-                      endDate = DateTime.Now.Month + "/" + (Settings.Default.EndDate < endOfThisMonth ? Settings.Default.EndDate : endOfThisMonth) + "/" + DateTime.Now.Year;
+
                     string query = "SELECT " +
-                                    "  dbo.CALL_DETAILS.transaction_date as Ngay, " +
-                                    " CONVERT(varchar(10), dbo.CALL_DETAILS.transaction_date, 103) strNgay, " +
-                                    " isnull(dbo.REGIONS.product_name,'') as SanPham," +
-                                    " dbo.REGIONS.region_name as Chuyen," +
+                                   "  dbo.CALL_DETAILS.transaction_date as Ngay, " +
+                                   " CONVERT(varchar(10), dbo.CALL_DETAILS.transaction_date, 103) strNgay, " +
+                                   " isnull(dbo.REGIONS.product_name,'') as SanPham," +
+                                   " dbo.REGIONS.region_name as Chuyen," +
 
-                                    " dbo.SHIFTS.shift_name as Ca, " +
-                                    " dbo.SHIFTS.start_time as BDCaLV, " +
-                                    " dbo.SHIFTS.end_time as KTCaLV, " +
+                                   " dbo.SHIFTS.shift_name as Ca, " +
+                                   " dbo.SHIFTS.start_time as BDCaLV, " +
+                                   " dbo.SHIFTS.end_time as KTCaLV, " +
 
-                                    " dbo.CALL_DETAILS.start_call as BatDau,			" +
-                                    " dbo.CALL_DETAILS.end_call as KetThuc,				" +
-                                    " dbo.CALL_DETAILS.process_time as TGXuLy, " +
-                                    " dbo.fn_second2time(dbo.CALL_DETAILS.wait_interval) wait_interval, " +
-                                    " dbo.fn_second2time(dbo.CALL_DETAILS.time_interval) time_interval, " +
-                                    " dbo.fn_second2time(dbo.CALL_DETAILS.time_interval - dbo.CALL_DETAILS.wait_interval) process_interval,	" +
+                                   " dbo.CALL_DETAILS.start_call as BatDau,			" +
+                                   " dbo.CALL_DETAILS.end_call as KetThuc,				" +
+                                   " dbo.CALL_DETAILS.process_time as TGXuLy, " +
+                                   " dbo.fn_second2time(dbo.CALL_DETAILS.wait_interval) wait_interval, " +
+                                   " dbo.fn_second2time(dbo.CALL_DETAILS.time_interval) time_interval, " +
+                                   " dbo.fn_second2time(dbo.CALL_DETAILS.time_interval - dbo.CALL_DETAILS.wait_interval) process_interval,	" +
 
-                                    " dbo.CALL_DETAILS.region_id," +
+                                   " dbo.CALL_DETAILS.region_id," +
 
-                                    " dbo.REGIONS.note AS region_note,  " +
+                                   " dbo.REGIONS.note AS region_note,  " +
 
-                                    " dbo.CALL_DETAILS.room_id, " +
-                                    " dbo.ROOMS.room_name as room_code ," +
-                                    " dbo.ROOMS.note AS room_note,	" +
+                                   " dbo.CALL_DETAILS.room_id, " +
+                                   " dbo.ROOMS.room_name as room_code ," +
+                                   " dbo.ROOMS.note AS room_note,	" +
+                                   " dbo.ROOMS.labors AS room_labor,	" +
 
-                                    " dbo.CALL_DETAILS.bed_id as bedId, 	" +
-                                    " dbo.BEDS.bed_name as bed_code,  " +
-                                    " dbo.BEDS.note AS bed_note,   	" +
-                                    "dbo.CALL_DETAILS.id," +
-                                    //" dbo.CALL_DETAILS.equipment, " +
-                                    " isnull(dbo.REGIONS.make_time, 0) as make_time, isnull(dbo.REGIONS.price, 0) as price  " +
-                                    // " dbo.fn_shift_employee(dbo.CALL_DETAILS.shift_id, dbo.CALL_DETAILS.start_call) AS shift_employee " +
+                                   " dbo.CALL_DETAILS.bed_id as bedId, 	" +
+                                   " dbo.BEDS.bed_name as bed_code,  " +
+                                   " dbo.BEDS.note AS bed_note,   	" +
+                                   "dbo.CALL_DETAILS.id," +
+                                   //" dbo.CALL_DETAILS.equipment, " +
+                                   " isnull(dbo.REGIONS.make_time, 0) as make_time, isnull(dbo.REGIONS.price, 0) as price  " +
+                                   // " dbo.fn_shift_employee(dbo.CALL_DETAILS.shift_id, dbo.CALL_DETAILS.start_call) AS shift_employee " +
 
-                                    " FROM dbo.CALL_DETAILS INNER JOIN " +
-                                    " dbo.REGIONS ON dbo.CALL_DETAILS.region_id = dbo.REGIONS.region_id INNER JOIN " +
-                                    " dbo.SHIFTS ON dbo.CALL_DETAILS.shift_id = dbo.SHIFTS.shift_id INNER JOIN " +
-                                    " dbo.ROOMS ON dbo.CALL_DETAILS.room_id = dbo.ROOMS.room_id AND dbo.CALL_DETAILS.region_id = dbo.ROOMS.region_id INNER JOIN " +
-                                    " dbo.BEDS ON dbo.CALL_DETAILS.bed_id = dbo.BEDS.bed_id AND dbo.CALL_DETAILS.room_id = dbo.BEDS.room_id AND " +
-                                    " dbo.CALL_DETAILS.region_id = dbo.BEDS.region_id " +
+                                   " FROM dbo.CALL_DETAILS INNER JOIN " +
+                                   " dbo.REGIONS ON dbo.CALL_DETAILS.region_id = dbo.REGIONS.region_id INNER JOIN " +
+                                   " dbo.SHIFTS ON dbo.CALL_DETAILS.shift_id = dbo.SHIFTS.shift_id INNER JOIN " +
+                                   " dbo.ROOMS ON dbo.CALL_DETAILS.room_id = dbo.ROOMS.room_id AND dbo.CALL_DETAILS.region_id = dbo.ROOMS.region_id INNER JOIN " +
+                                   " dbo.BEDS ON dbo.CALL_DETAILS.bed_id = dbo.BEDS.bed_id AND dbo.CALL_DETAILS.room_id = dbo.BEDS.room_id AND " +
+                                   " dbo.CALL_DETAILS.region_id = dbo.BEDS.region_id " +
 
-                                    " WHERE [start_call] > convert(varchar(10), N'" + startDate + "', 111)  and [start_call] <= convert(varchar(10), N'" + endDate + "', 111) ";
+                                   " WHERE [start_call] >  '" + startDate + "' and [start_call] <=  '" + endDate + "' ";
+                    //" WHERE [start_call] > convert(varchar(10), N'" + startDate + "', 111)  and [start_call] <= convert(varchar(10), N'" + endDate + "', 111) ";
 
                     var objs = new List<NewReportModel>();
 
@@ -2623,8 +2640,9 @@ namespace HTGSL
                         obj.Room = sqlDataReader["room_note"].ToString();
                         obj.Bed = sqlDataReader["bed_note"].ToString();
                         obj.BedId = int.Parse(sqlDataReader["bedId"].ToString());
+                        obj.Labors = int.Parse(sqlDataReader["room_labor"].ToString());
                         obj.ProcessTime = obj.End.Subtract(obj.Start).TotalMinutes;
-                        obj.WaitingTime = DateTime.Parse(sqlDataReader["TGXuLy"].ToString()).Subtract(obj.Start).TotalMinutes;
+                        obj.WaitingTime = (!string.IsNullOrEmpty(sqlDataReader["TGXuLy"].ToString()) ? DateTime.Parse(sqlDataReader["TGXuLy"].ToString()).Subtract(obj.Start).TotalMinutes : 0);
                         objs.Add(obj);
                     }
 
@@ -2644,82 +2662,95 @@ namespace HTGSL
                     int doc = 8;
                     double tongTG = 0, tgXuLy = 0, tongTGLV = 0;
                     Excel.Range range;
-                    foreach (var item in groupDate)
+
+                    if (groupDate.Count > 0)
                     {
-                        var groupChuyen = item.Details.GroupBy(x => x.Area).Select(x => new NewReportModel()
+                        foreach (var item in groupDate)
                         {
-                            Date = x.First().Date,
-                            strDate = x.First().strDate,
-                            Area = x.First().Area,
-                            Room = x.First().Room,
-                            Bed = x.First().Bed,
-                            Product = x.First().Product,
-                            ShiftStart = x.First().ShiftStart,
-                            ShiftEnd = x.First().ShiftEnd,
-                            Details = x.ToList()
-                        }).OrderBy(x => x.Date).ThenBy(x => x.Area).ToList();
-
-                        range = xlSheet.get_Range("B" + doc + ":B" + doc, "B" + (doc + groupChuyen.Count - 1));
-                        range.Merge(Type.Missing);
-                        range.Value = item.strDate.ToString();
-                        range.HorizontalAlignment = Excel.Constants.xlCenter;
-                        range.VerticalAlignment = Excel.Constants.xlCenter;
-                        range.WrapText = true;
-                        range.Borders.ColorIndex = 56;
-
-                        foreach (var chuyen in groupChuyen)
-                        {
-                            for (int ngang = 0; ngang < 23; ngang++)
+                            var groupChuyen = item.Details.GroupBy(x => x.Area).Select(x => new NewReportModel()
                             {
-                                switch (ngang)
+                                Date = x.First().Date,
+                                strDate = x.First().strDate,
+                                Area = x.First().Area,
+                                Room = x.First().Room,
+                                Bed = x.First().Bed,
+                                Product = x.First().Product,
+                                ShiftStart = x.First().ShiftStart,
+                                ShiftEnd = x.First().ShiftEnd,
+                                Details = x.ToList()
+                            }).OrderBy(x => x.Date).ThenBy(x => x.Area).ToList();
+
+                            range = xlSheet.get_Range("B" + doc + ":B" + doc, "B" + (doc + groupChuyen.Count - 1));
+                            range.Merge(Type.Missing);
+                            range.Value = item.strDate.ToString();
+                            range.HorizontalAlignment = Excel.Constants.xlCenter;
+                            range.VerticalAlignment = Excel.Constants.xlCenter;
+                            range.WrapText = true;
+                            range.Borders.ColorIndex = 56;
+
+                            foreach (var chuyen in groupChuyen)
+                            {
+                                for (int ngang = 0; ngang < 23; ngang++)
                                 {
-                                    // case 2: xlSheet.Cells[doc, ngang] = ; break;
-                                    case 3: xlSheet.Cells[doc, ngang] = chuyen.Product; break;
-                                    case 4: xlSheet.Cells[doc, ngang] = chuyen.Area; break;
+                                    switch (ngang)
+                                    {
+                                        // case 2: xlSheet.Cells[doc, ngang] = ; break;
+                                        //san pham
+                                        case 3: xlSheet.Cells[doc, ngang] = chuyen.Product; break;
+                                        case 4:
+                                            xlSheet.Cells[doc, ngang] = (Settings.Default.NameInReport == 0 ? chuyen.Area : chuyen.Room);
+                                            break;
+                                        //lao dong
+                                        case 5: xlSheet.Cells[doc, ngang] = chuyen.Details.First().Labors; break;
+                                        //tong thoi gian
+                                        case 6:
+                                            tongTG = chuyen.ShiftEnd.Subtract(chuyen.ShiftStart).TotalMinutes * chuyen.Details.First().Labors;
+                                            tongTGLV += tongTG;
+                                            xlSheet.Cells[doc, ngang] = tongTG; break;
+                                        //tg chet
+                                        case 7: xlSheet.Cells[doc, ngang] = Math.Ceiling(chuyen.Details.Sum(x => x.ProcessTime)); break;
+                                        //tong su co
+                                        case 8: xlSheet.Cells[doc, ngang] = chuyen.Details.Count; break;
 
-                                    case 6:
-                                        tongTG = chuyen.ShiftEnd.Subtract(chuyen.ShiftStart).TotalMinutes;
-                                        tongTGLV += tongTG;
-                                        xlSheet.Cells[doc, ngang] = tongTG; break;
-                                    //tg chet
-                                    case 7: xlSheet.Cells[doc, ngang] = chuyen.Details.Sum(x => x.ProcessTime); break;
-                                    //tong su co
-                                    case 8: xlSheet.Cells[doc, ngang] = chuyen.Details.Count; break;
+                                        //to truong
+                                        case 11: xlSheet.Cells[doc, ngang] = chuyen.Details.Where(x => x.BedId == 1).Count(); break;
+                                        case 12:
+                                            tgXuLy = Math.Ceiling(chuyen.Details.Where(x => x.BedId == 1).ToList().Sum(x => x.ProcessTime));
+                                            xlSheet.Cells[doc, ngang] = tgXuLy; break;
+                                        case 13: xlSheet.Cells[doc, ngang] = Math.Round((tgXuLy / tongTG) * 100, 2); break;
 
-                                    //to truong
-                                    case 11: xlSheet.Cells[doc, ngang] = chuyen.Details.Where(x => x.BedId == 1).Count(); break;
-                                    case 12:
-                                        tgXuLy = chuyen.Details.Where(x => x.BedId == 1).ToList().Sum(x => x.ProcessTime);
-                                        xlSheet.Cells[doc, ngang] = tgXuLy; break;
-                                    case 13: xlSheet.Cells[doc, ngang] = Math.Round((tgXuLy / tongTG) * 100, 2); break;
+                                        // bao tri
+                                        case 14: xlSheet.Cells[doc, ngang] = chuyen.Details.Where(x => x.BedId == 2).Count(); break;
+                                        case 15:
+                                            tgXuLy = Math.Ceiling(chuyen.Details.Where(x => x.BedId == 2).ToList().Sum(x => x.ProcessTime));
+                                            xlSheet.Cells[doc, ngang] = tgXuLy; break;
+                                        case 16: xlSheet.Cells[doc, ngang] = Math.Round((tgXuLy / tongTG) * 100, 2); break;
 
-                                    // bao tri
-                                    case 14: xlSheet.Cells[doc, ngang] = chuyen.Details.Where(x => x.BedId == 2).Count(); break;
-                                    case 15:
-                                        tgXuLy = chuyen.Details.Where(x => x.BedId == 2).ToList().Sum(x => x.ProcessTime);
-                                        xlSheet.Cells[doc, ngang] = tgXuLy; break;
-                                    case 16: xlSheet.Cells[doc, ngang] = Math.Round((tgXuLy / tongTG) * 100, 2); break;
+                                        // ky thuat
+                                        case 17: xlSheet.Cells[doc, ngang] = chuyen.Details.Where(x => x.BedId == 3).Count(); break;
+                                        case 18:
+                                            tgXuLy = Math.Ceiling(chuyen.Details.Where(x => x.BedId == 3).ToList().Sum(x => x.ProcessTime));
+                                            xlSheet.Cells[doc, ngang] = tgXuLy; break;
+                                        case 19: xlSheet.Cells[doc, ngang] = Math.Round((tgXuLy / tongTG) * 100, 2); break;
 
-                                    // ky thuat
-                                    case 17: xlSheet.Cells[doc, ngang] = chuyen.Details.Where(x => x.BedId == 3).Count(); break;
-                                    case 18:
-                                        tgXuLy = chuyen.Details.Where(x => x.BedId == 3).ToList().Sum(x => x.ProcessTime);
-                                        xlSheet.Cells[doc, ngang] = tgXuLy; break;
-                                    case 19: xlSheet.Cells[doc, ngang] = Math.Round((tgXuLy / tongTG) * 100, 2); break;
-
-                                    // to cat
-                                    case 20: xlSheet.Cells[doc, ngang] = chuyen.Details.Where(x => x.BedId == 4).Count(); break;
-                                    case 21:
-                                        tgXuLy = chuyen.Details.Where(x => x.BedId == 4).ToList().Sum(x => x.ProcessTime);
-                                        xlSheet.Cells[doc, ngang] = tgXuLy; break;
-                                    case 22: xlSheet.Cells[doc, ngang] = Math.Round((tgXuLy / tongTG) * 100, 2); break;
+                                        // to cat
+                                        case 20: xlSheet.Cells[doc, ngang] = chuyen.Details.Where(x => x.BedId == 4).Count(); break;
+                                        case 21:
+                                            tgXuLy = Math.Ceiling(chuyen.Details.Where(x => x.BedId == 4).ToList().Sum(x => x.ProcessTime));
+                                            xlSheet.Cells[doc, ngang] = tgXuLy; break;
+                                        case 22: xlSheet.Cells[doc, ngang] = Math.Round((tgXuLy / tongTG) * 100, 2); break;
+                                    }
                                 }
+                                doc++;
                             }
-                            doc++;
                         }
                     }
 
-                    xlSheet.Cells[3, 6] = "Từ " + Settings.Default.StartDate + " - " + (Settings.Default.EndDate < endOfThisMonth ? Settings.Default.EndDate : endOfThisMonth) + " tháng " + DateTime.Now.ToString("M - yyyy");
+                    if (toD.HasValue)
+                        xlSheet.Cells[3, 6] = "Từ " + Settings.Default.StartDate + " - " + toD + " tháng " + DateTime.Now.ToString("M - yyyy");
+                    else
+                        xlSheet.Cells[3, 6] = DateTime.Now.ToString("dd/MM/yyyy");
+
                     doc++;
                     range = xlSheet.get_Range("A" + doc + ":E" + doc);
                     range.Merge(Type.Missing);
@@ -2730,27 +2761,27 @@ namespace HTGSL
                     range.Borders.ColorIndex = 56;
 
                     xlSheet.Cells[doc, 6] = tongTGLV;
-                    xlSheet.Cells[doc, 7] = objs.Sum(x => x.ProcessTime);
+                    xlSheet.Cells[doc, 7] = Math.Ceiling(objs.Sum(x => x.ProcessTime));
                     xlSheet.Cells[doc, 8] = objs.Count;
 
                     var slSuCo = objs.Where(x => x.BedId == 1).ToList();
                     xlSheet.Cells[doc, 11] = slSuCo.Count;
-                    xlSheet.Cells[doc, 12] = slSuCo.Sum(x => x.ProcessTime);
+                    xlSheet.Cells[doc, 12] = Math.Ceiling(slSuCo.Sum(x => x.ProcessTime));
                     xlSheet.Cells[doc, 13] = Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
 
                     slSuCo = objs.Where(x => x.BedId == 2).ToList();
                     xlSheet.Cells[doc, 14] = slSuCo.Count;
-                    xlSheet.Cells[doc, 15] = slSuCo.Sum(x => x.ProcessTime);
+                    xlSheet.Cells[doc, 15] = Math.Ceiling(slSuCo.Sum(x => x.ProcessTime));
                     xlSheet.Cells[doc, 16] = Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
 
                     slSuCo = objs.Where(x => x.BedId == 3).ToList();
                     xlSheet.Cells[doc, 17] = slSuCo.Count;
-                    xlSheet.Cells[doc, 18] = slSuCo.Sum(x => x.ProcessTime);
+                    xlSheet.Cells[doc, 18] = Math.Ceiling(slSuCo.Sum(x => x.ProcessTime));
                     xlSheet.Cells[doc, 19] = Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
 
                     slSuCo = objs.Where(x => x.BedId == 4).ToList();
                     xlSheet.Cells[doc, 20] = slSuCo.Count;
-                    xlSheet.Cells[doc, 21] = slSuCo.Sum(x => x.ProcessTime);
+                    xlSheet.Cells[doc, 21] = Math.Ceiling(slSuCo.Sum(x => x.ProcessTime));
                     xlSheet.Cells[doc, 22] = Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
 
                     #endregion
@@ -2796,56 +2827,61 @@ namespace HTGSL
                         range.VerticalAlignment = Excel.Constants.xlCenter;
                         range.WrapText = true;
                         range.Borders.ColorIndex = 56;
-
-                        foreach (var date in groupByDate)
+                        if (groupByDate.Count > 0)
                         {
-                            for (int ngang = 0; ngang <= 15; ngang++)
+                            foreach (var date in groupByDate)
                             {
-                                switch (ngang)
+                                for (int ngang = 0; ngang <= 15; ngang++)
                                 {
-                                    case 2: xlSheet.Cells[doc, ngang] = date.strDate; break;
-                                    case 3: xlSheet.Cells[doc, ngang] = date.Product; break;
-                                    case 4: xlSheet.Cells[doc, ngang] = date.Area; break;
+                                    switch (ngang)
+                                    {
+                                        case 2: xlSheet.Cells[doc, ngang] = date.strDate; break;
+                                        case 3: xlSheet.Cells[doc, ngang] = date.Product; break;
+                                        case 4: xlSheet.Cells[doc, ngang] = (Settings.Default.NameInReport == 0 ? date.Area : date.Room); break;
+                                        case 5: xlSheet.Cells[doc, ngang] = date.Details.First().Labors; break;
+                                        case 6:
+                                            tongTG = date.ShiftEnd.Subtract(date.ShiftStart).TotalMinutes * date.Details.First().Labors;
+                                            tongTGLV += tongTG;
+                                            xlSheet.Cells[doc, ngang] = tongTG; break;
+                                        //tg chet
+                                        case 7: xlSheet.Cells[doc, ngang] = Math.Ceiling(date.Details.Sum(x => x.ProcessTime)); break;
 
-                                    case 6:
-                                        tongTG = date.ShiftEnd.Subtract(date.ShiftStart).TotalMinutes;
-                                        tongTGLV += tongTG;
-                                        xlSheet.Cells[doc, ngang] = tongTG; break;
-                                    //tg chet
-                                    case 7: xlSheet.Cells[doc, ngang] = date.Details.Sum(x => x.ProcessTime); break;
+                                        case 8: //to truong
+                                            tgXuLy = Math.Ceiling(date.Details.Where(x => x.BedId == 1).ToList().Sum(x => x.ProcessTime));
+                                            xlSheet.Cells[doc, ngang] = tgXuLy; break;
+                                        case 9:  // ky thuat 
+                                            tgXuLy = Math.Ceiling(date.Details.Where(x => x.BedId == 3).ToList().Sum(x => x.ProcessTime));
+                                            xlSheet.Cells[doc, ngang] = tgXuLy; break;
+                                        case 10: // bao tri
+                                            tgXuLy = Math.Ceiling(date.Details.Where(x => x.BedId == 2).ToList().Sum(x => x.ProcessTime));
+                                            xlSheet.Cells[doc, ngang] = tgXuLy; break;
+                                        case 11:   // to cat
+                                            tgXuLy = Math.Ceiling(date.Details.Where(x => x.BedId == 4).ToList().Sum(x => x.ProcessTime));
+                                            xlSheet.Cells[doc, ngang] = tgXuLy; break;
 
-                                    case 8: //to truong
-                                        tgXuLy = date.Details.Where(x => x.BedId == 1).ToList().Sum(x => x.ProcessTime);
-                                        xlSheet.Cells[doc, ngang] = tgXuLy; break;
-                                    case 9:  // bao tri
-                                        tgXuLy = date.Details.Where(x => x.BedId == 2).ToList().Sum(x => x.ProcessTime);
-                                        xlSheet.Cells[doc, ngang] = tgXuLy; break;
-                                    case 10:  // ky thuat
-                                        tgXuLy = date.Details.Where(x => x.BedId == 3).ToList().Sum(x => x.ProcessTime);
-                                        xlSheet.Cells[doc, ngang] = tgXuLy; break;
-                                    case 11:   // to cat
-                                        tgXuLy = date.Details.Where(x => x.BedId == 4).ToList().Sum(x => x.ProcessTime);
-                                        xlSheet.Cells[doc, ngang] = tgXuLy; break;
-
-                                    case 12: //to truong
-                                        tgXuLy = date.Details.Where(x => x.BedId == 1).ToList().Sum(x => x.ProcessTime);
-                                        xlSheet.Cells[doc, ngang] = Math.Round((tgXuLy / tongTG) * 100, 2); break;
-                                    case 13:  // bao tri
-                                        tgXuLy = date.Details.Where(x => x.BedId == 2).ToList().Sum(x => x.ProcessTime);
-                                        xlSheet.Cells[doc, ngang] = Math.Round((tgXuLy / tongTG) * 100, 2); break;
-                                    case 14:  // ky thuat
-                                        tgXuLy = date.Details.Where(x => x.BedId == 3).ToList().Sum(x => x.ProcessTime);
-                                        xlSheet.Cells[doc, ngang] = Math.Round((tgXuLy / tongTG) * 100, 2); break;
-                                    case 15:   // to cat
-                                        tgXuLy = date.Details.Where(x => x.BedId == 4).ToList().Sum(x => x.ProcessTime);
-                                        xlSheet.Cells[doc, ngang] = Math.Round((tgXuLy / tongTG) * 100, 2); break;
+                                        case 12: //to truong
+                                            tgXuLy = date.Details.Where(x => x.BedId == 1).ToList().Sum(x => x.ProcessTime);
+                                            xlSheet.Cells[doc, ngang] = Math.Round((tgXuLy / tongTG) * 100, 2); break;
+                                        case 13:  // ky thuat 
+                                            tgXuLy = date.Details.Where(x => x.BedId == 3).ToList().Sum(x => x.ProcessTime);
+                                            xlSheet.Cells[doc, ngang] = Math.Round((tgXuLy / tongTG) * 100, 2); break;
+                                        case 14: // bao tri
+                                            tgXuLy = date.Details.Where(x => x.BedId == 2).ToList().Sum(x => x.ProcessTime);
+                                            xlSheet.Cells[doc, ngang] = Math.Round((tgXuLy / tongTG) * 100, 2); break;
+                                        case 15:   // to cat
+                                            tgXuLy = date.Details.Where(x => x.BedId == 4).ToList().Sum(x => x.ProcessTime);
+                                            xlSheet.Cells[doc, ngang] = Math.Round((tgXuLy / tongTG) * 100, 2); break;
+                                    }
                                 }
+                                doc++;
                             }
-                            doc++;
                         }
                     }
+                    if (toD.HasValue)
+                        xlSheet.Cells[3, 6] = "Từ " + Settings.Default.StartDate + " - " + toD + " tháng " + DateTime.Now.ToString("M - yyyy");
+                    else
+                        xlSheet.Cells[3, 6] = DateTime.Now.ToString("dd/MM/yyyy");
 
-                    xlSheet.Cells[3, 6] = "Từ " + Settings.Default.StartDate + " - " + (Settings.Default.EndDate < endOfThisMonth ? Settings.Default.EndDate : endOfThisMonth) + " tháng " + DateTime.Now.ToString("M - yyyy");
                     doc++;
                     range = xlSheet.get_Range("A" + doc + ":E" + doc);
                     range.Merge(Type.Missing);
@@ -2856,29 +2892,35 @@ namespace HTGSL
                     range.Borders.ColorIndex = 56;
 
                     xlSheet.Cells[doc, 6] = tongTGLV;
-                    xlSheet.Cells[doc, 7] = objs.Sum(x => x.ProcessTime);
+                    xlSheet.Cells[doc, 7] = Math.Ceiling(objs.Sum(x => x.ProcessTime));
 
                     slSuCo = objs.Where(x => x.BedId == 1).ToList();
-                    xlSheet.Cells[doc, 8] = slSuCo.Sum(x => x.ProcessTime);
+                    xlSheet.Cells[doc, 8] = Math.Ceiling(slSuCo.Sum(x => x.ProcessTime));
                     xlSheet.Cells[doc, 12] = Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
 
                     slSuCo = objs.Where(x => x.BedId == 2).ToList();
-                    xlSheet.Cells[doc, 9] = slSuCo.Sum(x => x.ProcessTime);
+                    xlSheet.Cells[doc, 9] = Math.Ceiling(slSuCo.Sum(x => x.ProcessTime));
                     xlSheet.Cells[doc, 13] = Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
 
                     slSuCo = objs.Where(x => x.BedId == 3).ToList();
-                    xlSheet.Cells[doc, 10] = slSuCo.Sum(x => x.ProcessTime);
+                    xlSheet.Cells[doc, 10] = Math.Ceiling(slSuCo.Sum(x => x.ProcessTime));
                     xlSheet.Cells[doc, 14] = Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
 
                     slSuCo = objs.Where(x => x.BedId == 4).ToList();
-                    xlSheet.Cells[doc, 11] = slSuCo.Sum(x => x.ProcessTime);
+                    xlSheet.Cells[doc, 11] = Math.Ceiling(slSuCo.Sum(x => x.ProcessTime));
                     xlSheet.Cells[doc, 15] = Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
                     #endregion
 
                     xlSheet = (Excel.Worksheet)xlBook.Worksheets.get_Item(1);
+                    string filePath = string.Empty;
 
                     //save file
-                    xlBook.SaveAs(Application.StartupPath + @"\SaveReports\BaocaoSH_" + DateTime.Now.ToString("dd_MM_yyyy_HH_mm") + ".xlsx", Excel.XlFileFormat.xlWorkbookDefault, missValue, missValue, missValue, missValue, Excel.XlSaveAsAccessMode.xlNoChange, missValue, missValue, missValue, missValue, missValue);
+                    if (toD.HasValue)
+                        filePath = (Application.StartupPath + @"\SaveReports\BaocaoSH_Thang_" + DateTime.Now.ToString("dd_MM_yyyy_HH_mm") + ".xlsx" );
+                    else
+                        filePath = (Application.StartupPath + @"\SaveReports\BaocaoSH_Ngay_" + DateTime.Now.ToString("dd_MM_yyyy_HH_mm") + ".xlsx" );
+                    xlBook.SaveAs( filePath, Excel.XlFileFormat.xlWorkbookDefault, missValue, missValue, missValue, missValue, Excel.XlSaveAsAccessMode.xlNoChange, missValue, missValue, missValue, missValue, missValue);
+                    
                     xlBook.Close(true, missValue, missValue);
                     xlApp.Quit();
 
@@ -2888,7 +2930,7 @@ namespace HTGSL
                     releaseObject(xlApp);
                     sqlConnection.Close();
                     sqlConnection.Dispose();
-                    return Application.StartupPath + @"\SaveReports\BaocaoSH_" + DateTime.Now.ToString("dd_MM_yyyy_HH_mm") + ".xlsx";
+                    return filePath  ; 
                 }
                 catch (Exception ex)
                 {
@@ -2946,7 +2988,7 @@ namespace HTGSL
         {
             try
             {
-                string templatePath = System.Windows.Forms.Application.StartupPath + @"\Reports\DtoD.xlsx";
+                string templatePath = System.Windows.Forms.Application.StartupPath + @"\Reports\DtoD_2.xlsx";
                 Excel.Application xlApp;
                 Excel.Worksheet xlSheet;
                 Excel.Workbook xlBook;
@@ -2963,7 +3005,13 @@ namespace HTGSL
                 //không cho hiện ứng dụng Excel lên để tránh gây đơ máy
                 xlApp.Visible = false;
 
-                int endOfThisMonth = new DateTime(DateTime.Now.Year, (DateTime.Now.Month + 1), 1).AddDays(-1).Day;
+                int month = DateTime.Now.Month, year = DateTime.Now.Year;
+                if (month == 12)
+                {
+                    month = 1;
+                    year++;
+                }
+                int endOfThisMonth = new DateTime(year, month, 1).AddDays(-1).Day;
                 string startDate = DateTime.Now.Month + "/" + Settings.Default.StartDate + "/" + DateTime.Now.Year,
                   endDate = DateTime.Now.Month + "/" + (Settings.Default.EndDate < endOfThisMonth ? Settings.Default.EndDate : endOfThisMonth) + "/" + DateTime.Now.Year;
 
@@ -2975,12 +3023,12 @@ namespace HTGSL
                 {
                     myconn.Open();
                 }
-
+                //  MessageBox.Show("month " + month + " - year : " + year + " - startdate : " + startDate + " - enddate : " + endDate);
                 SqlCommand cmd = new SqlCommand("hai_test", myconn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 // Set Parameters            
-                cmd.Parameters.Add("@dTimeFrom", SqlDbType.DateTime).Value = startDate;
-                cmd.Parameters.Add("@dTimeTo", SqlDbType.DateTime).Value = endDate;
+                cmd.Parameters.Add("@dTimeFrom", SqlDbType.DateTime).Value = DateTime.ParseExact((Settings.Default.StartDate + "/" + DateTime.Now.Month + "/" + DateTime.Now.Year), "d/M/yyyy", CultureInfo.InvariantCulture);
+                cmd.Parameters.Add("@dTimeTo", SqlDbType.DateTime).Value = DateTime.ParseExact(((Settings.Default.EndDate < endOfThisMonth ? Settings.Default.EndDate : endOfThisMonth) + "/" + DateTime.Now.Month + "/" + DateTime.Now.Year), "d/M/yyyy", CultureInfo.InvariantCulture);
                 List<ReportModel> models = new List<ReportModel>();
                 SqlDataReader rdr = cmd.ExecuteReader();
                 if (rdr.HasRows)
@@ -3000,8 +3048,10 @@ namespace HTGSL
                             obj.Bed = dt.Rows[i]["bed_note"].ToString();
                             obj.User = dt.Rows[i]["user"].ToString();
                             obj.Start = dt.Rows[i]["start_call"].ToString();
+                            obj.Process = dt.Rows[i]["process_time"].ToString();
                             obj.End = dt.Rows[i]["end_call"].ToString();
                             obj.ProcessTime = dt.Rows[i]["time_interval"].ToString();
+                            obj.WattingTime = dt.Rows[i]["wait_interval"].ToString();
                             models.Add(obj);
                         }
                     }
@@ -3012,7 +3062,7 @@ namespace HTGSL
                 int cell = 1;
                 for (int i = 0; i < models.Count; i++)
                 {
-                    for (int j = 0; j < 9; j++)
+                    for (int j = 0; j < 11; j++)
                     {
                         switch (j)
                         {
@@ -3023,8 +3073,10 @@ namespace HTGSL
                             case 4: xlSheet.Cells[row, cell] = models[i].Bed; break;
                             case 5: xlSheet.Cells[row, cell] = models[i].User; break;
                             case 6: xlSheet.Cells[row, cell] = models[i].Start; break;
-                            case 7: xlSheet.Cells[row, cell] = models[i].End; break;
-                            case 8: xlSheet.Cells[row, cell] = models[i].ProcessTime; break;
+                            case 7: xlSheet.Cells[row, cell] = models[i].Process; break;
+                            case 8: xlSheet.Cells[row, cell] = models[i].End; break;
+                            case 9: xlSheet.Cells[row, cell] = models[i].ProcessTime; break;
+                            case 10: xlSheet.Cells[row, cell] = models[i].WattingTime; break;
                         }
                         cell++;
                     }
@@ -3051,7 +3103,7 @@ namespace HTGSL
             }
             return "";
         }
-         
+
         #endregion
 
 

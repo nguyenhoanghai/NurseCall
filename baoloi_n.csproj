@@ -103,6 +103,12 @@
     <Compile Include="HTGSL\FrmRGetByRegion.Designer.cs">
       <DependentUpon>FrmRGetByRegion.cs</DependentUpon>
     </Compile>
+    <Compile Include="HTGSL\FrmRoom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HTGSL\FrmRoom.Designer.cs">
+      <DependentUpon>FrmRoom.cs</DependentUpon>
+    </Compile>
     <Compile Include="HTGSL\FrmRShift.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -249,9 +255,6 @@
     <Compile Include="HTGSL\Form4.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="HTGSL\Form5.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="HTGSL\Form7.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -305,6 +308,7 @@
     <Compile Include="HTGSL\Helper\MyMsgBox.cs" />
     <Compile Include="HTGSL\Helper\MySqlDataClass.cs" />
     <Compile Include="HTGSL\Helper\NewInstanceMessageEventHandler.cs" />
+    <Compile Include="HTGSL\Models\SelectListModel.cs" />
     <Compile Include="HTGSL\Program.cs" />
     <Compile Include="HTGSL\Models\PropertyArray.cs" />
     <Compile Include="HTGSL\Models\PropertyInfo.cs" />
@@ -351,6 +355,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="HTGSL\FrmRGetByRegion.resx">
       <DependentUpon>FrmRGetByRegion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HTGSL\FrmRoom.resx">
+      <DependentUpon>FrmRoom.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HTGSL\FrmRShift.resx">
       <DependentUpon>FrmRShift.cs</DependentUpon>
@@ -403,7 +410,6 @@
     <EmbeddedResource Include="HTGSL\Form15.resources" />
     <EmbeddedResource Include="HTGSL\Form2.resources" />
     <EmbeddedResource Include="HTGSL\Form4.resources" />
-    <EmbeddedResource Include="HTGSL\Form5.resources" />
     <EmbeddedResource Include="HTGSL\Form7.resources" />
     <EmbeddedResource Include="HTGSL\Form8.resources" />
     <EmbeddedResource Include="HTGSL\Form9.resources" />

@@ -416,7 +416,7 @@ namespace HTGSL
             try
             {
                 SqlCommand sqlCommand = this.SqlConnect.CreateCommand();
-                sqlCommand.CommandText = " Select M.room_id, M.region_id, M.room_name, M.region_name, M.note,  (  Select Count(*)  From BEDS  Where  region_id = M.region_id And  room_id = M.room_id  ) As total_of_beds  From  (  Select A.room_id, A.region_id, A.room_name, B.region_name, A.note  From ROOMS A, REGIONS B  Where  A.region_id = B.region_id And  A.region_id = " + i_region_id.ToString() + " ) M Order By M.room_id ";
+                sqlCommand.CommandText = " Select M.room_id, M.region_id, M.room_name, M.region_name, M.note,  (  Select Count(*)  From BEDS  Where  region_id = M.region_id And  room_id = M.room_id  ) As total_of_beds, M.labors  From  (  Select A.room_id, A.region_id, A.room_name, B.region_name, A.note, A.labors  From ROOMS A, REGIONS B  Where  A.region_id = B.region_id And  A.region_id = " + i_region_id.ToString() + " ) M Order By M.room_id ";
                 SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
                 while (sqlDataReader.Read())
                 {
@@ -426,7 +426,8 @@ namespace HTGSL
                     string str_region_name = sqlDataReader[3].ToString();
                     string str_note = sqlDataReader.IsDBNull(4) ? " " : sqlDataReader[4].ToString();
                     int i_total_of_beds = int.Parse(sqlDataReader[5].ToString());
-                    RoomInfo ri = new RoomInfo(i_room_id, i_region_id2, str_room_name, str_region_name, str_note, i_total_of_beds);
+                    int i_labors = int.Parse(sqlDataReader[6].ToString());
+                    RoomInfo ri = new RoomInfo(i_room_id, i_region_id2, str_room_name, str_region_name, str_note, i_total_of_beds,i_labors);
                     roomArray.Add(ri);
                 }
                 sqlDataReader.Close();
@@ -449,7 +450,9 @@ namespace HTGSL
                 SqlCommand sqlCommand = this.SqlConnect.CreateCommand();
                 sqlCommand.CommandText = string.Concat(new string[]
 				{
-					" Select M.room_id, M.region_id, M.room_name, M.region_name, M.note,  (  Select Count(*)  From BEDS  Where  region_id = M.region_id And  room_id = M.room_id  ) As total_of_beds  From  (  Select A.room_id, A.region_id, A.room_name, B.region_name, A.note  From ROOMS A, REGIONS B  Where  A.region_id = B.region_id And  A.region_id = ",
+                    " Select M.room_id, M.region_id, M.room_name, M.region_name, M.note,  (  Select Count(*)  From BEDS  Where  region_id = M.region_id And  room_id = M.room_id  ) As total_of_beds, M.labors ",
+                    " From  (  Select A.room_id, A.region_id, A.room_name, B.region_name, A.note,A.labors  From ROOMS A, REGIONS B ",
+                    "  Where  A.region_id = B.region_id And  A.region_id = ",
 					i_region_id.ToString(),
 					" And  A.room_id = ",
 					i_room_id.ToString(),
@@ -464,7 +467,8 @@ namespace HTGSL
                     string str_region_name = sqlDataReader[3].ToString();
                     string str_note = sqlDataReader.IsDBNull(4) ? " " : sqlDataReader[4].ToString();
                     int i_total_of_beds = int.Parse(sqlDataReader[5].ToString());
-                    roomInfo = new RoomInfo(i_room_id2, i_region_id2, str_room_name, str_region_name, str_note, i_total_of_beds);
+                    int i_labors = int.Parse(sqlDataReader[6].ToString());
+                    roomInfo = new RoomInfo(i_room_id2, i_region_id2, str_room_name, str_region_name, str_note, i_total_of_beds,i_labors);
                 }
                 sqlDataReader.Close();
             }
@@ -521,7 +525,7 @@ namespace HTGSL
             result = num;
             return result;
         }
-        public bool InsertRoomInfo(int i_room_id, int i_region_id, string str_room_name, string str_note)
+        public bool InsertRoomInfo(int i_room_id, int i_region_id, string str_room_name, string str_note, int i_labors)
         {
             bool result;
             try
@@ -529,7 +533,7 @@ namespace HTGSL
                 SqlCommand sqlCommand = this.SqlConnect.CreateCommand();
                 sqlCommand.CommandText = string.Concat(new string[]
 				{
-					" Insert Into ROOMS  (  room_id,  region_id,  room_name,  note  )  Values  (  ",
+					" Insert Into ROOMS  (  room_id,  region_id,  room_name,  note,labors  )  Values  (  ",
 					i_room_id.ToString(),
 					",  ",
 					i_region_id.ToString(),
@@ -537,7 +541,9 @@ namespace HTGSL
 					str_room_name.Trim(),
 					"',  ",
 					(str_note.Trim() == string.Empty) ? "null" : ("N'" + str_note + "'"),
-					"  ) "
+                    ",  ",
+                    i_labors.ToString(),
+                    "  ) "
 				});
                 int num = sqlCommand.ExecuteNonQuery();
             }
@@ -550,7 +556,7 @@ namespace HTGSL
             result = true;
             return result;
         }
-        public bool UpdateRoomInfo(int i_room_id, int i_region_id, string str_room_name, string str_note)
+        public bool UpdateRoomInfo(int i_room_id, int i_region_id, string str_room_name, string str_note, int i_labor)
         {
             bool result;
             try
@@ -562,7 +568,9 @@ namespace HTGSL
 					str_room_name.Trim(),
 					"',  note = ",
 					(str_note.Trim() == string.Empty) ? "null" : ("N'" + str_note.Trim() + "'"),
-					"  Where  region_id = ",
+                    ",  labors = ",
+                    i_labor.ToString(),
+                    "  Where  region_id = ",
 					i_region_id.ToString(),
 					" And  room_id = ",
 					i_room_id.ToString()

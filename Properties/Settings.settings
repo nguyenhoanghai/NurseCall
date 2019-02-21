@@ -74,8 +74,8 @@
     <Setting Name="MailRecieve" Type="System.String" Scope="User">
       <Value Profile="(Default)">trivodai@gmail.com,nguyenhoanghaitn@gmail.com</Value>
     </Setting>
-    <Setting Name="TimeSend" Type="System.String" Scope="User">
-      <Value Profile="(Default)">17:00:00</Value>
+    <Setting Name="TimeSend" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">12/15/2018 12:00:00</Value>
     </Setting>
     <Setting Name="StartDate" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
@@ -85,6 +85,9 @@
     </Setting>
     <Setting Name="SendMail" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="NameInReport" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>
 </SettingsFile>

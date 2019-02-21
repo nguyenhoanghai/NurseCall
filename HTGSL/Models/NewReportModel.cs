@@ -19,6 +19,7 @@ namespace HTGSL.Models
         public string Bed { get; set; }
         public int BedId { get; set; }
         public string Product { get; set; }
+        public int Labors { get; set; }
         public List<NewReportModel> Details { get; set; }
         public NewReportModel()
         {

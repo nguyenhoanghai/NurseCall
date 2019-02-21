@@ -61,11 +61,12 @@
             this.txtSoundPath = new System.Windows.Forms.TextBox();
             this.btnBrowseFile = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.chbkSendMail = new System.Windows.Forms.CheckBox();
+            this.label21 = new System.Windows.Forms.Label();
             this.txtEndDate = new System.Windows.Forms.NumericUpDown();
             this.txtStartDate = new System.Windows.Forms.NumericUpDown();
             this.label20 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
-            this.txtTimeSend = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.txtMailRecieve = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
@@ -73,8 +74,9 @@
             this.label16 = new System.Windows.Forms.Label();
             this.txtMailSend = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.chbkSendMail = new System.Windows.Forms.CheckBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.cbNameinReport = new System.Windows.Forms.ComboBox();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtEndDate)).BeginInit();
@@ -115,7 +117,7 @@
             // 
             this.cmbAutoOpenComport.FormattingEnabled = true;
             this.cmbAutoOpenComport.Location = new System.Drawing.Point(279, 15);
-            this.cmbAutoOpenComport.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbAutoOpenComport.Margin = new System.Windows.Forms.Padding(4);
             this.cmbAutoOpenComport.Name = "cmbAutoOpenComport";
             this.cmbAutoOpenComport.Size = new System.Drawing.Size(193, 24);
             this.cmbAutoOpenComport.TabIndex = 3;
@@ -123,7 +125,7 @@
             // txtTimeRefreshData
             // 
             this.txtTimeRefreshData.Location = new System.Drawing.Point(279, 48);
-            this.txtTimeRefreshData.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtTimeRefreshData.Margin = new System.Windows.Forms.Padding(4);
             this.txtTimeRefreshData.Name = "txtTimeRefreshData";
             this.txtTimeRefreshData.Size = new System.Drawing.Size(193, 22);
             this.txtTimeRefreshData.TabIndex = 4;
@@ -211,7 +213,7 @@
             // txtSoundTemplate
             // 
             this.txtSoundTemplate.Location = new System.Drawing.Point(279, 112);
-            this.txtSoundTemplate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSoundTemplate.Margin = new System.Windows.Forms.Padding(4);
             this.txtSoundTemplate.Name = "txtSoundTemplate";
             this.txtSoundTemplate.Size = new System.Drawing.Size(193, 22);
             this.txtSoundTemplate.TabIndex = 13;
@@ -219,7 +221,7 @@
             // txtTimeSendData
             // 
             this.txtTimeSendData.Location = new System.Drawing.Point(279, 246);
-            this.txtTimeSendData.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtTimeSendData.Margin = new System.Windows.Forms.Padding(4);
             this.txtTimeSendData.Name = "txtTimeSendData";
             this.txtTimeSendData.Size = new System.Drawing.Size(193, 22);
             this.txtTimeSendData.TabIndex = 14;
@@ -227,7 +229,7 @@
             // txtTimeReadSound
             // 
             this.txtTimeReadSound.Location = new System.Drawing.Point(279, 80);
-            this.txtTimeReadSound.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtTimeReadSound.Margin = new System.Windows.Forms.Padding(4);
             this.txtTimeReadSound.Name = "txtTimeReadSound";
             this.txtTimeReadSound.Size = new System.Drawing.Size(193, 22);
             this.txtTimeReadSound.TabIndex = 15;
@@ -236,7 +238,7 @@
             // 
             this.cmbProcessTime.FormattingEnabled = true;
             this.cmbProcessTime.Location = new System.Drawing.Point(279, 213);
-            this.cmbProcessTime.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbProcessTime.Margin = new System.Windows.Forms.Padding(4);
             this.cmbProcessTime.Name = "cmbProcessTime";
             this.cmbProcessTime.Size = new System.Drawing.Size(193, 24);
             this.cmbProcessTime.TabIndex = 16;
@@ -245,7 +247,7 @@
             // 
             this.cmbEndAllCall.FormattingEnabled = true;
             this.cmbEndAllCall.Location = new System.Drawing.Point(279, 177);
-            this.cmbEndAllCall.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbEndAllCall.Margin = new System.Windows.Forms.Padding(4);
             this.cmbEndAllCall.Name = "cmbEndAllCall";
             this.cmbEndAllCall.Size = new System.Drawing.Size(193, 24);
             this.cmbEndAllCall.TabIndex = 17;
@@ -254,7 +256,7 @@
             // 
             this.cmbAllowDoubleCall.FormattingEnabled = true;
             this.cmbAllowDoubleCall.Location = new System.Drawing.Point(279, 144);
-            this.cmbAllowDoubleCall.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbAllowDoubleCall.Margin = new System.Windows.Forms.Padding(4);
             this.cmbAllowDoubleCall.Name = "cmbAllowDoubleCall";
             this.cmbAllowDoubleCall.Size = new System.Drawing.Size(193, 24);
             this.cmbAllowDoubleCall.TabIndex = 18;
@@ -262,7 +264,7 @@
             // txtRegionHeight
             // 
             this.txtRegionHeight.Location = new System.Drawing.Point(264, 21);
-            this.txtRegionHeight.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtRegionHeight.Margin = new System.Windows.Forms.Padding(4);
             this.txtRegionHeight.Name = "txtRegionHeight";
             this.txtRegionHeight.Size = new System.Drawing.Size(219, 22);
             this.txtRegionHeight.TabIndex = 19;
@@ -270,7 +272,7 @@
             // txtTimesRepeatSendACK
             // 
             this.txtTimesRepeatSendACK.Location = new System.Drawing.Point(279, 310);
-            this.txtTimesRepeatSendACK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtTimesRepeatSendACK.Margin = new System.Windows.Forms.Padding(4);
             this.txtTimesRepeatSendACK.Name = "txtTimesRepeatSendACK";
             this.txtTimesRepeatSendACK.Size = new System.Drawing.Size(193, 22);
             this.txtTimesRepeatSendACK.TabIndex = 20;
@@ -278,7 +280,7 @@
             // txtTimeSleepAfterSendACK
             // 
             this.txtTimeSleepAfterSendACK.Location = new System.Drawing.Point(279, 278);
-            this.txtTimeSleepAfterSendACK.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtTimeSleepAfterSendACK.Margin = new System.Windows.Forms.Padding(4);
             this.txtTimeSleepAfterSendACK.Name = "txtTimeSleepAfterSendACK";
             this.txtTimeSleepAfterSendACK.Size = new System.Drawing.Size(193, 22);
             this.txtTimeSleepAfterSendACK.TabIndex = 21;
@@ -286,7 +288,7 @@
             // txtRoomHeight
             // 
             this.txtRoomHeight.Location = new System.Drawing.Point(264, 53);
-            this.txtRoomHeight.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtRoomHeight.Margin = new System.Windows.Forms.Padding(4);
             this.txtRoomHeight.Name = "txtRoomHeight";
             this.txtRoomHeight.Size = new System.Drawing.Size(219, 22);
             this.txtRoomHeight.TabIndex = 23;
@@ -304,7 +306,7 @@
             // txtBedHeight
             // 
             this.txtBedHeight.Location = new System.Drawing.Point(264, 86);
-            this.txtBedHeight.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBedHeight.Margin = new System.Windows.Forms.Padding(4);
             this.txtBedHeight.Name = "txtBedHeight";
             this.txtBedHeight.Size = new System.Drawing.Size(219, 22);
             this.txtBedHeight.TabIndex = 25;
@@ -322,7 +324,7 @@
             // txtBedsPerRow
             // 
             this.txtBedsPerRow.Location = new System.Drawing.Point(264, 118);
-            this.txtBedsPerRow.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBedsPerRow.Margin = new System.Windows.Forms.Padding(4);
             this.txtBedsPerRow.Name = "txtBedsPerRow";
             this.txtBedsPerRow.Size = new System.Drawing.Size(219, 22);
             this.txtBedsPerRow.TabIndex = 27;
@@ -347,10 +349,10 @@
             this.groupBox1.Controls.Add(this.txtBedHeight);
             this.groupBox1.Controls.Add(this.txtRoomHeight);
             this.groupBox1.Controls.Add(this.label13);
-            this.groupBox1.Location = new System.Drawing.Point(481, 10);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Location = new System.Drawing.Point(486, 11);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(492, 154);
             this.groupBox1.TabIndex = 28;
             this.groupBox1.TabStop = false;
@@ -358,8 +360,8 @@
             // 
             // butSave
             // 
-            this.butSave.Location = new System.Drawing.Point(377, 486);
-            this.butSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.butSave.Location = new System.Drawing.Point(373, 490);
+            this.butSave.Margin = new System.Windows.Forms.Padding(4);
             this.butSave.Name = "butSave";
             this.butSave.Size = new System.Drawing.Size(216, 28);
             this.butSave.TabIndex = 29;
@@ -371,7 +373,7 @@
             // 
             this.txtSoundPath.Enabled = false;
             this.txtSoundPath.Location = new System.Drawing.Point(24, 351);
-            this.txtSoundPath.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSoundPath.Margin = new System.Windows.Forms.Padding(4);
             this.txtSoundPath.Multiline = true;
             this.txtSoundPath.Name = "txtSoundPath";
             this.txtSoundPath.Size = new System.Drawing.Size(320, 45);
@@ -380,7 +382,7 @@
             // btnBrowseFile
             // 
             this.btnBrowseFile.Location = new System.Drawing.Point(353, 350);
-            this.btnBrowseFile.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnBrowseFile.Margin = new System.Windows.Forms.Padding(4);
             this.btnBrowseFile.Name = "btnBrowseFile";
             this.btnBrowseFile.Size = new System.Drawing.Size(120, 48);
             this.btnBrowseFile.TabIndex = 32;
@@ -390,13 +392,13 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.dateTimePicker1);
             this.groupBox2.Controls.Add(this.chbkSendMail);
             this.groupBox2.Controls.Add(this.label21);
             this.groupBox2.Controls.Add(this.txtEndDate);
             this.groupBox2.Controls.Add(this.txtStartDate);
             this.groupBox2.Controls.Add(this.label20);
             this.groupBox2.Controls.Add(this.label19);
-            this.groupBox2.Controls.Add(this.txtTimeSend);
             this.groupBox2.Controls.Add(this.label18);
             this.groupBox2.Controls.Add(this.txtMailRecieve);
             this.groupBox2.Controls.Add(this.label17);
@@ -404,20 +406,40 @@
             this.groupBox2.Controls.Add(this.label16);
             this.groupBox2.Controls.Add(this.txtMailSend);
             this.groupBox2.Controls.Add(this.label15);
-            this.groupBox2.Location = new System.Drawing.Point(481, 171);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Location = new System.Drawing.Point(486, 173);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox2.Size = new System.Drawing.Size(492, 307);
             this.groupBox2.TabIndex = 33;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Thư điện tử";
             this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
+            // chbkSendMail
+            // 
+            this.chbkSendMail.AutoSize = true;
+            this.chbkSendMail.Location = new System.Drawing.Point(264, 279);
+            this.chbkSendMail.Name = "chbkSendMail";
+            this.chbkSendMail.Size = new System.Drawing.Size(45, 21);
+            this.chbkSendMail.TabIndex = 42;
+            this.chbkSendMail.Text = "có";
+            this.chbkSendMail.UseVisualStyleBackColor = true;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(24, 275);
+            this.label21.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(54, 17);
+            this.label21.TabIndex = 41;
+            this.label21.Text = "Gui thu";
+            // 
             // txtEndDate
             // 
             this.txtEndDate.Location = new System.Drawing.Point(264, 239);
-            this.txtEndDate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtEndDate.Margin = new System.Windows.Forms.Padding(4);
             this.txtEndDate.Maximum = new decimal(new int[] {
             31,
             0,
@@ -440,7 +462,7 @@
             // txtStartDate
             // 
             this.txtStartDate.Location = new System.Drawing.Point(264, 207);
-            this.txtStartDate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtStartDate.Margin = new System.Windows.Forms.Padding(4);
             this.txtStartDate.Maximum = new decimal(new int[] {
             31,
             0,
@@ -480,14 +502,6 @@
             this.label19.TabIndex = 35;
             this.label19.Text = "Ngày bắt đầu lấy dữ liệu";
             // 
-            // txtTimeSend
-            // 
-            this.txtTimeSend.Location = new System.Drawing.Point(263, 175);
-            this.txtTimeSend.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.txtTimeSend.Name = "txtTimeSend";
-            this.txtTimeSend.Size = new System.Drawing.Size(219, 22);
-            this.txtTimeSend.TabIndex = 34;
-            // 
             // label18
             // 
             this.label18.AutoSize = true;
@@ -501,7 +515,7 @@
             // txtMailRecieve
             // 
             this.txtMailRecieve.Location = new System.Drawing.Point(264, 94);
-            this.txtMailRecieve.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtMailRecieve.Margin = new System.Windows.Forms.Padding(4);
             this.txtMailRecieve.Multiline = true;
             this.txtMailRecieve.Name = "txtMailRecieve";
             this.txtMailRecieve.Size = new System.Drawing.Size(219, 73);
@@ -520,7 +534,7 @@
             // txtPass
             // 
             this.txtPass.Location = new System.Drawing.Point(264, 58);
-            this.txtPass.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPass.Margin = new System.Windows.Forms.Padding(4);
             this.txtPass.Name = "txtPass";
             this.txtPass.PasswordChar = '*';
             this.txtPass.Size = new System.Drawing.Size(219, 22);
@@ -539,7 +553,7 @@
             // txtMailSend
             // 
             this.txtMailSend.Location = new System.Drawing.Point(264, 23);
-            this.txtMailSend.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtMailSend.Margin = new System.Windows.Forms.Padding(4);
             this.txtMailSend.Name = "txtMailSend";
             this.txtMailSend.Size = new System.Drawing.Size(219, 22);
             this.txtMailSend.TabIndex = 28;
@@ -554,31 +568,46 @@
             this.label15.TabIndex = 13;
             this.label15.Text = "Mail gửi";
             // 
-            // label21
+            // label22
             // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(24, 275);
-            this.label21.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(54, 17);
-            this.label21.TabIndex = 41;
-            this.label21.Text = "Gui thu";
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(24, 414);
+            this.label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(54, 17);
+            this.label22.TabIndex = 34;
+            this.label22.Text = "label22";
             // 
-            // chbkSendMail
+            // cbNameinReport
             // 
-            this.chbkSendMail.AutoSize = true;
-            this.chbkSendMail.Location = new System.Drawing.Point(264, 279);
-            this.chbkSendMail.Name = "chbkSendMail";
-            this.chbkSendMail.Size = new System.Drawing.Size(45, 21);
-            this.chbkSendMail.TabIndex = 42;
-            this.chbkSendMail.Text = "có";
-            this.chbkSendMail.UseVisualStyleBackColor = true;
+            this.cbNameinReport.FormattingEnabled = true;
+            this.cbNameinReport.Items.AddRange(new object[] {
+            "Lấy theo Region",
+            "Lấy theo Room"});
+            this.cbNameinReport.Location = new System.Drawing.Point(279, 411);
+            this.cbNameinReport.Margin = new System.Windows.Forms.Padding(4);
+            this.cbNameinReport.Name = "cbNameinReport";
+            this.cbNameinReport.Size = new System.Drawing.Size(193, 24);
+            this.cbNameinReport.TabIndex = 35;
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.CustomFormat = "HH:mm:ss";
+            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePicker1.Location = new System.Drawing.Point(264, 173);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.ShowUpDown = true;
+            this.dateTimePicker1.Size = new System.Drawing.Size(131, 22);
+            this.dateTimePicker1.TabIndex = 43;
+            this.dateTimePicker1.Value = new System.DateTime(2018, 12, 15, 23, 59, 0, 0);
             // 
             // FConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(989, 521);
+            this.ClientSize = new System.Drawing.Size(989, 526);
+            this.Controls.Add(this.cbNameinReport);
+            this.Controls.Add(this.label22);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnBrowseFile);
             this.Controls.Add(this.txtSoundPath);
@@ -604,7 +633,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FConfig";
             this.Text = "FConfig";
             this.Load += new System.EventHandler(this.FConfig_Load);
@@ -656,7 +685,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.TextBox txtTimeSend;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox txtMailRecieve;
         private System.Windows.Forms.Label label17;
@@ -668,5 +696,8 @@
         private System.Windows.Forms.NumericUpDown txtStartDate;
         private System.Windows.Forms.CheckBox chbkSendMail;
         private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.ComboBox cbNameinReport;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
     }
 }

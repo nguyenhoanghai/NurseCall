@@ -9,10 +9,11 @@ namespace HTGSL
 		public string strRegionName;
 		public string strNote;
 		public int iTotalOfBeds;
-		public RoomInfo()
+		public int iLabors;
+        public RoomInfo()
 		{
 		}
-		public RoomInfo(int i_room_id, int i_region_id, string str_room_name, string str_region_name, string str_note, int i_total_of_beds)
+		public RoomInfo(int i_room_id, int i_region_id, string str_room_name, string str_region_name, string str_note, int i_total_of_beds, int i_labors)
 		{
 			this.iRoomID = i_room_id;
 			this.iRegionID = i_region_id;
@@ -20,6 +21,7 @@ namespace HTGSL
 			this.strRegionName = str_region_name;
 			this.strNote = str_note;
 			this.iTotalOfBeds = i_total_of_beds;
-		}
+			this.iLabors = i_labors;
+        }
 	}
 }

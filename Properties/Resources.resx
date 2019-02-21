@@ -862,4 +862,10 @@
   <data name="SendMail" xml:space="preserve">
     <value>Send Mail</value>
   </data>
+  <data name="Labors" xml:space="preserve">
+    <value>Labors</value>
+  </data>
+  <data name="lbNameInReport" xml:space="preserve">
+    <value>Field Name in report get by</value>
+  </data>
 </root>

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 //using HTGSL.Properties;
 
@@ -304,12 +301,12 @@ namespace HTGSL
         {
             ListViewItem lvi;
             int iImageIndex = 1;
-            lvi = new ListViewItem(new string[] { 
-				Ri.iRegionID.ToString(),
-				Ri.strRegionName,
-				Ri.iTotalOfRooms.ToString(),
-				Ri.iTotalOfLocations.ToString(),
-				Ri.strNote}, iImageIndex);
+            lvi = new ListViewItem(new string[] {
+                Ri.iRegionID.ToString(),
+                Ri.strRegionName,
+                Ri.iTotalOfRooms.ToString(),
+                Ri.iTotalOfLocations.ToString(),
+                Ri.strNote}, iImageIndex);
             lvi.Tag = Ri.iRegionID.ToString();
             lvi.ForeColor = Color.Black;
             return lvi;
@@ -372,10 +369,10 @@ namespace HTGSL
             ListViewItem lvi;
             int iImageIndex = 3;
             lvi = new ListViewItem(new string[] {
-				Ri.iRoomID.ToString(),
-				Ri.strRoomName,
-				Ri.iTotalOfBeds.ToString(),
-				Ri.strNote}, iImageIndex);
+                Ri.iRoomID.ToString(),
+                Ri.strRoomName,
+                Ri.iTotalOfBeds.ToString(),
+                Ri.strNote}, iImageIndex);
             lvi.Tag = Ri.iRoomID.ToString();
             lvi.ForeColor = Color.Black;
             return lvi;
@@ -416,12 +413,12 @@ namespace HTGSL
         {
             ListViewItem lvi;
             int iImageIndex = 4;
-            lvi = new ListViewItem(new string[] { 
-				Bi.iBedID.ToString(),
-				Bi.strBedName,
-				Bi.strNote,
-				Bi.strCurator,
-				Bi.bInstall ? "X" : "-"}, iImageIndex);
+            lvi = new ListViewItem(new string[] {
+                Bi.iBedID.ToString(),
+                Bi.strBedName,
+                Bi.strNote,
+                Bi.strCurator,
+                Bi.bInstall ? "X" : "-"}, iImageIndex);
             lvi.Tag = Bi.iBedID.ToString();
             lvi.ForeColor = Color.Black;
             return lvi;
@@ -462,13 +459,13 @@ namespace HTGSL
         {
             ListViewItem lvi;
             int iImageIndex = 6;
-            lvi = new ListViewItem(new string[] { 
-				Li.iLocationID.ToString(),
-				Li.strLocationName,
-				Li.iTypeID.ToString(),
-				Li.strTypeName,
-				Li.strNote,
-				Li.bInstall ? "X" : "-"}, iImageIndex);
+            lvi = new ListViewItem(new string[] {
+                Li.iLocationID.ToString(),
+                Li.strLocationName,
+                Li.iTypeID.ToString(),
+                Li.strTypeName,
+                Li.strNote,
+                Li.bInstall ? "X" : "-"}, iImageIndex);
             lvi.Tag = Li.iLocationID.ToString();
             lvi.ForeColor = Color.Black;
             return lvi;
@@ -811,24 +808,31 @@ namespace HTGSL
         #region Room lv tootip
         private void newRoomLVToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            bool bValidRoomID = false;
-            bool bContinue = true;
-            int iMaxRoomID = this.TheSqlData.GetMaxValueRoomID(this.iRegionID);
-            int iRoomID_ = iMaxRoomID + 1;
-            string strRoomName_ = "";
-            int iRegionID_ = this.iRegionID;
-            string strRegionName_ = this.strRegionName;
-            string strNote_ = "";
-            int iTotalOfBeds_ = 0;
+            bool
+                bValidRoomID = false,
+                bContinue = true;
+            int
+                iMaxRoomID = this.TheSqlData.GetMaxValueRoomID(this.iRegionID),
+                iRoomID_ = iMaxRoomID + 1,
+                iRegionID_ = this.iRegionID,
+                iTotalOfBeds_ = 0,
+                iLabor_ = 1;
+            string
+                strRoomName_ = "",
+                strRegionName_ = this.strRegionName,
+                strNote_ = "";
+
             while (!bValidRoomID && bContinue)
             {
-                Form5 form5 = new Form5();
+                // Form5 form5 = new Form5();
+                var form5 = new FrmRoom();
                 form5.bModify = false;
                 form5.The_iRoomID = iRoomID_;
                 form5.The_strRoomName = strRoomName_;
                 form5.The_iRegionID = iRegionID_;
                 form5.The_strRegionName = strRegionName_;
                 form5.The_strNote = strNote_;
+                form5.The_iLabor = iLabor_;
                 if (form5.ShowDialog(this) == DialogResult.OK)
                 {
                     iRoomID_ = form5.The_iRoomID;
@@ -836,15 +840,16 @@ namespace HTGSL
                     iRegionID_ = form5.The_iRegionID;
                     strRegionName_ = form5.The_strRegionName;
                     strNote_ = form5.The_strNote;
+                    iLabor_ = form5.The_iLabor;
                     if (this.TheSqlData.IsExistRoomID(iRoomID_, iRegionID_))
                     {
                         MyMsgBox.MsgError(Properties.Resources.InfoOfRoom + ": " + iRoomID_.ToString() + ". " + strRoomName_ + ", " + Properties.Resources.Region + ": " + strRegionName_ + " " + Properties.Resources.IsExisted + "!");
                     }
                     else
                     {
-                        if (this.TheSqlData.InsertRoomInfo(iRoomID_, iRegionID_, strRoomName_, strNote_))
+                        if (this.TheSqlData.InsertRoomInfo(iRoomID_, iRegionID_, strRoomName_, strNote_, iLabor_))
                         {
-                            ListViewItem lvi = this.RetListViewItemFromRoomInfo(new RoomInfo(iRoomID_, iRegionID_, strRoomName_, strRegionName_, strNote_, iTotalOfBeds_));
+                            ListViewItem lvi = this.RetListViewItemFromRoomInfo(new RoomInfo(iRoomID_, iRegionID_, strRoomName_, strRegionName_, strNote_, iTotalOfBeds_, iLabor_));
                             this.listView1.Items.Add(lvi);
                             this.listView1.Focus();
                             lvi.Selected = true;
@@ -877,29 +882,39 @@ namespace HTGSL
         {
             this.Cursor = Cursors.WaitCursor;
             RoomInfo Ri = this.TheSqlData.ReaderRoomInfo(this.iRoomID, this.iRegionID);
-            int iRoomID_ = Ri.iRoomID;
-            string strRoomName_ = Ri.strRoomName;
-            int iRegionID_ = Ri.iRegionID;
-            string strRegionName_ = Ri.strRegionName;
-            string strNote_ = Ri.strNote;
-            int iTotalOfBeds_ = Ri.iTotalOfBeds;
-            Form5 form5 = new Form5();
+
+            int
+                iRoomID_ = Ri.iRoomID,
+                iLabor_ = Ri.iLabors,
+                iRegionID_ = Ri.iRegionID,
+                iTotalOfBeds_ = Ri.iTotalOfBeds;
+
+            string
+                strRoomName_ = Ri.strRoomName,
+                strRegionName_ = Ri.strRegionName,
+                strNote_ = Ri.strNote;
+
+            // Form5 form5 = new Form5();
+            var form5 = new FrmRoom();
             form5.bModify = true;
             form5.The_iRoomID = iRoomID_;
             form5.The_strRoomName = strRoomName_;
             form5.The_iRegionID = iRegionID_;
             form5.The_strRegionName = strRegionName_;
             form5.The_strNote = strNote_;
+            form5.The_iLabor = iLabor_;
             if (form5.ShowDialog(this) == DialogResult.OK)
             {
                 iRoomID_ = form5.The_iRoomID;
+                iLabor_ = form5.The_iLabor;
                 strRoomName_ = form5.The_strRoomName;
                 iRegionID_ = form5.The_iRegionID;
                 strRegionName_ = form5.The_strRegionName;
                 strNote_ = form5.The_strNote;
-                if (this.TheSqlData.UpdateRoomInfo(iRoomID_, iRegionID_, strRoomName_, strNote_))
+                iLabor_ = form5.The_iLabor;
+                if (this.TheSqlData.UpdateRoomInfo(iRoomID_, iRegionID_, strRoomName_, strNote_, iLabor_))
                 {
-                    ListViewItem lvi = this.RetListViewItemFromRoomInfo(new RoomInfo(iRoomID_, iRegionID_, strRoomName_, strRegionName_, strNote_, iTotalOfBeds_));
+                    ListViewItem lvi = this.RetListViewItemFromRoomInfo(new RoomInfo(iRoomID_, iRegionID_, strRoomName_, strRegionName_, strNote_, iTotalOfBeds_, iLabor_));
                     this.listView1.Items[this.iItem] = lvi;
                     this.listView1.Focus();
                     lvi.Selected = true;
@@ -1209,14 +1224,19 @@ namespace HTGSL
         private void modifyRoomTVToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RoomInfo Ri = this.TheSqlData.ReaderRoomInfo(this.iRoomID, this.iRegionID);
-            int iRoomID_ = Ri.iRoomID;
-            string strRoomName_ = Ri.strRoomName;
-            int iRegionID_ = Ri.iRegionID;
-            string strRegionName_ = Ri.strRegionName;
-            string strNote_ = Ri.strNote;
-            Form5 form5 = new Form5();
+            int
+              iRoomID_ = Ri.iRoomID,
+              iLabor_ = Ri.iLabors,
+              iRegionID_ = Ri.iRegionID;
+            string
+              strRoomName_ = Ri.strRoomName,
+              strRegionName_ = Ri.strRegionName,
+              strNote_ = Ri.strNote;
+            // Form5 form5 = new Form5();
+            var form5 = new FrmRoom();
             form5.bModify = true;
             form5.The_iRoomID = iRoomID_;
+            form5.The_iLabor = iLabor_;
             form5.The_strRoomName = strRoomName_;
             form5.The_iRegionID = iRegionID_;
             form5.The_strRegionName = strRegionName_;
@@ -1224,17 +1244,18 @@ namespace HTGSL
             if (form5.ShowDialog(this) == DialogResult.OK)
             {
                 iRoomID_ = form5.The_iRoomID;
+                iLabor_ = form5.The_iLabor;
                 strRoomName_ = form5.The_strRoomName;
                 iRegionID_ = form5.The_iRegionID;
                 strRegionName_ = form5.The_strRegionName;
                 strNote_ = form5.The_strNote;
-                if (this.TheSqlData.UpdateRoomInfo(iRoomID_, iRegionID_, strRoomName_, strNote_))
+                if (this.TheSqlData.UpdateRoomInfo(iRoomID_, iRegionID_, strRoomName_, strNote_, iLabor_))
                 {
                     this.tnMouseDown.Text = strRoomName_;
                     if (this.tnMouseDown.Parent == this.tnSelect)
-                    {
-                        this.treeView1.SelectedNode = null;
-                        this.treeView1.SelectedNode = this.tnSelect;
+                    { 
+                            this.treeView1.SelectedNode = null;
+                            this.treeView1.SelectedNode = this.tnSelect; 
                     }
                 }
             }
@@ -1275,7 +1296,7 @@ namespace HTGSL
         }
 
         #endregion
-         
+
         private void regionTVContextMenuStrip_Opening(object sender, CancelEventArgs e)
         {
             this.bTVMouseDown = true;
@@ -1735,23 +1756,29 @@ namespace HTGSL
 
         private void newRoomTVToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            bool bValidRoomID = false;
-            bool bContinue = true;
-            int iMaxRoomID = this.TheSqlData.GetMaxValueRoomID(this.iRegionID);
-            int iRoomID_ = iMaxRoomID + 1;
-            string strRoomName_ = "";
-            int iRegionID_ = this.iRegionID;
-            string strRegionName_ = this.strRegionName;
-            string strNote_ = "";
+            bool
+                bValidRoomID = false,
+                bContinue = true;
+            int
+                iMaxRoomID = this.TheSqlData.GetMaxValueRoomID(this.iRegionID),
+                iRoomID_ = iMaxRoomID + 1,
+                iLabor_ = 1,
+                iRegionID_ = this.iRegionID;
+            string
+                strRoomName_ = "",
+                strRegionName_ = this.strRegionName,
+                strNote_ = "";
             while (!bValidRoomID && bContinue)
             {
-                Form5 form5 = new Form5();
+                // Form5 form5 = new Form5();
+                var form5 = new FrmRoom();
                 form5.bModify = false;
                 form5.The_iRoomID = iRoomID_;
                 form5.The_strRoomName = strRoomName_;
                 form5.The_iRegionID = iRegionID_;
                 form5.The_strRegionName = strRegionName_;
                 form5.The_strNote = strNote_;
+                form5.The_iLabor = iLabor_;
                 if (form5.ShowDialog(this) == DialogResult.OK)
                 {
                     iRoomID_ = form5.The_iRoomID;
@@ -1759,13 +1786,14 @@ namespace HTGSL
                     iRegionID_ = form5.The_iRegionID;
                     strRegionName_ = form5.The_strRegionName;
                     strNote_ = form5.The_strNote;
+                    iLabor_ = form5.The_iLabor;
                     if (this.TheSqlData.IsExistRoomID(iRoomID_, iRegionID_))
                     {
                         MyMsgBox.MsgError(Properties.Resources.InfoOfRoom + ": " + iRoomID_.ToString() + ". " + strRoomName_ + ", " + Properties.Resources.Region + ": " + strRegionName_ + " " + Properties.Resources.IsExisted + "!");
                     }
                     else
                     {
-                        if (this.TheSqlData.InsertRoomInfo(iRoomID_, iRegionID_, strRoomName_, strNote_))
+                        if (this.TheSqlData.InsertRoomInfo(iRoomID_, iRegionID_, strRoomName_, strNote_, iLabor_))
                         {
                             TreeNode tn = this.InitRoomNode(iRoomID_, strRoomName_);
                             int iPos = this.FindPostionTreeNodeFromTreeNodeParent(this.tnMouseDown, iRoomID_);
@@ -1789,14 +1817,14 @@ namespace HTGSL
 
         }
 
-	
 
 
 
 
-       
 
-        
+
+
+
 
 
     }

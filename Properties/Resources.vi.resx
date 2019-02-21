@@ -759,4 +759,10 @@
   <data name="SendMail" xml:space="preserve">
     <value>Gửi thư điện tử</value>
   </data>
+  <data name="Labors" xml:space="preserve">
+    <value>Lao động</value>
+  </data>
+  <data name="lbNameInReport" xml:space="preserve">
+    <value>Cột Tên trong báo cáo lấy theo</value>
+  </data>
 </root>

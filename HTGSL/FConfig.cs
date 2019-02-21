@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing; 
 using System.Text; 
 using System.Windows.Forms;
+using HTGSL.Models;
 //using HTGSL.Properties;
 using  Properties;
 
@@ -50,9 +51,11 @@ namespace HTGSL
             this.label19.Text = Properties.Resources.StartDate + ":";
             this.label20.Text = Properties.Resources.EndDate + ":";
             this.label21.Text = Properties.Resources.SendMail + ":";
+            this.label22.Text = Properties.Resources.lbNameInReport + ":";
 
             this.butSave.Text = Properties.Resources.butSave;
             this.btnBrowseFile.Text = Properties.Resources.BrowseSoundDirectory;
+             
             InitializeControlValues();
         }
 
@@ -79,10 +82,13 @@ namespace HTGSL
                 Settings.Default.MailSend = this.txtMailSend.Text;
                 Settings.Default.Password = this.txtPass.Text;
                 Settings.Default.MailRecieve = this.txtMailRecieve.Text;
-                Settings.Default.TimeSend = this.txtTimeSend.Text;
+                Settings.Default.TimeSend = this.dateTimePicker1.Value;
                 Settings.Default.StartDate = (int)this.txtStartDate.Value;
                 Settings.Default.EndDate = (int)this.txtEndDate.Value; 
                 Settings.Default.SendMail =  this.chbkSendMail.Checked;
+
+                var model = (SelectListModel)this.cbNameinReport.SelectedItem;
+                Settings.Default.NameInReport = model.Value ;
 
                 Settings.Default.Save();
                 MessageBox.Show(Properties.Resources.SaveSuccess  , "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
@@ -182,10 +188,20 @@ namespace HTGSL
             this.txtMailSend.Text = Settings.Default.MailSend.ToString();
             this.txtPass.Text = Settings.Default.Password.ToString();
             this.txtMailRecieve.Text = Settings.Default.MailRecieve.ToString();
-            this.txtTimeSend.Text = Settings.Default.TimeSend.ToString();
+            this.dateTimePicker1.Value = Settings.Default.TimeSend;
             this.txtStartDate.Value = Settings.Default.StartDate ;
             this.txtEndDate.Value = Settings.Default.EndDate ;  
             this.chbkSendMail.Checked = Settings.Default.SendMail;
+
+            var list = new List<SelectListModel>();
+            list.Add(new SelectListModel() { Value = 0, Name = "Region" });
+            list.Add(new SelectListModel() { Value = 1, Name = "Room" });
+            this.cbNameinReport.DataSource = list;
+            this.cbNameinReport.ValueMember = "Value";
+            this.cbNameinReport.DisplayMember = "Name";
+            this.cbNameinReport.SelectedIndex = Settings.Default.NameInReport;
+
+
         }
 
         private void btnBrowseFile_Click(object sender, EventArgs e)

@@ -313,10 +313,10 @@ namespace Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("17:00:00")]
-        public string TimeSend {
+        [global::System.Configuration.DefaultSettingValueAttribute("12/15/2018 12:00:00")]
+        public global::System.DateTime TimeSend {
             get {
-                return ((string)(this["TimeSend"]));
+                return ((global::System.DateTime)(this["TimeSend"]));
             }
             set {
                 this["TimeSend"] = value;
@@ -356,6 +356,18 @@ namespace Properties {
             }
             set {
                 this["SendMail"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int NameInReport {
+            get {
+                return ((int)(this["NameInReport"]));
+            }
+            set {
+                this["NameInReport"] = value;
             }
         }
     }

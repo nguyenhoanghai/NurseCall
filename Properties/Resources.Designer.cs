@@ -1148,6 +1148,15 @@ namespace Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Labors.
+        /// </summary>
+        internal static string Labors {
+            get {
+                return ResourceManager.GetString("Labors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
         internal static string Language {
@@ -1162,6 +1171,15 @@ namespace Properties {
         internal static string LastName {
             get {
                 return ResourceManager.GetString("LastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Field Name in report get by.
+        /// </summary>
+        internal static string lbNameInReport {
+            get {
+                return ResourceManager.GetString("lbNameInReport", resourceCulture);
             }
         }
         
