@@ -2518,7 +2518,7 @@ namespace HTGSL
                 }
 
                 //bao cao thang
-                int endOfThisMonth = new DateTime(year, month, 1).AddDays(-1).Day;
+                int endOfThisMonth = new DateTime(year, month+1, 1).AddDays(-1).Day;
                 string startDate = DateTime.Now.Month + "/" + Settings.Default.StartDate + "/" + DateTime.Now.Year,
                   endDate = DateTime.Now.Month + "/" + (Settings.Default.EndDate < endOfThisMonth ? Settings.Default.EndDate : endOfThisMonth) + "/" + DateTime.Now.Year;
                 mail.AddAttachment(GetReportFiles(startDate, endDate,endOfThisMonth));
@@ -2898,11 +2898,11 @@ namespace HTGSL
                     xlSheet.Cells[doc, 8] = Math.Ceiling(slSuCo.Sum(x => x.ProcessTime));
                     xlSheet.Cells[doc, 12] = Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
 
-                    slSuCo = objs.Where(x => x.BedId == 2).ToList();
+                    slSuCo = objs.Where(x => x.BedId == 3).ToList();
                     xlSheet.Cells[doc, 9] = Math.Ceiling(slSuCo.Sum(x => x.ProcessTime));
                     xlSheet.Cells[doc, 13] = Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
 
-                    slSuCo = objs.Where(x => x.BedId == 3).ToList();
+                    slSuCo = objs.Where(x => x.BedId == 2).ToList();
                     xlSheet.Cells[doc, 10] = Math.Ceiling(slSuCo.Sum(x => x.ProcessTime));
                     xlSheet.Cells[doc, 14] = Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
 
@@ -3011,7 +3011,7 @@ namespace HTGSL
                     month = 1;
                     year++;
                 }
-                int endOfThisMonth = new DateTime(year, month, 1).AddDays(-1).Day;
+                int endOfThisMonth = new DateTime(year, month+1, 1).AddDays(-1).Day;
                 string startDate = DateTime.Now.Month + "/" + Settings.Default.StartDate + "/" + DateTime.Now.Year,
                   endDate = DateTime.Now.Month + "/" + (Settings.Default.EndDate < endOfThisMonth ? Settings.Default.EndDate : endOfThisMonth) + "/" + DateTime.Now.Year;
 

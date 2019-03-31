@@ -2,7 +2,7 @@
 <String_Connect>
   <SQLServer id="1">
     <Server_Name>.</Server_Name>
-    <Database>NurseCall</Database>
+    <Database>NURSECALL</Database>
     <User>sa</User>
     <Password>123</Password>
   </SQLServer>
