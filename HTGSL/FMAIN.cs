@@ -2761,28 +2761,28 @@ namespace HTGSL
                     range.Borders.ColorIndex = 56;
 
                     xlSheet.Cells[doc, 6] = tongTGLV;
-                    xlSheet.Cells[doc, 7] = Math.Ceiling(objs.Sum(x => x.ProcessTime));
+                    xlSheet.Cells[doc, 7] = "=SUM(G8:G" + (doc - 2) + ")";//  Math.Ceiling(objs.Sum(x => x.ProcessTime));
                     xlSheet.Cells[doc, 8] = objs.Count;
 
                     var slSuCo = objs.Where(x => x.BedId == 1).ToList();
                     xlSheet.Cells[doc, 11] = slSuCo.Count;
-                    xlSheet.Cells[doc, 12] = Math.Ceiling(slSuCo.Sum(x => x.ProcessTime));
-                    xlSheet.Cells[doc, 13] = Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
+                    xlSheet.Cells[doc, 12] = "=SUM(L8:L" + (doc - 2) + ")";// Math.Ceiling(slSuCo.Sum(x => x.ProcessTime));
+                    xlSheet.Cells[doc, 13] = "=L" + doc + "/F" + doc + "*100";// Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
 
                     slSuCo = objs.Where(x => x.BedId == 2).ToList();
                     xlSheet.Cells[doc, 14] = slSuCo.Count;
-                    xlSheet.Cells[doc, 15] = Math.Ceiling(slSuCo.Sum(x => x.ProcessTime));
-                    xlSheet.Cells[doc, 16] = Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
+                    xlSheet.Cells[doc, 15] = "=SUM(O8:O" + (doc - 2) + ")";//  Math.Ceiling(slSuCo.Sum(x => x.ProcessTime));
+                    xlSheet.Cells[doc, 16] = "=O" + doc + "/F" + doc + "*100";//Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
 
                     slSuCo = objs.Where(x => x.BedId == 3).ToList();
                     xlSheet.Cells[doc, 17] = slSuCo.Count;
-                    xlSheet.Cells[doc, 18] = Math.Ceiling(slSuCo.Sum(x => x.ProcessTime));
-                    xlSheet.Cells[doc, 19] = Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
+                    xlSheet.Cells[doc, 18] = "=SUM(R8:R" + (doc - 2) + ")";//  Math.Ceiling(slSuCo.Sum(x => x.ProcessTime));
+                    xlSheet.Cells[doc, 19] = "=R" + doc + "/F" + doc + "*100";//Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
 
                     slSuCo = objs.Where(x => x.BedId == 4).ToList();
                     xlSheet.Cells[doc, 20] = slSuCo.Count;
-                    xlSheet.Cells[doc, 21] = Math.Ceiling(slSuCo.Sum(x => x.ProcessTime));
-                    xlSheet.Cells[doc, 22] = Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
+                    xlSheet.Cells[doc, 21] = "=SUM(U8:U" + (doc - 2) + ")";// Math.Ceiling(slSuCo.Sum(x => x.ProcessTime));
+                    xlSheet.Cells[doc, 22] = "=U" + doc + "/F" + doc + "*100";//Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
 
                     #endregion
 
@@ -2892,23 +2892,23 @@ namespace HTGSL
                     range.Borders.ColorIndex = 56;
 
                     xlSheet.Cells[doc, 6] = tongTGLV;
-                    xlSheet.Cells[doc, 7] = Math.Ceiling(objs.Sum(x => x.ProcessTime));
+                    xlSheet.Cells[doc, 7] = "=SUM(G8:G" + (doc - 2) + ")";// Math.Ceiling(objs.Sum(x => x.ProcessTime));
 
                     slSuCo = objs.Where(x => x.BedId == 1).ToList();
-                    xlSheet.Cells[doc, 8] = Math.Ceiling(slSuCo.Sum(x => x.ProcessTime));
-                    xlSheet.Cells[doc, 12] = Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
+                    xlSheet.Cells[doc, 8] = "=SUM(H8:H" + (doc - 2) + ")";// Math.Ceiling(slSuCo.Sum(x => x.ProcessTime));
+                    xlSheet.Cells[doc, 12] = "=H" + doc + "/F"+doc+"*100";// Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
 
                     slSuCo = objs.Where(x => x.BedId == 3).ToList();
-                    xlSheet.Cells[doc, 9] = Math.Ceiling(slSuCo.Sum(x => x.ProcessTime));
-                    xlSheet.Cells[doc, 13] = Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
+                    xlSheet.Cells[doc, 9] = "=SUM(I8:I" + (doc - 2) + ")"; //Math.Ceiling(slSuCo.Sum(x => x.ProcessTime));
+                    xlSheet.Cells[doc, 13] = "=I" + doc + "/F" + doc + "*100"; //Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
 
                     slSuCo = objs.Where(x => x.BedId == 2).ToList();
-                    xlSheet.Cells[doc, 10] = Math.Ceiling(slSuCo.Sum(x => x.ProcessTime));
-                    xlSheet.Cells[doc, 14] = Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
+                    xlSheet.Cells[doc, 10] = "=SUM(J8:J" + (doc - 2) + ")"; //Math.Ceiling(slSuCo.Sum(x => x.ProcessTime));
+                    xlSheet.Cells[doc, 14] = "=J" + doc + "/F" + doc + "*100"; Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
 
                     slSuCo = objs.Where(x => x.BedId == 4).ToList();
-                    xlSheet.Cells[doc, 11] = Math.Ceiling(slSuCo.Sum(x => x.ProcessTime));
-                    xlSheet.Cells[doc, 15] = Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
+                    xlSheet.Cells[doc, 11] = "=SUM(K8:K" + (doc - 2) + ")";// Math.Ceiling(slSuCo.Sum(x => x.ProcessTime));
+                    xlSheet.Cells[doc, 15] = "=K" + doc + "/F" + doc + "*100"; //Math.Round((slSuCo.Sum(x => x.ProcessTime) / tongTGLV) * 100, 2);
                     #endregion
 
                     xlSheet = (Excel.Worksheet)xlBook.Worksheets.get_Item(1);
